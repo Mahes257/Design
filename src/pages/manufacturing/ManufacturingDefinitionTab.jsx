@@ -238,7 +238,7 @@ export default function ManufacturingDefinitionTab() {
               className={`mech-domain-chip${categoryFilter === category.key ? ' is-active' : ''}`}
               onClick={() => {
                 setCategoryFilter(category.key);
-                setSelectedIds([]);
+                register.setSelectedIds([]);
                 register.setPage(1);
               }}
             >
