@@ -1,0 +1,517 @@
+/* ===== MODULE 06 — ENGINEERING ANALYSIS ================================
+   Review layouts, evidence summaries, analysis pick lists and revision
+   blocks that sit on top of the shared design system and Module 05 form
+   and detail primitives.
+   ====================================================================== */
+
+.anl-view-hint {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.anl-field-note {
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px dashed #e2e8f0;
+  border-radius: 8px;
+  background: #fbfdfc;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.anl-inline-hint {
+  display: block;
+  margin: 10px 0 12px;
+}
+
+/* --- review readiness checklist ---------------------------------------- */
+.anl-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+.anl-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.anl-checklist li svg {
+  width: 12px;
+  height: 12px;
+  color: #cbd5e1;
+  flex-shrink: 0;
+}
+
+.anl-checklist li.is-done {
+  color: #0b4a3d;
+}
+
+.anl-checklist li.is-done svg {
+  color: #0f8f78;
+}
+
+.anl-attachment-list {
+  margin-top: 2px;
+}
+
+/* --- analysis pick list (report form) ---------------------------------- */
+.anl-pick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.anl-pick-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.anl-pick-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid #eef2f6;
+  border-radius: 9px;
+  background: #fbfdfc;
+  cursor: pointer;
+}
+
+.anl-pick-item:hover {
+  border-color: #cfe9e2;
+}
+
+.anl-pick-item.is-selected {
+  border-color: #0f8f78;
+  background: #f2fbf8;
+}
+
+.anl-pick-item input {
+  width: 14px;
+  height: 14px;
+  accent-color: #0f8f78;
+  flex-shrink: 0;
+}
+
+.anl-pick-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.anl-pick-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #102a2a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.anl-pick-meta {
+  font-size: 10px;
+  color: #94a3b8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- evidence summary -------------------------------------------------- */
+.anl-evidence-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.anl-evidence-summary.is-stacked {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.anl-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 9px 10px;
+  border: 1px solid #eef2f6;
+  border-radius: 9px;
+  background: #fbfdfc;
+}
+
+.anl-stat-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.anl-stat strong {
+  font-size: 18px;
+  line-height: 1.1;
+  color: #102a2a;
+}
+
+.anl-stat.is-verified {
+  border-color: #cfe9e2;
+  background: #f4fbf9;
+}
+
+.anl-stat.is-verified strong {
+  color: #0b4a3d;
+}
+
+.anl-stat.is-outstanding {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.anl-stat.is-outstanding strong {
+  color: #b45309;
+}
+
+.anl-evidence-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.anl-subhead {
+  margin: 12px 0 6px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.anl-ref-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+  color: #475569;
+}
+
+.anl-ref-list li {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  padding: 6px 8px;
+  border: 1px solid #eef2f6;
+  border-radius: 7px;
+  background: #fbfdfc;
+}
+
+.anl-ref-list li svg {
+  width: 12px;
+  height: 12px;
+  color: #0f8f78;
+  flex-shrink: 0;
+}
+
+.anl-ref-list.is-outstanding li svg {
+  color: #d97706;
+}
+
+/* --- review detail layout --------------------------------------------- */
+.anl-review-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 12px;
+  align-items: start;
+}
+
+.anl-review-main {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.anl-review-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  position: sticky;
+  top: 12px;
+}
+
+.anl-action-panel {
+  overflow: hidden;
+}
+
+.anl-action-panel textarea.form-input,
+.modal-panel textarea.form-input {
+  height: auto;
+  min-height: 92px;
+  padding: 8px 10px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.anl-action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.anl-action-buttons .erp-btn,
+.anl-action-buttons button {
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.anl-evidence-block {
+  margin-top: 12px;
+}
+
+/* --- detail section chips --------------------------------------------- */
+.anl-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.anl-section-chip {
+  padding: 3px 8px;
+  border: 1px solid #eef2f6;
+  border-radius: 999px;
+  background: #fbfdfc;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* --- report revision view --------------------------------------------- */
+.anl-revision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.anl-revision-sub {
+  margin: 0 0 6px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.anl-revision-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+  color: #475569;
+}
+
+.anl-revision-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px 8px;
+  border: 1px solid #eef2f6;
+  border-radius: 7px;
+  background: #fbfdfc;
+}
+
+/* --- dark theme -------------------------------------------------------- */
+.dark .anl-view-hint {
+  color: #94a3b8;
+}
+
+.dark .anl-field-note,
+.dark .anl-pick-item,
+.dark .anl-stat,
+.dark .anl-ref-list li,
+.dark .anl-section-chip,
+.dark .anl-revision-list li {
+  background: #243244;
+  border-color: #334155;
+  color: #cbd5e1;
+}
+
+.dark .anl-pick-item.is-selected {
+  border-color: #0f8f78;
+  background: rgba(15, 143, 120, 0.14);
+}
+
+.dark .anl-pick-title,
+.dark .anl-stat strong {
+  color: #e2e8f0;
+}
+
+.dark .anl-stat.is-verified {
+  background: rgba(15, 143, 120, 0.14);
+  border-color: rgba(15, 143, 120, 0.4);
+}
+
+.dark .anl-stat.is-verified strong {
+  color: #a7f3d0;
+}
+
+.dark .anl-stat.is-outstanding {
+  background: rgba(180, 83, 9, 0.16);
+  border-color: rgba(180, 83, 9, 0.4);
+}
+
+.dark .anl-stat.is-outstanding strong {
+  color: #fcd34d;
+}
+
+.dark .anl-checklist li.is-done {
+  color: #a7f3d0;
+}
+
+.dark .anl-action-panel {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+/* --- responsive -------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .anl-review-layout {
+    grid-template-columns: minmax(0, 1fr) 290px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .anl-review-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .anl-review-aside {
+    position: static;
+    order: -1;
+  }
+
+  .anl-evidence-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .anl-evidence-summary,
+  .anl-evidence-summary.is-stacked {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .anl-section-chip {
+    font-size: 9px;
+  }
+}
+
+/* ===== Module 07 — engineering analysis report ========================= */
+.analysis-report {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.analysis-report-banner,
+.analysis-source-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid #dbeae5;
+  border-radius: 10px;
+  background: #f4fbf8;
+}
+
+.analysis-source-banner {
+  display: block;
+  margin-bottom: 12px;
+  border-color: #f0d9ad;
+  background: #fffaf0;
+}
+
+.analysis-report-banner strong,
+.analysis-source-banner strong {
+  display: block;
+  font-size: 12px;
+  color: #0f5a46;
+}
+
+.analysis-source-banner strong {
+  color: #8a5a06;
+}
+
+.analysis-report-banner p,
+.analysis-source-banner p {
+  margin: 4px 0 0;
+  max-width: 92ch;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.analysis-source-banner p {
+  color: #8a6a35;
+}
+
+@media print {
+  .analysis-report {
+    gap: 8px;
+  }
+
+  .analysis-report .card,
+  .analysis-report .table-card {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .analysis-report-banner,
+  .analysis-source-banner {
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+  }
+}
+
+.dark .analysis-report-banner {
+  border-color: #1f3733;
+  background: #102622;
+}
+
+.dark .analysis-report-banner strong {
+  color: #7dd3c0;
+}
+
+.dark .analysis-source-banner {
+  border-color: #4a3a1c;
+  background: #241d10;
+}
+
+.dark .analysis-source-banner strong {
+  color: #f0c98a;
+}

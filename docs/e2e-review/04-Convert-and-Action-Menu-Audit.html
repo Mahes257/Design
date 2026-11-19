@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Convert &amp; Action Menu Audit — Mechanical Design ERP</title>
+<link rel="stylesheet" href="report.css" />
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="brandmark">VT</div>
+      <div>
+        <div class="brandname">VISHAK TECH</div>
+        <div class="brandsub">Mechanical Design ERP · Frontend Workspace</div>
+      </div>
+    </div>
+    <span class="cover-kicker">End-to-End Review · Document 04 of 05</span>
+    <h1>Convert &amp; Action Menu Audit</h1>
+    <p class="lede">A register-by-register inventory of three-dot menus, inline actions, conversion paths and the workflow gaps repaired during the end-to-end review.</p>
+    <div class="cover-meta">
+      <div><span>Document</span><strong>Convert &amp; Action Menu Audit</strong></div>
+      <div><span>Version</span><strong>1.0 · Final</strong></div>
+      <div><span>Review date</span><strong>16 November 2026</strong></div>
+      <div><span>Registers audited</span><strong>15 row-action menus</strong></div>
+      <div><span>Conversion paths reviewed</span><strong>10</strong></div>
+      <div><span>Actions added</span><strong>2</strong></div>
+    </div>
+  </div>
+  <div class="cover-foot">Menu labels reflect the as-built interface. Actions that depend on record state are noted explicitly; an absent action can be a deliberate gate rather than a missing feature.</div>
+</section>
+
+<h2>1. Audit approach</h2>
+<p>Each primary register was opened at desktop width. The first row’s three-dot trigger was activated and the resulting menu labels were captured. The menu was then closed and the next register tested. Inline actions outside the three-dot menu were reviewed separately, because several modules deliberately place workflow decisions in the record panel rather than in a row menu.</p>
+<p>Menu position was also checked against the viewport. When the action button itself is visible inside a horizontally scrolled table, the right-aligned menu opens inside the viewport. When the action column is offscreen, the table must be scrolled first; this is normal wide-table behaviour and is not a clipped menu once the trigger is visible.</p>
+
+<h2>2. Menu inventory by register</h2>
+<table>
+  <thead><tr><th style="width:27%">Register</th><th>Three-dot menu items observed</th><th style="width:26%">Assessment</th></tr></thead>
+  <tbody>
+    <tr><td>Customer enquiries<br><span class="mono">/customer-sales</span></td><td>View enquiry · Edit enquiry</td><td>Appropriate. Conversion now lives on the enquiry detail header.</td></tr>
+    <tr><td>Quotations<br><span class="mono">/customer-sales/quotations</span></td><td>View quotation · Edit quotation</td><td>Appropriate; project conversion is a detail action after acceptance.</td></tr>
+    <tr><td>Projects<br><span class="mono">/projects</span></td><td>View project · Edit project · Duplicate project · Archive project</td><td>Complete for a project register.</td></tr>
+    <tr><td>Design plans<br><span class="mono">/design-planning</span></td><td>View plan · Edit plan · Delete plan</td><td>Delete is appropriate for a planning draft; no archive needed.</td></tr>
+    <tr><td>Concepts<br><span class="mono">/conceptual-design</span></td><td>View concept details · Edit concept · Delete concept</td><td>Comparison and selection are inline detail actions.</td></tr>
+    <tr><td>Mechanical designs<br><span class="mono">/mechanical-design</span></td><td>View design · Edit design · Duplicate design · View revision history · Archive design</td><td>Complete; revision history is reachable without opening the full record.</td></tr>
+    <tr><td>Analysis register<br><span class="mono">/engineering-analysis</span></td><td>View details · Edit analysis · Duplicate · View attachments · View revision history · Archive</td><td>Complete for an evidence register.</td></tr>
+    <tr><td>Manufacturing definitions<br><span class="mono">/manufacturing-design</span></td><td>View record · Status history</td><td>Thin but appropriate: most manufacturing editing is context-panel driven.</td></tr>
+    <tr><td>BOM register<br><span class="mono">/bom-cost</span></td><td>View BOM · Edit BOM · Submit for review · Delete BOM</td><td>Submit is state-aware. Review decision is in the BOM detail panel.</td></tr>
+    <tr><td>CAD repository<br><span class="mono">/cad-management</span></td><td>View details · Open in CAD Viewer · Download file · Edit metadata · Delete record</td><td>Complete for a file repository.</td></tr>
+    <tr><td>Drawing register<br><span class="mono">/cad-management/drawings</span></td><td>View drawing details · Edit drawing · Submit for review · Delete draft</td><td>Submit appears for Draft / Changes Requested; review is in Revision &amp; Release.</td></tr>
+    <tr><td>Approval reviews<br><span class="mono">/design-review</span></td><td>View review details · View submitted revision · View attachments</td><td>Decision actions are in the stage workspaces and review detail.</td></tr>
+    <tr><td>Engineering changes<br><span class="mono">/engineering-release</span></td><td>Open ECR / ECO details</td><td>Thin row menu; impact and approval actions are in the change record.</td></tr>
+    <tr><td>Transfers<br><span class="mono">/transfers</span></td><td>View transfer details · Validate transfer · Cancel transfer</td><td>State-aware and complete for the register context.</td></tr>
+    <tr><td>Support cases<br><span class="mono">/manufacturing-support</span></td><td>View case · Edit case · Add comment · Close case</td><td>Complete for production support.</td></tr>
+    <tr><td>Readiness records<br><span class="mono">/manufacturing-readiness</span></td><td>Manage readiness package</td><td>Single action appropriate; checklist is inside the package workspace.</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Inline actions that are not in a row menu</h2>
+<table class="small-table">
+  <thead><tr><th style="width:26%">Workspace</th><th>Inline actions</th><th style="width:28%">Why this placement works</th></tr></thead>
+  <tbody>
+    <tr><td>Enquiry detail</td><td>Edit Enquiry · Create Quotation / Open Quotation · Update Status · Attach Document · Raise Clarification · Record Response</td><td>Workflow depends on the record status and readiness panel; a row menu would hide crucial context.</td></tr>
+    <tr><td>Quotation detail</td><td>Edit quotation · technical stage actions · customer submission · convert to project</td><td>Conversion is terminal and should be deliberate.</td></tr>
+    <tr><td>Analysis detail / review</td><td>Submit for Review · Open Review · Verify · Request Changes · Reject</td><td>Reviewer decision belongs beside the evidence, not in a list.</td></tr>
+    <tr><td>BOM detail</td><td>Submit for Review · Review Decision · Open Cost Planning · Open Revision &amp; Release</td><td>BOM review is a controlled decision with comments.</td></tr>
+    <tr><td>CAD Review &amp; Approval</td><td>Approve · Request Changes · Reject for each pending drawing</td><td>Queue-style review is faster than opening each record.</td></tr>
+    <tr><td>Review stage pages</td><td>Approve Engineering / Manufacturing Review · Reject · Request Changes · Add Comment · View Revision · History</td><td>Stage-specific actions must be near stage evidence and checklist.</td></tr>
+    <tr><td>Release History</td><td>Create controlled release · View approval history · View exact revision</td><td>Release is high-consequence and belongs to the eligible queue.</td></tr>
+    <tr><td>Transfer detail</td><td>Validate Transfer · Prepare Handover · Add Comment · Cancel Transfer</td><td>Destination handover is a separate controlled step from creation.</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Conversion paths</h2>
+<table>
+  <thead><tr><th style="width:20%">From</th><th style="width:20%">To</th><th style="width:23%">Action</th><th>Audit result</th></tr></thead>
+  <tbody>
+    <tr><td>Customer enquiry</td><td>Quotation</td><td>Create Quotation</td><td><span class="tag pass">ADDED</span> Available on a Ready-for-Quotation enquiry with no existing linked quotation. Opens the quotation form with the enquiry ID. Once linked, the action becomes Open Quotation. Open Quotation navigation was verified.</td></tr>
+    <tr><td>Quotation</td><td>Project</td><td>Convert to Project</td><td><span class="tag pass">VERIFIED</span> Accepted QTN-2026-022 generated and linked PRJ-2026-042.</td></tr>
+    <tr><td>Concept</td><td>Detailed design</td><td>Create design / link selected concept</td><td><span class="tag pass">VERIFIED</span> Selected CON-2026-011 was used as the design basis; no forced duplicate conversion action exists.</td></tr>
+    <tr><td>Design / part</td><td>Analysis</td><td>Create analysis with linked part/assembly</td><td><span class="tag pass">VERIFIED</span> ANL-2026-023 links PRJ-2026-042 and E2E-FRAME-001.</td></tr>
+    <tr><td>Design / part</td><td>Manufacturing definition</td><td>Create manufacturing record</td><td><span class="tag pass">VERIFIED</span> MFD-2026-016 links project and part.</td></tr>
+    <tr><td>BOM</td><td>Review</td><td>Submit for review → Review Decision</td><td><span class="tag pass">VERIFIED</span> BOM-2026-009 moved to Under Review and approved with comments.</td></tr>
+    <tr><td>Drawing</td><td>Review</td><td>Submit for review → CAD review queue</td><td><span class="tag pass">VERIFIED</span> E2E-DWG-001 moved to Under Review and was approved.</td></tr>
+    <tr><td>Review</td><td>Controlled release</td><td>Create controlled release</td><td><span class="tag pass">VERIFIED</span> Eligible REV-2026-013 released as REL-REV-2026-003, releasing the linked BOM and drawing.</td></tr>
+    <tr><td>Release</td><td>Transfer</td><td>New Transfer</td><td><span class="tag pass">VERIFIED</span> Live released BOM and drawing appear in the source selector; TRF-2026-011 and TRF-2026-012 were created.</td></tr>
+    <tr><td>Transfer</td><td>Destination handover</td><td>Prepare Handover</td><td><span class="tag pass">VERIFIED</span> Seeded BOM transfer TRF-2026-010 recorded purchase handover PUR-HO-2026-006 and moved to Awaiting Acknowledgement.</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Actions added or strengthened</h2>
+<table>
+  <thead><tr><th style="width:9%">Ref</th><th style="width:25%">Change</th><th>Behaviour</th><th style="width:23%">Reason</th></tr></thead>
+  <tbody>
+    <tr><td>ACT-01</td><td>Create Quotation / Open Quotation on enquiry detail</td><td>Status-aware conversion header action; no duplicate conversion when a quotation is already linked.</td><td>The quotation form already supported a linked enquiry, but sales users had to leave the record and create an unlinked quotation.</td></tr>
+    <tr><td>ACT-02</td><td>Technical checklist editor in Engineering Review</td><td>Each technical item can record Pass, Fail, Not Applicable, reviewer, comments and evidence.</td><td>New reviews started with all technical items pending and no way to complete them.</td></tr>
+    <tr><td>ACT-03</td><td>Checklist gate on engineering/manufacturing approval</td><td>Approve is disabled while required checklist items are pending; a banner states the count.</td><td>Approval should not be recorded against an empty review checklist.</td></tr>
+    <tr><td>ACT-04</td><td>Release propagation to BOM and drawing</td><td>Controlled release marks the exact linked BOM and drawing as Released and stores the release reference.</td><td>Downstream transfer eligibility depends on released records, not only an approval release record.</td></tr>
+    <tr><td>ACT-05</td><td>Live released sources in transfer selector</td><td>Released local BOMs/drawings are merged with seeded fixtures; duplicates are suppressed by deliverable and revision.</td><td>New projects could not transfer their newly released baseline.</td></tr>
+    <tr><td>ACT-06</td><td>Live project validation and labels in transfers</td><td>Project existence and display names resolve against persisted projects as well as seeded projects.</td><td>A valid new project was reported as an invalid project reference and displayed as “ID · ID”.</td></tr>
+    <tr><td>ACT-07</td><td>Support project lookups use live projects</td><td>Case form, case detail and support register resolve the live project register.</td><td>New projects were missing from support selection and detail labels.</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Three-dot menu quality checks</h2>
+<table class="small-table">
+  <thead><tr><th style="width:34%">Check</th><th style="width:15%">Result</th><th>Observation</th></tr></thead>
+  <tbody>
+    <tr><td>Menu opens on the row trigger</td><td><span class="tag pass">PASS</span></td><td>15 registers audited; every row menu opened.</td></tr>
+    <tr><td>Menu closes on outside click</td><td><span class="tag pass">PASS</span></td><td>Shared click-outside hook applied.</td></tr>
+    <tr><td>Menu closes on Escape</td><td><span class="tag pass">PASS</span></td><td>Keyboard handler ran during the menu audit.</td></tr>
+    <tr><td>Right alignment when trigger is near the right edge</td><td><span class="tag pass">PASS</span></td><td>Once the action column was scrolled into view, the menu stayed inside the viewport.</td></tr>
+    <tr><td>No page-level horizontal overflow</td><td><span class="tag pass">PASS</span></td><td>Wide tables own a local horizontal scroll container.</td></tr>
+    <tr><td>Menu actions reflect state</td><td><span class="tag pass">PASS*</span></td><td>Submit/delete/release items appear only in valid states; a few registers intentionally have a single action.</td></tr>
+    <tr><td>Destructive action confirmation</td><td><span class="tag pass">PASS</span></td><td>Delete/archive/cancel paths present a confirmation step where data would be lost.</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Note on menu visibility.</b> At 1440 px the enquiry action column can sit beyond the visible table area because the register has many columns. The table scrolls horizontally inside its card; when the trigger is visible, the menu is not clipped. No global menu-positioning bug was found.</div>
+
+<h2>7. Recommendations</h2>
+<p>The following are worthwhile follow-ups but were not added during this testing cycle because they are enhancements rather than missing workflow actions:</p>
+<ul class="clean">
+  <li>Add a sticky first column and/or sticky action column to the widest registers so identity and actions remain visible during horizontal scroll.</li>
+  <li>Expose a single “Create review from drawing/BOM” action that pre-fills deliverable, revision, linked BOM and reviewers, replacing the current separate submit and review steps.</li>
+  <li>Add a live released manufacturing package source for production transfer, rather than relying on seeded package fixtures.</li>
+  <li>Expose bulk actions (bulk archive, bulk submit, bulk release) for high-volume registers.</li>
+  <li>Add a visible “review checklist incomplete” state on the review register row, not only inside the stage page.</li>
+</ul>
+
+<h2>8. Conclusion</h2>
+<p>Row-level action menus are consistently implemented through a shared component, with appropriate state-aware items and no clipping defect once the table trigger is visible. The meaningful gaps were not missing three-dot items but missing cross-module commands and data wiring. Those gaps are now addressed for enquiry conversion, approval checklists, controlled-release propagation and live transfer sourcing.</p>
+
+<div class="footer-note">Document 04 of 05 · Convert &amp; Action Menu Audit · Mechanical Design ERP end-to-end review · 16 November 2026. Menu inventory captured from the running application; recommendations are not implemented unless listed as an added action.</div>
+</body>
+</html>

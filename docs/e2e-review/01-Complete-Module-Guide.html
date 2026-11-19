@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Complete Module Guide — Mechanical Design ERP</title>
+<link rel="stylesheet" href="report.css" />
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="brandmark">VT</div>
+      <div>
+        <div class="brandname">VISHAK TECH</div>
+        <div class="brandsub">Mechanical Design ERP · Frontend Workspace</div>
+      </div>
+    </div>
+    <span class="cover-kicker">End-to-End Review · Document 01 of 05</span>
+    <h1>Complete Module Guide</h1>
+    <p class="lede">A practical reference to every module, tab, register, action and data boundary in the Mechanical Design ERP frontend, based on the tested 16 November 2026 workspace.</p>
+    <div class="cover-meta">
+      <div><span>Document</span><strong>Complete Module Guide</strong></div>
+      <div><span>Version</span><strong>1.0 · Final</strong></div>
+      <div><span>Review date</span><strong>16 November 2026</strong></div>
+      <div><span>Environment</span><strong>React + Tailwind · localStorage</strong></div>
+      <div><span>Test project</span><strong>PRJ-2026-042 · E2E Testing – Mechanical Product</strong></div>
+      <div><span>Prepared by</span><strong>Design Office QA / Engineering Systems</strong></div>
+    </div>
+  </div>
+  <div class="cover-foot">This guide describes the implemented frontend only. Records, approvals, releases, transfers and handovers are browser-local simulation data; no backend, purchase order, production order or legally binding approval is created.</div>
+</section>
+
+<h2>1. Purpose and how to use this guide</h2>
+<p>This document explains what each workspace area is for, which tabs and registers it contains, which actions are available, and where a record moves next. It is written for design engineers, design leads, reviewers, transfer coordinators and administrators who need a single map of the application.</p>
+<p>Use the module sections as a reference while working. Use the separate <b>End-to-End Workflow Guide</b> for the sequence of work, the <b>Functional Testing Report</b> for verified results, the <b>Convert &amp; Action Menu Audit</b> for menu-level coverage, and the <b>Issues &amp; Fixes Report</b> for changes made during this review.</p>
+
+<div class="summary-band">
+  <div class="metric"><span>Main modules</span><strong>18</strong><small>plus Dashboard</small></div>
+  <div class="metric"><span>Module/tab routes</span><strong>65</strong><small>audited in browser</small></div>
+  <div class="metric"><span>Settings categories</span><strong>19</strong><small>independently configured</small></div>
+  <div class="metric"><span>Release baseline</span><strong>REL-REV-2026-003</strong><small>E2E controlled release</small></div>
+</div>
+
+<h3>1.1 Navigation model</h3>
+<p>The sidebar groups work by lifecycle: Customer &amp; Sales, Project &amp; Engineering, Engineering Approval &amp; Release, Manufacturing Preparation, Manufacturing Execution Tracking, Delivery &amp; Service Tracking, and Administration. A module’s submodules are horizontal, route-backed tabs inside the module page, not nested sidebar links. Each tab has a direct URL and survives refresh.</p>
+<p>Common page behaviour includes breadcrumbs, module and tab headers, KPI cards, search and filters, sortable tables, pagination, status pills, row-level three-dot menus, modal forms, validation messages and toast feedback. Wide registers scroll inside their table container rather than stretching the page.</p>
+
+<div class="note"><b>Data boundary.</b> The application stores working state in browser localStorage under <span class="mono">md-*-state-v1</span> keys. Refreshing the browser preserves records on the same machine and browser profile. Clearing site data, changing browsers or using a private window resets the workspace to seeded data.</div>
+
+<h2>2. Dashboard</h2>
+<p>The dashboard is a read-oriented command centre. It presents active projects, open design tasks, drawings in review, pending approvals, open BOM value, project progress, task status, engineering workload and monthly planned-versus-actual progress. It also shows drawing repository, transfer and released-package summaries, a pending approval queue and a recent activity feed.</p>
+<p>Dashboard figures are seeded management indicators, not a live aggregation of every local register. After creating the E2E records, the dashboard still displayed the original headline KPI values; this is a documented analytics limitation rather than a workflow failure.</p>
+
+<h2>3. Customer &amp; Sales</h2>
+<table>
+  <thead><tr><th style="width:27%">Tab</th><th>Purpose and main actions</th><th style="width:26%">Downstream link</th></tr></thead>
+  <tbody>
+    <tr><td><b>Customer Enquiry / Requirement</b><br><span class="mono">/customer-sales</span></td><td>Capture customer, contact, product, domain, priority, quantities and required date. Maintain requirement specifications, customer documents, technical clarifications and status history. Status progression covers Draft, Submitted, Under Technical Review, Clarification Required, Ready for Quotation, Quotation Prepared and Closed.</td><td>Ready-for-Quotation records can create a linked quotation. An existing linked quotation opens directly from the enquiry.</td></tr>
+    <tr><td><b>Quotation &amp; Technical Review</b><br><span class="mono">/customer-sales/quotations</span></td><td>Prepare technical and commercial quotation content, run technical review, record customer submission and acceptance. Actions support editing, status progression, document references and linked-enquiry lookup.</td><td>An accepted quotation converts into a project and stores the generated project reference.</td></tr>
+  </tbody>
+</table>
+<p>The Customer &amp; Sales workspace consolidates two previously separate sidebar destinations. Direct routes for the former enquiry and quotation modules remain available for bookmarks and deep links.</p>
+
+<h2>4. Project Management</h2>
+<table>
+  <thead><tr><th style="width:27%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>Projects</b><br><span class="mono">/projects</span></td><td>Register projects with customer, product, engineering domain, manager, priority, dates, progress, status, enquiry and quotation references, CPR status/owner and notes. Search, filter, sort, paginate, create, view, edit, duplicate and archive. Progress and status are editable through the project edit dialog.</td></tr>
+    <tr><td><b>Project Details &amp; Progress</b><br><span class="mono">/projects/project-details</span></td><td>Project-wise view of progress, milestones, team assignments and status context. Detail pages expose project identity, customer, manager, dates, progress and linked records.</td></tr>
+  </tbody>
+</table>
+<p>Creating a project from an accepted quotation generates a project ID and writes the linkage back to the quotation. The E2E project began as <i>New Request</i> and was manually advanced to <i>Design In Progress</i> at 35% once design work started, which is the intended manual project-status control.</p>
+
+<h2>5. Design Planning</h2>
+<p>Design Planning creates the plan and task layer for a project. The <b>Design Plans</b> tab registers plan ID, project, scope, owner, dates, status and progress. The <b>Tasks &amp; Progress</b> tab registers task ID, project, design item, assignee, discipline, priority, dates, estimated hours, progress and workflow state.</p>
+<p>Available actions include create plan, edit plan, delete plan, create task, update task status and progress, view plan and view task context. Plans and tasks are project-linked; the E2E plan <span class="mono">DPL-2026-009</span> and task <span class="mono">TSK-2105</span> were created against <span class="mono">PRJ-2026-042</span>.</p>
+
+<h2>6. Conceptual Design</h2>
+<p>The <b>Concept Register</b> captures alternative concepts with concept ID, project, concept name, description, design intent, advantages, limitations, risk, estimated cost, status and revision. The <b>Concept Details</b> tab provides a deeper workspace for comparison criteria, layout files, studies, proposals and selection.</p>
+<p>Concepts can be edited, duplicated through the normal form flow, compared and selected. Selection establishes the preferred concept for detailed design. For the E2E project, <span class="mono">CON-2026-011</span> and <span class="mono">CON-2026-012</span> were compared and <span class="mono">CON-2026-011</span> was selected.</p>
+
+<h2>7. Mechanical Engineering Design</h2>
+<table>
+  <thead><tr><th style="width:25%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>Design Register</b></td><td>Detailed design records with project, concept, part/assembly, discipline, designer, revision, status, dates and description. Actions: view, edit, duplicate, revision history and archive.</td></tr>
+    <tr><td><b>Parts &amp; Assemblies</b></td><td>Part numbers, descriptions, material, revision, make/buy classification, assembly membership and status. Parts and assemblies link back to the project and detailed design.</td></tr>
+    <tr><td><b>Design Calculations</b></td><td>Calculation references, method, inputs, results, assumptions, reviewer and status. Calculations are evidence records; the application does not execute engineering calculations.</td></tr>
+  </tbody>
+</table>
+<p>The E2E design <span class="mono">DES-2026-016</span>, part <span class="mono">PRT-2026-019 / E2E-FRAME-001</span> and assembly <span class="mono">ASM-2026-008</span> demonstrate the project → concept → design → part/assembly chain.</p>
+
+<h2>8. Engineering Analysis</h2>
+<table>
+  <thead><tr><th style="width:25%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>Analysis Register</b></td><td>Analysis ID, project, part/assembly, analysis type, load case, method, software reference, engineer, revision, status and verification state. Actions: view, edit, duplicate, attachments, revision history and archive.</td></tr>
+    <tr><td><b>Review &amp; Verification</b></td><td>Submit an analysis for review, assign reviewer and due date, then record Verify, Request Changes or Reject with mandatory comments for non-verification. Every decision is appended to review and analysis history.</td></tr>
+    <tr><td><b>Validation Reports</b></td><td>Validation report records and evidence references, including report submission and review context.</td></tr>
+  </tbody>
+</table>
+<p>Analysis is an evidence workspace, not a simulation tool. <span class="mono">ANL-2026-023</span> was submitted to N. Joshi and verified through review <span class="mono">RVW-2026-016</span>; the verification does not certify simulation accuracy or release the design.</p>
+
+<h2>9. Manufacturing Design</h2>
+<p>Manufacturing Design translates the design into production definition. The <b>Manufacturing Definition</b> tab captures process route, material, special characteristics, inspection needs, tooling, notes and status. <b>Inspection &amp; Quality Requirements</b> records inspection points, methods, acceptance criteria, gauges and quality references. <b>Process Planning &amp; Instructions</b> records operation sequence, work instructions, setup, cycle references and attachments.</p>
+<p>Definition records can be viewed, their status history inspected, and their manufacturing context reviewed. <span class="mono">MFD-2026-016</span> was created for the E2E part and submitted for review.</p>
+
+<h2>10. BOM &amp; Cost Estimation</h2>
+<table>
+  <thead><tr><th style="width:25%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>BOM Management</b></td><td>Engineering BOM header and line items, project, assembly, revision, status, attachments and history. Actions: view, edit, submit for review, delete and review decision.</td></tr>
+    <tr><td><b>Cost Planning &amp; Estimation</b></td><td>Material, quantity, labour, rate and estimate records used to build cost planning context. Cost values are estimates, not committed ERP costs.</td></tr>
+    <tr><td><b>BOM Revision &amp; Release</b></td><td>Revision history and release context for approved BOMs. An approved BOM can be released with a controlled reference.</td></tr>
+  </tbody>
+</table>
+<p>The E2E BOM <span class="mono">BOM-2026-009</span> moved from In Progress to Under Review, was approved with comments, and was released through the controlled approval release. Its release reference is <span class="mono">REL-REV-2026-003</span>.</p>
+
+<h2>11. Drawing &amp; CAD Management</h2>
+<table>
+  <thead><tr><th style="width:25%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>CAD File Repository</b></td><td>Upload and register CAD files, metadata, format, project, part/assembly, revision, preview availability and change history. Actions: view, open in viewer, download, edit metadata and delete.</td></tr>
+    <tr><td><b>Drawing Management</b></td><td>Drawing number, title, type, project, part, assembly, revision, format, preparer and dates. Actions: view details, edit, submit for review, and delete a draft.</td></tr>
+    <tr><td><b>CAD Viewer</b></td><td>In-browser viewing for supported formats. SVG and raster previews work locally; other formats are shown as metadata/download references. There is no STEP/IGES geometric viewer.</td></tr>
+    <tr><td><b>Revision &amp; Release Management</b></td><td>Revision register, comparison, change history, technical review and approval queue, transmittals and released history. Approve, request changes, reject, create revision, release approved drawing and issue transmittal.</td></tr>
+  </tbody>
+</table>
+<p><span class="mono">CAD-2026-013</span> was uploaded from a real local SVG, and drawing <span class="mono">DRW-2026-011 / E2E-DWG-001</span> was registered, submitted, approved and released. The released drawing is visible to the transfer selector.</p>
+
+<h2>12. Design Review &amp; Approval</h2>
+<table>
+  <thead><tr><th style="width:25%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>Review Register</b></td><td>All reviews with project, deliverable type/number, revision, reviewers, stage, status, due date and actions. Create review, open full record, view submitted revision and attachments.</td></tr>
+    <tr><td><b>Engineering Review</b></td><td>Design and technical checklists, requirements, calculation and analysis evidence, comments, decisions and stage history. Approve, reject or request changes; approval is now blocked until no design or technical checklist item remains pending.</td></tr>
+    <tr><td><b>Manufacturing Review</b></td><td>Manufacturability, tolerances, process suitability, inspection requirements, manufacturing checklist, comments and decisions. Manufacturing approval is gated by its checklist.</td></tr>
+    <tr><td><b>Client Approval</b></td><td>Client submission, reviewer, reference, comments, decision and resubmission context where client approval is required.</td></tr>
+    <tr><td><b>Release History</b></td><td>Eligible fully approved reviews, controlled release confirmation and released revision history. A release records the exact BOM and drawing revisions.</td></tr>
+  </tbody>
+</table>
+<p>Review <span class="mono">REV-2026-013</span> was approved for engineering and manufacturing and released as <span class="mono">REL-REV-2026-003</span>. Controlled release now marks the linked BOM and drawing as released so downstream transfer validation sees the same controlled baseline.</p>
+
+<h2>13. Engineering Change &amp; Release</h2>
+<p>The <b>Change Register</b> lists engineering change requests with project, affected drawing/BOM/part, reason, priority, owner, status and revision. <b>ECR / ECO</b> provides impact assessment, disposition, approval and revision update. <b>Engineering Release</b> shows release readiness and blockers for controlled handover.</p>
+<p><span class="mono">ECR-2026-008</span> recorded an E2E frame guard clearance correction, completed impact assessment and ECO approval, and applied a revision update. Release readiness is deliberately blocked when the referenced BOM or drawing is not approved or released.</p>
+
+<h2>14. Engineering Release &amp; Transfer</h2>
+<table>
+  <thead><tr><th style="width:25%">Tab</th><th>Purpose and main actions</th></tr></thead>
+  <tbody>
+    <tr><td><b>Transfer Register</b></td><td>All transfers with source deliverable, project, revision, release, destinations, priority, coordinator, status and validation context. Create, validate, view, comment and cancel draft/ready transfers.</td></tr>
+    <tr><td><b>Purchase Transfer</b></td><td>Purchase handover preparation, requisition references, workflow, handover and acknowledgement. Local mock records only.</td></tr>
+    <tr><td><b>Production Transfer</b></td><td>Production package preparation, package/handover references, workflow and acknowledgement.</td></tr>
+    <tr><td><b>Transfer Tracking</b></td><td>Destination-wise tracking of prepared, acknowledged, pending and failed handovers.</td></tr>
+    <tr><td><b>Transfer History</b></td><td>Chronological transfer and acknowledgement history.</td></tr>
+  </tbody>
+</table>
+<p>The transfer form now reads live released BOMs and drawings in addition to seeded fixtures. Validation checks source approval, source release, project reference, exact revision, attachments, destination eligibility, BOM/revision match, material quantities and purchased references. Transfers <span class="mono">TRF-2026-010</span> (seeded BOM), <span class="mono">TRF-2026-011</span> (E2E BOM) and <span class="mono">TRF-2026-012</span> (E2E drawing) were created and validated.</p>
+
+<h2>15. Manufacturing Readiness &amp; Handover</h2>
+<p>The <b>Manufacturing Readiness</b> tab records package reference, project, revision, owner, readiness checks, required documents, engineering issues, blockers and status. <b>Purchase Handover Tracking</b> and <b>Production Handover Tracking</b> record destination acknowledgement and outstanding actions without creating ERP transactions.</p>
+<p>Readiness is a gate: released BOM, approved drawing set, package index, material specifications, inspection requirements and handover cover sheet must be recorded. The review created readiness record <span class="mono">MR-2026-005</span> for the seeded approved package to exercise the workflow.</p>
+
+<h2>16. Manufacturing Execution Tracking</h2>
+<p>This is a read-only tracking workspace. <b>Material &amp; Inventory Status</b> shows material readiness and shortages; <b>Production Progress</b> shows operation and completion state; <b>Inspection &amp; Testing Status</b> shows inspection, test and NCR references; <b>Manufacturing Support &amp; As-Built</b> shows production queries and as-built references.</p>
+<p>Project and stage filters are available. The tracking dataset is seeded mock data and is not automatically populated by new design projects or transfers; this is an intentional read-only demonstration boundary.</p>
+
+<h2>17. Manufacturing Support &amp; As-Built</h2>
+<p>The support workspace registers production engineering cases with case number, project, type, priority, owner, status, linked drawing/BOM/part/assembly, description and comments. Actions: view, edit, add comment and close case. Case project lookup now uses the live project register, so newly created projects are selectable.</p>
+<p><span class="mono">MSC-Q-2026-004</span> was created for <span class="mono">PRJ-2026-042</span>, linked to the E2E drawing, BOM, part and assembly, and left in Assigned status for production follow-up.</p>
+
+<h2>18. Delivery &amp; Service Tracking</h2>
+<p>This read-only workspace covers <b>Finished Goods Status</b>, <b>Dispatch Tracking</b>, <b>Invoice Tracking</b> and <b>Service &amp; Warranty Tracking</b>. It shows project-wise finished-goods readiness, dispatch references, invoice/payment context, installation, warranty and service references. Filters and search are available; no delivery, invoice or service transaction is created.</p>
+
+<h2>19. Reports &amp; Analytics</h2>
+<p>Reports provides eight analytical views: Project Reports, Design Progress, CAD / Drawing Reports, BOM Reports, Cost Reports, Approval Reports, Change Reports and Workload / Delay Reports. Each view supports date range, project, engineer/domain and status filters where applicable, KPI cards, charts, tables and CSV export.</p>
+<p>Charts include bars, donuts, funnels, heatmaps, progress bars, stacked bars, treemaps and trend lines. Report data is seeded analytical data; newly created local records do not automatically rewrite report aggregates. Export is client-side CSV.</p>
+
+<h2>20. Settings</h2>
+<p>Settings is a configuration workspace with 19 independent categories: Overview, Approval Matrix, Approval Rules, Budget Control, 3-Way Matching, Tax Settings, Currency &amp; Exchange Rates, Payment Terms, HSN / SAC, Items / Products, Logistics Defaults, PDF / Document Defaults, Terms &amp; Conditions, Company / Organization, Document Numbering, Workflow Settings, Notifications, Audit / Security and Access Management.</p>
+<p>Each category has its own sections, fields and editable lists such as approval levels, rules, tax rates, currencies, payment terms, HSN/SAC codes and item settings. Changes persist locally and are summarized on the overview. These settings are frontend reference values; they do not alter backend authorisation or accounting behaviour.</p>
+
+<h2>21. Common interaction standards</h2>
+<div class="two-col">
+  <div class="card">
+    <h3>Lists and registers</h3>
+    <ul class="clean">
+      <li>Search covers the primary identifiers and names shown in the table.</li>
+      <li>Filters combine with search and reset explicitly.</li>
+      <li>Sortable headers toggle ascending and descending order.</li>
+      <li>Pagination offers row-count options and page navigation.</li>
+      <li>Three-dot action menus open on the row and close on outside click or Escape.</li>
+      <li>Wide tables scroll horizontally inside the table card.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Forms and decisions</h3>
+    <ul class="clean">
+      <li>Required fields are marked and validated before save.</li>
+      <li>Errors appear inline and in a form-level alert.</li>
+      <li>Destructive actions ask for confirmation where data would be lost.</li>
+      <li>Comments are mandatory for request-changes and reject decisions.</li>
+      <li>Successful actions raise a toast and update the register immediately.</li>
+      <li>Browser refresh preserves the current state.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>22. Known boundaries</h2>
+<table>
+  <thead><tr><th style="width:29%">Boundary</th><th>What it means in use</th></tr></thead>
+  <tbody>
+    <tr><td>No backend or database</td><td>All records live in the browser. There is no multi-user concurrency, server authorization or audit-grade event log.</td></tr>
+    <tr><td>No ERP transactions</td><td>Transfers and handovers create local mock references only. No purchase requisition, purchase order, production order, invoice or dispatch is created.</td></tr>
+    <tr><td>No engineering computation</td><td>Calculations and analysis are recorded evidence. The application does not compute stress, thermal, modal, fatigue or tolerance results and does not certify simulation accuracy.</td></tr>
+    <tr><td>Analytics are seeded</td><td>Dashboard and report aggregates are demonstration data and do not recompute from every local record.</td></tr>
+    <tr><td>Tracking is read-only</td><td>Manufacturing and delivery tracking datasets are not automatically fed by new projects, releases or transfers.</td></tr>
+    <tr><td>CAD preview is format-limited</td><td>SVG and raster files preview in the browser; native CAD geometry is not rendered.</td></tr>
+  </tbody>
+</table>
+
+<div class="footer-note">Document 01 of 05 · Complete Module Guide · Mechanical Design ERP end-to-end review · 16 November 2026. Editable HTML source; PDF generated from the same source.</div>
+</body>
+</html>

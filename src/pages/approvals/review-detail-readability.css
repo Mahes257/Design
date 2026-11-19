@@ -1,0 +1,383 @@
+/* Design Review & Approval — Review View readability pass.
+   Scoped to `.approvals-review-detail-page` (the PageLayout className on
+   ReviewDetailPage only), so no other review screen or module is affected. */
+
+/* --- page chrome ------------------------------------------------------- */
+.approvals-review-detail-page .breadcrumb {
+  font-size: 12px;
+}
+
+.approvals-review-detail-page .page-header h1 {
+  font-size: 24px;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.approvals-review-detail-page .page-subtitle {
+  margin-top: 4px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+/* --- summary hero ------------------------------------------------------ */
+.approvals-review-detail-page .approvals-detail-hero {
+  gap: 16px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+
+.approvals-review-detail-page .approvals-detail-hero p {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.approvals-review-detail-page .approvals-inline-badges {
+  gap: 8px;
+}
+
+.approvals-review-detail-page .approvals-detail-hero .status-pill {
+  padding: 5px 11px;
+  font-size: 12px;
+}
+
+.approvals-review-detail-page .approvals-stage-chip {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* --- notice banners ---------------------------------------------------- */
+.approvals-review-detail-page .approvals-banner {
+  padding: 11px 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* --- workflow track ---------------------------------------------------- */
+.approvals-review-detail-page .approvals-track {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.approvals-review-detail-page .approvals-track-step {
+  gap: 11px;
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+
+.approvals-review-detail-page .approvals-track-index {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+}
+
+.approvals-review-detail-page .approvals-track-step strong {
+  font-size: 13px;
+}
+
+.approvals-review-detail-page .approvals-track-step > div > span {
+  margin-top: 1px;
+  font-size: 12px;
+}
+
+/* --- stage cards ------------------------------------------------------- */
+.approvals-review-detail-page .approvals-stage-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.approvals-review-detail-page .approvals-stage-card {
+  padding: 16px 18px;
+}
+
+.approvals-review-detail-page .approvals-stage-card-head {
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.approvals-review-detail-page .approvals-stage-card-head span {
+  font-size: 11.5px;
+  letter-spacing: 0.045em;
+}
+
+.approvals-review-detail-page .approvals-stage-card-head strong {
+  margin-top: 2px;
+  font-size: 14.5px;
+  line-height: 1.4;
+}
+
+.approvals-review-detail-page .approvals-stage-card .fact-grid {
+  gap: 12px 18px;
+  margin-bottom: 8px;
+}
+
+.approvals-review-detail-page .approvals-stage-card .approvals-decision-note {
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.approvals-review-detail-page .approvals-stage-card .link-button {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 12.5px;
+}
+
+.approvals-review-detail-page .approvals-stage-card > button {
+  margin-top: 6px;
+}
+
+/* --- main / side columns ---------------------------------------------- */
+.approvals-review-detail-page .approvals-detail-layout {
+  grid-template-columns: minmax(0, 1.9fr) minmax(300px, 1fr);
+  gap: 18px;
+}
+
+.approvals-review-detail-page .approvals-panel {
+  margin-bottom: 18px;
+}
+
+.approvals-review-detail-page .approvals-card-head {
+  padding: 15px 18px;
+}
+
+.approvals-review-detail-page .approvals-card-head strong {
+  font-size: 15.5px;
+  letter-spacing: -0.005em;
+}
+
+.approvals-review-detail-page .approvals-card-head p {
+  margin-top: 3px;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+/* --- fact lists -------------------------------------------------------- */
+.approvals-review-detail-page .approvals-pad {
+  padding: 16px 18px;
+}
+
+.approvals-review-detail-page .fact-grid {
+  gap: 14px 24px;
+  margin-bottom: 16px;
+}
+
+.approvals-review-detail-page .fact {
+  gap: 4px;
+}
+
+.approvals-review-detail-page .fact-label {
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+}
+
+.approvals-review-detail-page .fact-value {
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.approvals-review-detail-page .fact.is-empty .fact-value {
+  color: var(--ink-3);
+}
+
+/* --- text blocks ------------------------------------------------------- */
+.approvals-review-detail-page .approvals-text-block {
+  padding: 0 18px 18px;
+}
+
+.approvals-review-detail-page .approvals-text-block h4 {
+  margin: 16px 0 5px;
+  font-size: 12px;
+}
+
+.approvals-review-detail-page .approvals-text-block p {
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+/* --- checklist progress ------------------------------------------------ */
+.approvals-review-detail-page .approvals-checklist-progress {
+  gap: 18px;
+  padding: 16px 18px;
+}
+
+.approvals-review-detail-page .approvals-checklist-progress strong {
+  font-size: 13.5px;
+}
+
+.approvals-review-detail-page .approvals-checklist-progress span {
+  font-size: 12.5px;
+}
+
+.approvals-review-detail-page .approvals-progress-bar {
+  height: 8px;
+}
+
+/* --- comments ---------------------------------------------------------- */
+.approvals-review-detail-page .approvals-comment-list li {
+  padding: 15px 18px;
+}
+
+.approvals-review-detail-page .approvals-comment-head strong {
+  font-size: 13.5px;
+}
+
+.approvals-review-detail-page .approvals-comment-head span {
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.approvals-review-detail-page .approvals-comment-list p {
+  margin: 7px 0 5px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.approvals-review-detail-page .approvals-comment-meta {
+  gap: 12px;
+  font-size: 12px;
+}
+
+.approvals-review-detail-page .approvals-count-chip {
+  height: 26px;
+  padding: 0 11px;
+  font-size: 12px;
+}
+
+/* --- attachments / lists ---------------------------------------------- */
+.approvals-review-detail-page .approvals-attachments li {
+  gap: 10px;
+  padding: 11px 0;
+}
+
+.approvals-review-detail-page .approvals-attachments li > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.approvals-review-detail-page .approvals-attachments strong {
+  font-size: 12.5px;
+}
+
+.approvals-review-detail-page .approvals-attachments span {
+  margin-top: 1px;
+  font-size: 12px;
+}
+
+.approvals-review-detail-page .approvals-resub-list strong {
+  font-size: 12.5px;
+}
+
+.approvals-review-detail-page .approvals-resub-list span {
+  font-size: 11.5px;
+}
+
+/* --- decision timeline ------------------------------------------------- */
+.approvals-review-detail-page .approvals-timeline li {
+  gap: 11px;
+  padding-bottom: 16px;
+}
+
+.approvals-review-detail-page .approvals-timeline-head strong {
+  font-size: 12.5px;
+}
+
+.approvals-review-detail-page .approvals-timeline-head span {
+  font-size: 11.5px;
+}
+
+.approvals-review-detail-page .approvals-timeline-stage {
+  margin-top: 2px;
+  font-size: 11.5px;
+}
+
+.approvals-review-detail-page .approvals-timeline p {
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+/* --- links and footnote ------------------------------------------------ */
+.approvals-review-detail-page .link-button {
+  font-size: 12.5px;
+  font-weight: 650;
+}
+
+.approvals-review-detail-page .approvals-audit-note {
+  margin: 8px 0 14px;
+  padding: 12px 4px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* --- responsive -------------------------------------------------------- */
+@media (max-width: 1280px) {
+  .approvals-review-detail-page .approvals-track {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1100px) {
+  .approvals-review-detail-page .approvals-detail-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .approvals-review-detail-page .approvals-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .approvals-review-detail-page .approvals-stage-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .approvals-review-detail-page .fact-grid {
+    gap: 12px 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .approvals-review-detail-page .page-header h1 {
+    font-size: 21px;
+  }
+
+  .approvals-review-detail-page .approvals-detail-hero {
+    padding: 14px 15px;
+  }
+
+  .approvals-review-detail-page .approvals-stage-card {
+    padding: 14px 15px;
+  }
+
+  .approvals-review-detail-page .approvals-card-head,
+  .approvals-review-detail-page .approvals-pad,
+  .approvals-review-detail-page .approvals-comment-list li,
+  .approvals-review-detail-page .approvals-checklist-progress {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .approvals-review-detail-page .approvals-text-block {
+    padding: 0 15px 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .approvals-review-detail-page .approvals-track,
+  .approvals-review-detail-page .approvals-stage-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .approvals-review-detail-page .fact-grid,
+  .approvals-review-detail-page .approvals-stage-card .fact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>End-to-End Workflow Guide — Mechanical Design ERP</title>
+<link rel="stylesheet" href="report.css" />
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="brandmark">VT</div>
+      <div>
+        <div class="brandname">VISHAK TECH</div>
+        <div class="brandsub">Mechanical Design ERP · Frontend Workspace</div>
+      </div>
+    </div>
+    <span class="cover-kicker">End-to-End Review · Document 02 of 05</span>
+    <h1>End-to-End Workflow Guide</h1>
+    <p class="lede">The tested customer-to-manufacturing path, phase gates, handover rules and the actual E2E record chain from enquiry ENQ-2026-044 to controlled release REL-REV-2026-003.</p>
+    <div class="cover-meta">
+      <div><span>Document</span><strong>End-to-End Workflow Guide</strong></div>
+      <div><span>Version</span><strong>1.0 · Final</strong></div>
+      <div><span>Review date</span><strong>16 November 2026</strong></div>
+      <div><span>Reference project</span><strong>PRJ-2026-042 · E2E Testing – Mechanical Product</strong></div>
+      <div><span>Reference customer</span><strong>E2E Test Customer</strong></div>
+      <div><span>Workflow result</span><strong>Released · purchase transfers created</strong></div>
+    </div>
+  </div>
+  <div class="cover-foot">The workflow is simulated in the browser. Controlled release and transfer records are local references, not ERP transactions. Production transfer remains gated until a released manufacturing package is recorded.</div>
+</section>
+
+<h2>1. Workflow at a glance</h2>
+<table class="small-table">
+  <thead><tr><th style="width:5%">#</th><th style="width:18%">Stage</th><th style="width:24%">Module / action</th><th>Exit condition</th><th style="width:17%">E2E evidence</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Customer requirement</td><td>Customer &amp; Sales → New Enquiry</td><td>Requirement captured, documents/specs available, enquiry technically reviewed and ready for quotation.</td><td>ENQ-2026-044</td></tr>
+    <tr><td>2</td><td>Quotation &amp; technical review</td><td>Quotation &amp; Technical Review → New Quotation</td><td>Technical feasibility accepted, quotation submitted to customer, customer reference recorded, quotation accepted.</td><td>QTN-2026-022</td></tr>
+    <tr><td>3</td><td>Project creation</td><td>Accepted quotation → Convert to Project</td><td>Project ID generated, manager assigned, project linked back to quotation.</td><td>PRJ-2026-042</td></tr>
+    <tr><td>4</td><td>Planning</td><td>Design Planning → Create Plan / Task</td><td>Plan active, engineering task assigned with dates and priority.</td><td>DPL-2026-009 · TSK-2105</td></tr>
+    <tr><td>5</td><td>Concept selection</td><td>Conceptual Design → concepts + comparison</td><td>At least two concepts assessed; preferred concept selected.</td><td>CON-2026-011 selected</td></tr>
+    <tr><td>6</td><td>Detailed design</td><td>Mechanical Design → Design / Part / Assembly</td><td>Design item, part number and assembly created and linked to project and concept.</td><td>DES-2026-016 · PRT-2026-019 · ASM-2026-008</td></tr>
+    <tr><td>7</td><td>Engineering evidence</td><td>Engineering Analysis → submit &amp; verify</td><td>Analysis evidence submitted, reviewer assigned, verification decision recorded.</td><td>ANL-2026-023 · RVW-2026-016</td></tr>
+    <tr><td>8</td><td>Manufacturing definition</td><td>Manufacturing Design → definition / inspection / process</td><td>Manufacturing requirements defined and submitted for review.</td><td>MFD-2026-016</td></tr>
+    <tr><td>9</td><td>BOM baseline</td><td>BOM &amp; Cost → BOM → submit → approve → release</td><td>BOM approved and released against the exact revision.</td><td>BOM-2026-009 · REL-REV-2026-003</td></tr>
+    <tr><td>10</td><td>Drawing baseline</td><td>CAD Management → upload → drawing → submit → approve → release</td><td>Drawing approved and released for the same exact revision.</td><td>CAD-2026-013 · DRW-2026-011 · E2E-DWG-001</td></tr>
+    <tr><td>11</td><td>Design review</td><td>Design Review &amp; Approval → engineering + manufacturing review</td><td>Required stages approved; review eligible for controlled release.</td><td>REV-2026-013</td></tr>
+    <tr><td>12</td><td>Change control</td><td>Engineering Change &amp; Release → ECR / ECO</td><td>Impact assessed, ECO approved, revision update applied where required.</td><td>ECR-2026-008</td></tr>
+    <tr><td>13</td><td>Controlled release</td><td>Release History → Create controlled release</td><td>Exact review, BOM and drawing revisions released together.</td><td>REL-REV-2026-003</td></tr>
+    <tr><td>14</td><td>Transfer</td><td>Engineering Release &amp; Transfer → New Transfer</td><td>Source approval/release validated; destination handover prepared and tracked.</td><td>TRF-2026-011 · TRF-2026-012</td></tr>
+    <tr><td>15</td><td>Production support</td><td>Manufacturing Support &amp; As-Built → case</td><td>Production query recorded, linked to affected engineering records and owned.</td><td>MSC-Q-2026-004</td></tr>
+  </tbody>
+</table>
+
+<div class="note"><b>Golden rule.</b> Downstream records reference an exact revision. A newer revision must pass its own review and release before it can be transferred. Editing a released record or starting a new revision does not silently upgrade an existing transfer.</div>
+
+<h2>2. Phase 1 — Capture the customer requirement</h2>
+<p>Start in <b>Customer &amp; Sales → Customer Enquiry / Requirement</b>. Create the enquiry with customer, contact, subject, product/machine, engineering domain, priority, quantity, units and required date. Complete the requirement specifications, then attach the customer’s technical documents or references.</p>
+<p>Submit the enquiry for technical review. Use clarifications when the requirement is incomplete. The normal progression is:</p>
+<p class="mono">Draft → Submitted → Under Technical Review → Ready for Quotation</p>
+<p>If information is missing, the record moves to <i>Clarification Required</i>; record the customer response to return it to technical review. Only a <i>Ready for Quotation</i> enquiry should create a quotation.</p>
+<div class="warning"><b>Conversion control.</b> A ready enquiry now shows <b>Create Quotation</b> when no quotation is linked. Once linked, the action becomes <b>Open Quotation</b>, preventing accidental duplicate quotations from the same requirement.</div>
+
+<h3>E2E evidence</h3>
+<dl class="kv">
+  <dt>Enquiry</dt><dd>ENQ-2026-044 · E2E Test Customer</dd>
+  <dt>Subject</dt><dd>E2E Testing – Mechanical Product Requirement</dd>
+  <dt>Product / domain</dt><dd>Conveyor System</dd>
+  <dt>Quantity</dt><dd>1 Set</dd>
+  <dt>Required date</dt><dd>28 February 2027</dd>
+  <dt>Final status</dt><dd>Ready for Quotation</dd>
+</dl>
+
+<h2>3. Phase 2 — Quotation and customer acceptance</h2>
+<p>Open <b>Customer &amp; Sales → Quotation &amp; Technical Review</b>. Create the quotation from the enquiry. The enquiry reference is preselected when the quotation is started from the enquiry action. Complete the technical scope, assumptions, exclusions, delivery basis and commercial summary.</p>
+<p>Run the technical review in sequence:</p>
+<p class="mono">Technical Review → Technically Accepted → Ready for Sales → Customer Submitted → Accepted</p>
+<p>Record the customer reference when the quotation is submitted. Acceptance is the trigger for project conversion. Rejection or withdrawal ends the quotation path and leaves the enquiry available for revision.</p>
+
+<h3>E2E evidence</h3>
+<dl class="kv">
+  <dt>Quotation</dt><dd>QTN-2026-022 · linked to ENQ-2026-044</dd>
+  <dt>Customer reference</dt><dd>E2E-CUST-REF-001</dd>
+  <dt>Final status</dt><dd>Accepted</dd>
+  <dt>Generated project</dt><dd>PRJ-2026-042</dd>
+</dl>
+
+<h2>4. Phase 3 — Convert accepted work into a project</h2>
+<p>From the accepted quotation, use the project conversion action. The system generates the next project ID, creates the project header, and writes the project reference back to the quotation. Confirm the customer, product, manager, priority, dates and enquiry/quotation references on the project record.</p>
+<p>Then open <b>Design Planning</b> and create a design plan and the first engineering task. A practical plan includes concept work, detailed design, analysis, drawing preparation, BOM preparation and review preparation. Assign owners and target dates before work starts.</p>
+<div class="note"><b>Project status.</b> A converted project starts as <i>New Request</i>. Move it to <i>Under Planning</i> and then <i>Design In Progress</i> as work actually starts. Status and progress are manual project controls; they are not inferred from task completion.</div>
+
+<h3>E2E evidence</h3>
+<dl class="kv">
+  <dt>Project</dt><dd>PRJ-2026-042 · E2E Testing – Mechanical Product</dd>
+  <dt>Customer</dt><dd>E2E Test Customer</dd>
+  <dt>Project manager</dt><dd>N. Joshi</dd>
+  <dt>Status / progress</dt><dd>Design In Progress · 35%</dd>
+  <dt>Design plan</dt><dd>DPL-2026-009 · Active</dd>
+  <dt>Design task</dt><dd>TSK-2105 · E2E concept and detailed design task</dd>
+</dl>
+
+<h2>5. Phase 4 — Concept development and selection</h2>
+<p>Create at least two concepts so the design has a documented alternative. For each concept record the design intent, working principle, advantages, limitations, estimated cost and risk. Use the comparison view to evaluate criteria and record the decision.</p>
+<p>Select the preferred concept only after comparison. The selected concept becomes the design basis. Do not create detailed design records against an unselected or superseded concept unless the deviation is documented.</p>
+
+<h3>E2E evidence</h3>
+<table class="small-table">
+  <thead><tr><th>Concept</th><th>Name</th><th>Status</th><th>Outcome</th></tr></thead>
+  <tbody>
+    <tr><td>CON-2026-011</td><td>E2E Modular Frame Concept</td><td><span class="tag pass">Selected</span></td><td>Preferred concept for detailed design.</td></tr>
+    <tr><td>CON-2026-012</td><td>E2E Folded Enclosure Alternative</td><td><span class="tag info">Under Evaluation</span></td><td>Retained as the evaluated alternative.</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Phase 5 — Detailed mechanical design</h2>
+<p>Create the design item in <b>Mechanical Engineering Design</b>. Link the project and selected concept. Register the parts and assemblies that make up the design, including part number, description, material, revision, make/buy classification and parent assembly.</p>
+<p>Record design calculations as evidence references. Calculations and analysis do not certify the design by themselves; they support the review decision.</p>
+
+<h3>E2E evidence</h3>
+<dl class="kv">
+  <dt>Design</dt><dd>DES-2026-016 · E2E Mechanical Assembly Design</dd>
+  <dt>Part</dt><dd>PRT-2026-019 · E2E-FRAME-001 · E2E Frame Base Weldment</dd>
+  <dt>Assembly</dt><dd>ASM-2026-008 · E2E Mechanical Test Assembly</dd>
+  <dt>Concept link</dt><dd>CON-2026-011</dd>
+</dl>
+
+<h2>7. Phase 6 — Engineering analysis and verification</h2>
+<p>Create the analysis record with load case, method, assumptions, acceptance criteria and evidence references. Submit it for review, assign the reviewer and set the due date. The reviewer records <b>Verify</b>, <b>Request Changes</b> or <b>Reject</b>; comments are mandatory for the latter two decisions.</p>
+<p>Verification confirms that the evidence package and acceptance criteria were reviewed. It does not certify simulation accuracy and does not release the design.</p>
+
+<h3>E2E evidence</h3>
+<dl class="kv">
+  <dt>Analysis</dt><dd>ANL-2026-023 · E2E Frame Static Stress Analysis</dd>
+  <dt>Linked part</dt><dd>E2E-FRAME-001</dd>
+  <dt>Review</dt><dd>RVW-2026-016 · N. Joshi · due 05 December 2026</dd>
+  <dt>Decision</dt><dd><span class="tag pass">Verified</span> with evidence and acceptance-criteria comment</dd>
+</dl>
+
+<h2>8. Phase 7 — Manufacturing definition</h2>
+<p>Translate the design into manufacturing requirements. Record the process route, material specification, special characteristics, inspection points, gauges, acceptance criteria, tooling and work-instruction references. Submit the definition for review when complete.</p>
+<p>Manufacturing definition is an engineering input to production, not a production order. It must remain aligned with the released drawing and BOM revision.</p>
+<dl class="kv">
+  <dt>Definition</dt><dd>MFD-2026-016 · E2E Frame Manufacturing Definition</dd>
+  <dt>Linked records</dt><dd>PRJ-2026-042 · PRT-2026-019</dd>
+  <dt>Status</dt><dd>Pending Review</dd>
+</dl>
+
+<h2>9. Phase 8 — BOM and drawing baselines</h2>
+<div class="two-col">
+  <div class="card">
+    <h3>BOM baseline</h3>
+    <ol>
+      <li>Create the BOM for the assembly/project.</li>
+      <li>Add all make and buy lines with quantity, unit, material and references.</li>
+      <li>Submit the BOM for review.</li>
+      <li>Record the approval decision with comments.</li>
+      <li>Release the approved BOM to create the controlled baseline.</li>
+    </ol>
+    <p><b>E2E:</b> BOM-2026-009 Rev A · In Progress → Under Review → Approved → Released · REL-REV-2026-003.</p>
+  </div>
+  <div class="card">
+    <h3>Drawing baseline</h3>
+    <ol>
+      <li>Upload the CAD or drawing file; confirm preview.</li>
+      <li>Register the drawing number, title, type, project, part and assembly.</li>
+      <li>Submit the drawing for technical review.</li>
+      <li>Approve or request changes from the CAD review queue.</li>
+      <li>Release the approved drawing to make it transferable.</li>
+    </ol>
+    <p><b>E2E:</b> DRW-2026-011 Rev A · E2E-DWG-001 · Draft → Under Review → Approved → Released.</p>
+  </div>
+</div>
+
+<div class="warning"><b>Release gate.</b> A transfer can only use a BOM and drawing that are approved or released. A draft drawing or in-progress BOM blocks controlled release and downstream transfer. This is a real gate, not an error to bypass.</div>
+
+<h2>10. Phase 9 — Design review and approval</h2>
+<p>Create the review against the deliverable type, number and exact revision. Link the BOM, drawing and part where applicable. Select the required stages: Engineering, Manufacturing and, where contracted, Client.</p>
+<h3>Engineering review</h3>
+<ul class="clean">
+  <li>Check the design and technical checklist. Every item must be <b>Pass</b> or <b>N/A</b> before approval.</li>
+  <li>Review requirements, assumptions, material references, calculations and analysis evidence.</li>
+  <li>Record comments with the relevant checklist item where useful.</li>
+  <li>Approve, reject or request changes. Approval advances to the next applicable stage.</li>
+</ul>
+<h3>Manufacturing review</h3>
+<ul class="clean">
+  <li>Check manufacturability, tolerance/fit feasibility, process suitability and inspection requirements.</li>
+  <li>Complete every manufacturing checklist item before approval.</li>
+  <li>Record the decision. A rejection or change request must include comments.</li>
+</ul>
+<h3>Client approval</h3>
+<p>Where the contract requires client approval, submit the revision with the client reference and reviewer, record the client decision, and retain the client comments with the exact revision.</p>
+
+<div class="note"><b>Checklist gate added during this review.</b> The engineering and manufacturing approval buttons are now disabled while design, technical or manufacturing checklist items remain pending. The technical checklist is editable in the Engineering Review workspace. This prevents an approval from being recorded with an empty checklist.</div>
+
+<h2>11. Phase 10 — Change control</h2>
+<p>Raise an ECR when a released or in-review design must change. Record the reason, affected records, priority and owner. Complete the impact assessment across drawing, BOM, part, assembly, manufacturing definition, analysis and open production cases.</p>
+<p>The ECO approval establishes the disposition. A revision update creates the new controlled revision. The new revision must then follow its own review and release path; existing transfers remain pinned to the earlier revision.</p>
+<dl class="kv">
+  <dt>Change</dt><dd>ECR-2026-008 · E2E frame guard clearance correction</dd>
+  <dt>Assessment</dt><dd>Impact assessment and ECO approval completed</dd>
+  <dt>Outcome</dt><dd>Revision update applied; current revision A</dd>
+</dl>
+
+<h2>12. Phase 11 — Controlled release</h2>
+<p>Open <b>Design Review &amp; Approval → Release History</b>. The eligibility panel only lists fully approved reviews whose linked BOM and drawing revisions are approved or released. Confirm the review, BOM revision and drawing revision, then create the controlled release.</p>
+<p>The release record captures:</p>
+<ul class="clean">
+  <li>review ID, deliverable number and revision;</li>
+  <li>BOM ID and revision;</li>
+  <li>drawing ID and revision;</li>
+  <li>engineering and manufacturing approvers and approval date;</li>
+  <li>release ID, releasing authority and release date.</li>
+</ul>
+<p>Controlled release now propagates the released state to the linked BOM and drawing. This is essential: without propagation, the transfer module would still see “Approved / Not released” and refuse the baseline.</p>
+<dl class="kv">
+  <dt>Release</dt><dd>REL-REV-2026-003 · 16 November 2026</dd>
+  <dt>Review</dt><dd>REV-2026-013 · E2E-DWG-001 Rev A</dd>
+  <dt>BOM</dt><dd>BOM-2026-009 Rev A · Released</dd>
+  <dt>Drawing</dt><dd>DRW-2026-011 Rev A · E2E-DWG-001 · Released</dd>
+  <dt>Released by</dt><dd>Design Authority</dd>
+</dl>
+
+<h2>13. Phase 12 — Transfer to purchase and production</h2>
+<p>Create a transfer from <b>Engineering Release &amp; Transfer</b>. Select the deliverable type and the newly released record. Confirm the exact revision, source review, release ID, source module and release date. Select the destination(s), add notes and supporting references, then run validation.</p>
+<h3>Validation gates</h3>
+<table class="small-table">
+  <thead><tr><th style="width:30%">Gate</th><th>Required evidence</th><th style="width:22%">E2E result</th></tr></thead>
+  <tbody>
+    <tr><td>Source approval</td><td>Linked approval review exists.</td><td>REV-2026-013 · Valid</td></tr>
+    <tr><td>Source release</td><td>Controlled release exists.</td><td>REL-REV-2026-003 · Valid</td></tr>
+    <tr><td>Project reference</td><td>Project exists in the live project register.</td><td>PRJ-2026-042 · Valid</td></tr>
+    <tr><td>Deliverable and exact revision</td><td>Deliverable number and revision are identified.</td><td>Rev A · Valid</td></tr>
+    <tr><td>Attachments</td><td>At least one supporting reference or release attachment.</td><td>Valid</td></tr>
+    <tr><td>Destination eligibility</td><td>Selected deliverable is eligible for the chosen destination.</td><td>Purchase · Valid</td></tr>
+    <tr><td>BOM and revision match</td><td>Approved/linked BOM revision matches the release.</td><td>BOM-2026-009 Rev A · Valid</td></tr>
+    <tr><td>Material quantities</td><td>Material requirements are available for purchase.</td><td>1 requirement · Valid</td></tr>
+    <tr><td>Manufacturing package</td><td>Released package reference required for production.</td><td><span class="tag warn">Blocked for E2E production</span></td></tr>
+    <tr><td>Purchased references</td><td>Buy items present where applicable.</td><td>Warning: no buy items in E2E BOM</td></tr>
+  </tbody>
+</table>
+<p>A warning does not block creation but remains visible to the receiving owner. A mandatory invalid result blocks the affected destination. In the E2E case, the BOM and drawing transfers to Purchase validated with no invalid results; the one warning reflects that the E2E BOM is entirely make-to-print.</p>
+
+<h3>Created transfers</h3>
+<table class="small-table">
+  <thead><tr><th>Transfer</th><th>Source</th><th>Destination</th><th>Validation</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>TRF-2026-011</td><td>BOM-2026-009 Rev A</td><td>Purchase</td><td>12 valid · 1 warning · 0 invalid</td><td>Ready for Transfer</td></tr>
+    <tr><td>TRF-2026-012</td><td>E2E-DWG-001 Rev A</td><td>Purchase</td><td>12 valid · 1 warning · 0 invalid</td><td>Ready for Transfer</td></tr>
+    <tr><td>TRF-2026-010</td><td>BOM-2026-001 Rev C (seeded)</td><td>Purchase</td><td>13 valid · 0 invalid</td><td>Awaiting Acknowledgement</td></tr>
+  </tbody>
+</table>
+
+<h3>Destination handover</h3>
+<ol>
+  <li>Open the transfer and choose <b>Prepare Handover</b> for Purchase or Production.</li>
+  <li>Record the destination owner, prepared-by person, handover date and notes.</li>
+  <li>Confirm the handover. The transfer moves to <b>Awaiting Acknowledgement</b>.</li>
+  <li>The destination acknowledges, comments or rejects in its own workspace.</li>
+  <li>Track the handover in Transfer Tracking and Transfer History.</li>
+</ol>
+<p>For TRF-2026-010, a purchase handover was recorded against the Purchase — Sourcing cell and the transfer moved to Awaiting Acknowledgement with reference PUR-HO-2026-006.</p>
+
+<h2>14. Phase 13 — Readiness and production handover</h2>
+<p>Before production handover, confirm the manufacturing readiness record: released BOM, approved drawing set, manufacturing package index, material specifications, inspection requirements and handover cover sheet. Record open engineering issues with severity and owner. A readiness record with zero available documents remains incomplete even if the header is created.</p>
+<p>Production handover requires a released manufacturing package. The E2E drawing is released and purchase-transferable, but no released manufacturing package was created for E2E, so the production destination remains correctly blocked. Do not work around this by selecting an unrelated seeded package.</p>
+
+<h2>15. Phase 14 — Production support and as-built</h2>
+<p>When production raises a query, create a support case from <b>Manufacturing Support &amp; As-Built</b>. Link the project and the affected drawing, BOM, part or assembly. Assign an owner and priority. Record the engineering response and close the case only when the disposition is accepted.</p>
+<dl class="kv">
+  <dt>Case</dt><dd>MSC-Q-2026-004 · E2E frame guard interference query</dd>
+  <dt>Project</dt><dd>PRJ-2026-042</dd>
+  <dt>Linked records</dt><dd>E2E drawing, BOM, part and assembly</dd>
+  <dt>Status</dt><dd>Assigned</dd>
+</dl>
+
+<h2>16. Record traceability map</h2>
+<table class="small-table">
+  <thead><tr><th>From</th><th>Relationship</th><th>To</th></tr></thead>
+  <tbody>
+    <tr><td>ENQ-2026-044</td><td>converted to quotation</td><td>QTN-2026-022</td></tr>
+    <tr><td>QTN-2026-022</td><td>converted to project</td><td>PRJ-2026-042</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has plan / task</td><td>DPL-2026-009 / TSK-2105</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has concepts</td><td>CON-2026-011 (selected) · CON-2026-012</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has design / part / assembly</td><td>DES-2026-016 · PRT-2026-019 · ASM-2026-008</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has analysis / review</td><td>ANL-2026-023 · RVW-2026-016</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has manufacturing definition</td><td>MFD-2026-016</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has BOM / CAD / drawing</td><td>BOM-2026-009 · CAD-2026-013 · DRW-2026-011</td></tr>
+    <tr><td>REV-2026-013</td><td>released as</td><td>REL-REV-2026-003</td></tr>
+    <tr><td>REL-REV-2026-003</td><td>transferred as</td><td>TRF-2026-011 · TRF-2026-012</td></tr>
+    <tr><td>PRJ-2026-042</td><td>has production query</td><td>MSC-Q-2026-004</td></tr>
+  </tbody>
+</table>
+
+<h2>17. Roles and decision rights</h2>
+<table class="small-table">
+  <thead><tr><th style="width:24%">Role</th><th>Typical responsibility</th><th style="width:26%">Key gates</th></tr></thead>
+  <tbody>
+    <tr><td>Sales / Application Engineering</td><td>Capture enquiry, clarify requirement, prepare quotation, record customer submission and acceptance.</td><td>Technical review complete; customer reference recorded.</td></tr>
+    <tr><td>Project Manager</td><td>Create project plan and tasks, assign owners, control status and progress, coordinate reviews.</td><td>Plan and task ownership; project status.</td></tr>
+    <tr><td>Design Engineer</td><td>Develop concepts, detailed design, parts, assemblies, calculations and analysis evidence.</td><td>Selected concept; design/part/assembly linkage.</td></tr>
+    <tr><td>Engineering Reviewer</td><td>Review design and technical evidence, complete checklist, approve/reject/request changes.</td><td>No pending checklist item; evidence reviewed.</td></tr>
+    <tr><td>Manufacturing Reviewer</td><td>Review manufacturability, tolerances, process and inspection requirements.</td><td>Manufacturing checklist complete.</td></tr>
+    <tr><td>Design Authority</td><td>Create the controlled release and release the exact revisions.</td><td>All required stages approved; BOM and drawing approved/released.</td></tr>
+    <tr><td>Transfer Coordinator</td><td>Validate source release, select destinations, prepare handovers, track acknowledgement.</td><td>No invalid validation result; destination eligibility.</td></tr>
+    <tr><td>Production / Purchase Owner</td><td>Acknowledge handover, raise queries, own destination actions.</td><td>Handover acknowledgement and issue resolution.</td></tr>
+  </tbody>
+</table>
+
+<h2>18. Operational checklist</h2>
+<div class="two-col">
+  <div class="card">
+    <h3>Before releasing</h3>
+    <ul class="clean">
+      <li>Project, revision and customer references are correct.</li>
+      <li>BOM is approved and released for the exact revision.</li>
+      <li>Drawing is approved and released for the exact revision.</li>
+      <li>Engineering and manufacturing checklists are complete.</li>
+      <li>Client approval is recorded where required.</li>
+      <li>Open ECR/ECO impact is dispositioned.</li>
+      <li>Release History shows the review as eligible.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Before transferring</h3>
+    <ul class="clean">
+      <li>Source release ID is visible and current.</li>
+      <li>Destination is eligible for the deliverable type.</li>
+      <li>BOM revision matches the released revision.</li>
+      <li>Material quantities are available for purchase.</li>
+      <li>Manufacturing package is available for production.</li>
+      <li>Attachments and technical notes are complete.</li>
+      <li>Validation has zero mandatory invalid results.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer-note">Document 02 of 05 · End-to-End Workflow Guide · Mechanical Design ERP end-to-end review · 16 November 2026. The record chain in this guide is the actual E2E chain retained in the browser workspace.</div>
+</body>
+</html>

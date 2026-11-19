@@ -1,0 +1,666 @@
+/* ===== ENGINEERING ANALYSIS — ATTACHMENT STORAGE ========================
+   Upload dropzone, chunk progress, attachment rows and the file preview
+   dialog. Built on the same tokens as the analysis form and detail cards.
+   ====================================================================== */
+
+.att-manager,
+.att-list-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* --- dropzone ---------------------------------------------------------- */
+.att-dropzone {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px dashed #cfe9e2;
+  border-radius: 12px;
+  background: #f7fcfa;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.att-dropzone.is-active {
+  border-color: #0f8f78;
+  background: #eefaf6;
+}
+
+.att-dropzone.is-disabled {
+  opacity: 0.65;
+}
+
+.att-dropzone-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e6f6f1;
+  color: #0f8f78;
+}
+
+.att-dropzone-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.att-dropzone-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.att-dropzone-text strong {
+  font-size: 12px;
+  color: #0b4a3d;
+}
+
+.att-dropzone-text span {
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.attachment-picker.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- limits and quota -------------------------------------------------- */
+.att-limits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  font-size: 10.5px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.att-limits > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.att-limits svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.att-limits-warn {
+  color: #b45309;
+}
+
+.att-limits-ok {
+  color: #0f8f78;
+}
+
+/* --- notices ----------------------------------------------------------- */
+.att-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: 9px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #475569;
+}
+
+.att-notice > svg {
+  width: 13px;
+  height: 13px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.att-notice.is-error {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.att-notice.is-success {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #15803d;
+}
+
+.att-notice span {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.att-notice-close {
+  display: inline-flex;
+  padding: 1px;
+  border: none;
+  border-radius: 4px;
+  background: none;
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.att-notice-close svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* --- progress ---------------------------------------------------------- */
+.att-overall {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid #e6f2ee;
+  border-radius: 9px;
+  background: #fbfdfc;
+}
+
+.att-overall-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 10.5px;
+  color: #475569;
+}
+
+.att-overall-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.att-overall-head strong {
+  font-size: 11px;
+  color: #0b4a3d;
+}
+
+.att-overall-head svg {
+  width: 12px;
+  height: 12px;
+  color: #0f8f78;
+}
+
+.att-progress {
+  position: relative;
+  height: 5px;
+  margin-top: 5px;
+  border-radius: 999px;
+  background: #e8eef3;
+  overflow: hidden;
+}
+
+.att-progress.is-large {
+  height: 7px;
+  margin-top: 0;
+}
+
+.att-progress > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #12a98d, #0b4a3d);
+  transition: width 160ms ease;
+}
+
+.att-spin {
+  animation: att-spin 900ms linear infinite;
+}
+
+@keyframes att-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- summary and empty ------------------------------------------------- */
+.att-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  font-size: 10.5px;
+  color: #64748b;
+}
+
+.att-summary span:first-child {
+  font-weight: 700;
+  color: #334155;
+}
+
+.att-summary-warn {
+  color: #b45309;
+}
+
+.att-empty {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px dashed #e2e8f0;
+  border-radius: 9px;
+  background: #fbfdfc;
+  font-size: 10.5px;
+  color: #94a3b8;
+}
+
+.att-empty svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* --- rows -------------------------------------------------------------- */
+.att-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.att-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border: 1px solid #eef2f6;
+  border-radius: 9px;
+  background: #fbfdfc;
+  min-width: 0;
+}
+
+.att-row.is-metadata-only {
+  border-style: dashed;
+  background: #fdfcf8;
+}
+
+.att-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: #eef4f8;
+  color: #475569;
+}
+
+.att-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.att-icon-image {
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.att-icon-document {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.att-icon-spreadsheet {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.att-icon-presentation {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.att-icon-video {
+  background: #f5f3ff;
+  color: #6d28d9;
+}
+
+.att-icon-audio {
+  background: #fdf2f8;
+  color: #be185d;
+}
+
+.att-icon-cad {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.att-icon-archive {
+  background: #fefce8;
+  color: #a16207;
+}
+
+.att-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+  min-width: 0;
+}
+
+.att-name-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.att-name {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #334155;
+  overflow-wrap: anywhere;
+}
+
+.att-ext {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.att-badge {
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.att-badge.is-warn {
+  background: #fff7ed;
+  color: #b45309;
+}
+
+.att-badge.is-info {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.att-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 10px;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.att-status {
+  color: #0f8f78;
+  font-weight: 600;
+}
+
+.att-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.att-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: none;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.att-action:hover:not(:disabled) {
+  border-color: #dbeae5;
+  background: #f1faf7;
+  color: #0b4a3d;
+}
+
+.att-action:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.att-action.is-danger:hover {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.att-action svg {
+  width: 13px;
+  height: 13px;
+}
+
+.att-upload-errors {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 10px;
+  color: #b91c1c;
+}
+
+.att-upload-errors li {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.att-upload-errors svg {
+  width: 12px;
+  height: 12px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.att-footnote {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+/* --- preview dialog ---------------------------------------------------- */
+.att-preview-state {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 14px;
+  border: 1px dashed #e2e8f0;
+  border-radius: 9px;
+  background: #fbfdfc;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.att-preview-state.is-error {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.att-preview-state svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.att-preview-media-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.att-preview-image {
+  display: block;
+  max-width: 100%;
+  max-height: 60vh;
+  margin: 0 auto;
+  border: 1px solid #eef2f6;
+  border-radius: 9px;
+  background: #f8fafc;
+  object-fit: contain;
+}
+
+.att-preview-frame {
+  width: 100%;
+  height: 60vh;
+  border: 1px solid #eef2f6;
+  border-radius: 9px;
+  background: #f8fafc;
+}
+
+.att-preview-video {
+  width: 100%;
+  max-height: 60vh;
+  border-radius: 9px;
+  background: #0f172a;
+}
+
+.att-preview-audio {
+  width: 100%;
+}
+
+.att-preview-note {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.5;
+  color: #94a3b8;
+}
+
+.att-preview-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.att-preview-text {
+  max-height: 60vh;
+  margin: 0;
+  padding: 12px;
+  overflow: auto;
+  border: 1px solid #eef2f6;
+  border-radius: 9px;
+  background: #f8fafc;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: #334155;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* --- dark theme -------------------------------------------------------- */
+.dark .att-dropzone {
+  border-color: #1f4d43;
+  background: #0f1c19;
+}
+
+.dark .att-dropzone.is-active {
+  border-color: #2dd4bf;
+  background: #12241f;
+}
+
+.dark .att-dropzone-text strong {
+  color: #d1fae5;
+}
+
+.dark .att-dropzone-text span,
+.dark .att-limits,
+.dark .att-summary,
+.dark .att-meta,
+.dark .att-footnote,
+.dark .att-preview-note {
+  color: #94a3b8;
+}
+
+.dark .att-dropzone-icon {
+  background: #143329;
+  color: #2dd4bf;
+}
+
+.dark .att-row,
+.dark .att-empty,
+.dark .att-overall,
+.dark .att-preview-state,
+.dark .att-preview-text {
+  border-color: #1e293b;
+  background: #111c24;
+}
+
+.dark .att-row.is-metadata-only {
+  background: #1a1a12;
+}
+
+.dark .att-name,
+.dark .att-summary span:first-child,
+.dark .att-preview-text {
+  color: #e2e8f0;
+}
+
+.dark .att-ext {
+  background: #1e293b;
+  color: #94a3b8;
+}
+
+.dark .att-icon {
+  background: #16232e;
+  color: #cbd5e1;
+}
+
+.dark .att-action:hover:not(:disabled) {
+  border-color: #1f4d43;
+  background: #12241f;
+  color: #d1fae5;
+}
+
+.dark .att-progress {
+  background: #1e293b;
+}
+
+.dark .att-notice {
+  border-color: #1e293b;
+  background: #111c24;
+  color: #cbd5e1;
+}
+
+.dark .att-notice.is-error {
+  border-color: #7f1d1d;
+  background: #1f1113;
+  color: #fca5a5;
+}
+
+.dark .att-notice.is-success {
+  border-color: #14532d;
+  background: #0f1d15;
+  color: #86efac;
+}

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Functional Testing Report — Mechanical Design ERP</title>
+<link rel="stylesheet" href="report.css" />
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="brandmark">VT</div>
+      <div>
+        <div class="brandname">VISHAK TECH</div>
+        <div class="brandsub">Mechanical Design ERP · Frontend Workspace</div>
+      </div>
+    </div>
+    <span class="cover-kicker">End-to-End Review · Document 03 of 05</span>
+    <h1>Functional Testing Report</h1>
+    <p class="lede">Actual browser-based testing of every module, tab, register, form, conversion, workflow gate, persistence path, responsive layout and controlled-release handover in the Mechanical Design ERP.</p>
+    <div class="cover-meta">
+      <div><span>Document</span><strong>Functional Testing Report</strong></div>
+      <div><span>Version</span><strong>1.0 · Final</strong></div>
+      <div><span>Test date</span><strong>16 November 2026</strong></div>
+      <div><span>Test project</span><strong>PRJ-2026-042 · E2E Testing – Mechanical Product</strong></div>
+      <div><span>Routes audited</span><strong>65 module and tab routes</strong></div>
+      <div><span>Final build</span><strong>Pass · exit 0</strong></div>
+    </div>
+  </div>
+  <div class="cover-foot">Results reflect the connected browser workspace on the supplied machine. Tests used the application’s local data model only. No backend, external ERP, email, payment or production system was contacted.</div>
+</section>
+
+<h2>1. Executive result</h2>
+<div class="summary-band">
+  <div class="metric"><span>Test cases</span><strong>34</strong><small>functional and non-functional</small></div>
+  <div class="metric"><span>Passed</span><strong>32</strong><small>including 4 pass-with-note</small></div>
+  <div class="metric"><span>Blocked / not run</span><strong>1 / 1</strong><small>expected gate / export</small></div>
+  <div class="metric"><span>Defects fixed</span><strong>5</strong><small>all retested</small></div>
+</div>
+<p>The application builds successfully and renders every audited module and tab route without a runtime exception or page-level horizontal overflow. The full customer-to-release chain was exercised with one identifiable test project. Five functional integration defects were found and corrected during the review:</p>
+<ul class="clean">
+  <li>Support project lookups used a static project list and omitted newly created projects.</li>
+  <li>Ready-for-Quotation enquiries had no direct quotation conversion action.</li>
+  <li>Approval decisions could bypass an entirely pending design/technical checklist, and the technical checklist was read-only.</li>
+  <li>Controlled release created an approval release record but left the linked BOM and drawing “Approved / Not released.”</li>
+  <li>The transfer form used fixed source fixtures and a static project validator, so a newly released E2E baseline was not selectable or valid.</li>
+</ul>
+<p>All five fixes were retested. Remaining blocked items are intentional gates: E2E production handover lacks a released manufacturing package, and E2E controlled release was initially blocked until the BOM and drawing were approved and released.</p>
+
+<h2>2. Test environment and method</h2>
+<table class="small-table">
+  <thead><tr><th style="width:24%">Item</th><th>Details</th></tr></thead>
+  <tbody>
+    <tr><td>Application</td><td>Mechanical Design ERP frontend, React + Vite + Tailwind, local development server.</td></tr>
+    <tr><td>Browser</td><td>Chromium-based browser supplied with the connected desktop workspace.</td></tr>
+    <tr><td>Desktop viewport</td><td>1440 × 900 CSS pixels.</td></tr>
+    <tr><td>Mobile viewport</td><td>390 × 844 CSS pixels for responsive checks.</td></tr>
+    <tr><td>Data store</td><td>Browser localStorage keys <span class="mono">md-*-state-v1</span>; seeded records preserved and separate E2E records created.</td></tr>
+    <tr><td>Reference project</td><td>PRJ-2026-042 · E2E Testing – Mechanical Product · customer E2E Test Customer.</td></tr>
+    <tr><td>Build command</td><td><span class="mono">npm run build</span> · Vite production build.</td></tr>
+    <tr><td>Test style</td><td>Black-box browser interaction with DOM inspection for table, menu, overflow and persistence checks; code inspection used to locate and repair root causes.</td></tr>
+  </tbody>
+</table>
+
+<h3>2.1 Result legend</h3>
+<table class="small-table">
+  <thead><tr><th style="width:18%">Result</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tag pass">PASS</span></td><td>The stated behaviour was exercised and produced the expected result.</td></tr>
+    <tr><td><span class="tag pass">PASS*</span></td><td>Behaviour works but has a documented boundary or a limitation that should be read with the result.</td></tr>
+    <tr><td><span class="tag fail">FAIL → FIXED</span></td><td>A defect was reproduced, repaired, and the affected path retested.</td></tr>
+    <tr><td><span class="tag warn">BLOCKED</span></td><td>The workflow is intentionally prevented by a gate or missing upstream record; this is not an application crash.</td></tr>
+    <tr><td><span class="tag info">NOT EXERCISED</span></td><td>Not claimed as tested; typically a feature outside the E2E scenario or a read-only seeded view.</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Route and render audit</h2>
+<p>A browser sweep opened 65 module and tab routes covering Dashboard, Customer &amp; Sales, Project Management, Design Planning, Conceptual Design, Mechanical Engineering Design, Engineering Analysis, Manufacturing Design, BOM &amp; Cost Estimation, Drawing &amp; CAD Management, Design Review &amp; Approval, Engineering Change &amp; Release, Engineering Release &amp; Transfer, Manufacturing Readiness &amp; Handover, Manufacturing Execution Tracking, Manufacturing Support &amp; As-Built, Delivery &amp; Service Tracking, Reports &amp; Analytics and Settings.</p>
+<p>For each route the audit checked that the page rendered its expected heading/tab context, did not raise an uncaught runtime error, and did not introduce page-level horizontal overflow. All audited routes passed. Data tables intentionally scroll inside their own container on narrow screens; the page itself does not widen.</p>
+
+<table class="small-table">
+  <thead><tr><th style="width:34%">Area</th><th>Render result</th><th style="width:22%">Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Dashboard</td><td><span class="tag pass">PASS</span></td><td>KPI cards, charts, queues and activity feed render.</td></tr>
+    <tr><td>Customer &amp; Sales (2 tabs)</td><td><span class="tag pass">PASS</span></td><td>Enquiry and quotation registers and detail routes.</td></tr>
+    <tr><td>Project Management (2 tabs)</td><td><span class="tag pass">PASS</span></td><td>Register, details, task and progress views.</td></tr>
+    <tr><td>Design Planning (2 tabs)</td><td><span class="tag pass">PASS</span></td><td>Plans, tasks, forms and detail routes.</td></tr>
+    <tr><td>Conceptual Design (2 tabs)</td><td><span class="tag pass">PASS</span></td><td>Register, details, comparison and selection.</td></tr>
+    <tr><td>Mechanical Engineering Design (3 tabs)</td><td><span class="tag pass">PASS</span></td><td>Designs, parts, assemblies, calculations.</td></tr>
+    <tr><td>Engineering Analysis (3 tabs)</td><td><span class="tag pass">PASS</span></td><td>Register, review, reports and detail routes.</td></tr>
+    <tr><td>Manufacturing Design (3 tabs)</td><td><span class="tag pass">PASS</span></td><td>Definition, inspection, process.</td></tr>
+    <tr><td>BOM &amp; Cost Estimation (3 tabs)</td><td><span class="tag pass">PASS</span></td><td>BOM, cost planning, revision/release.</td></tr>
+    <tr><td>Drawing &amp; CAD Management (4 tabs)</td><td><span class="tag pass">PASS</span></td><td>Repository, drawings, viewer, revisions.</td></tr>
+    <tr><td>Design Review &amp; Approval (5 tabs)</td><td><span class="tag pass">PASS</span></td><td>Review register, stages, release history.</td></tr>
+    <tr><td>Engineering Change &amp; Release (3 tabs)</td><td><span class="tag pass">PASS</span></td><td>Change register, ECR/ECO, release gate.</td></tr>
+    <tr><td>Engineering Release &amp; Transfer (5 tabs)</td><td><span class="tag pass">PASS</span></td><td>Register, destinations, tracking, history.</td></tr>
+    <tr><td>Manufacturing Readiness &amp; Handover (3 tabs)</td><td><span class="tag pass">PASS</span></td><td>Readiness and destination tracking.</td></tr>
+    <tr><td>Manufacturing Execution Tracking (4 tabs)</td><td><span class="tag pass">PASS*</span></td><td>Read-only seeded tracking dataset.</td></tr>
+    <tr><td>Manufacturing Support &amp; As-Built</td><td><span class="tag pass">PASS</span></td><td>Case register and case detail.</td></tr>
+    <tr><td>Delivery &amp; Service Tracking (4 tabs)</td><td><span class="tag pass">PASS*</span></td><td>Read-only seeded tracking dataset.</td></tr>
+    <tr><td>Reports &amp; Analytics (8 tabs)</td><td><span class="tag pass">PASS*</span></td><td>Charts and filters render from seeded analytics.</td></tr>
+    <tr><td>Settings (19 categories)</td><td><span class="tag pass">PASS</span></td><td>All category routes and editors render.</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Functional test cases and results</h2>
+<table>
+  <thead><tr><th style="width:7%">ID</th><th style="width:31%">Test case</th><th>Expected result</th><th style="width:12%">Result</th><th style="width:22%">Evidence / note</th></tr></thead>
+  <tbody>
+    <tr><td>FT-01</td><td>Production build</td><td>Vite build completes with exit 0 and emits assets.</td><td><span class="tag pass">PASS</span></td><td>Built in 1.31 s; only existing chunk-size warning.</td></tr>
+    <tr><td>FT-02</td><td>Open all 65 module/tab routes</td><td>Expected page renders; no runtime crash or page overflow.</td><td><span class="tag pass">PASS</span></td><td>Full route sweep completed.</td></tr>
+    <tr><td>FT-03</td><td>Dashboard cards and charts</td><td>KPI cards, chart SVG, legends and activity content render.</td><td><span class="tag pass">PASS*</span></td><td>Figures are seeded indicators, not live aggregates.</td></tr>
+    <tr><td>FT-04</td><td>Create customer enquiry</td><td>New enquiry persists with customer, subject, domain, quantity and dates.</td><td><span class="tag pass">PASS</span></td><td>ENQ-2026-044 created.</td></tr>
+    <tr><td>FT-05</td><td>Advance enquiry through technical review</td><td>Status actions update the record and workflow position.</td><td><span class="tag pass">PASS</span></td><td>ENQ-2026-044 reached Ready for Quotation.</td></tr>
+    <tr><td>FT-06</td><td>Quotation creates with linked enquiry</td><td>Quotation saves and retains the enquiry reference.</td><td><span class="tag pass">PASS</span></td><td>QTN-2026-022 linked to ENQ-2026-044.</td></tr>
+    <tr><td>FT-07</td><td>Quotation technical and customer stages</td><td>Technical review, customer submission and acceptance statuses record correctly.</td><td><span class="tag pass">PASS</span></td><td>Customer reference E2E-CUST-REF-001 retained.</td></tr>
+    <tr><td>FT-08</td><td>Convert accepted quotation to project</td><td>Project ID generated and written back to quotation.</td><td><span class="tag pass">PASS</span></td><td>PRJ-2026-042 linked on QTN-2026-022.</td></tr>
+    <tr><td>FT-09</td><td>Create design plan and task</td><td>Plan and task persist against the project with owner and dates.</td><td><span class="tag pass">PASS</span></td><td>DPL-2026-009 · TSK-2105.</td></tr>
+    <tr><td>FT-10</td><td>Compare and select concepts</td><td>At least two concepts registered; comparison saved; selected concept retained.</td><td><span class="tag pass">PASS</span></td><td>CON-2026-011 selected; CON-2026-012 retained.</td></tr>
+    <tr><td>FT-11</td><td>Create design, part and assembly</td><td>All three records link to project and design basis.</td><td><span class="tag pass">PASS</span></td><td>DES-2026-016 · PRT-2026-019 · ASM-2026-008.</td></tr>
+    <tr><td>FT-12</td><td>Submit analysis for review</td><td>Review record created; analysis moves to Pending Review; reviewer and due date set.</td><td><span class="tag pass">PASS</span></td><td>RVW-2026-016 created for ANL-2026-023.</td></tr>
+    <tr><td>FT-13</td><td>Record analysis verification</td><td>Verification decision appended; analysis review status becomes Verified.</td><td><span class="tag pass">PASS</span></td><td>ANL-2026-023 · RVW-2026-016 Verified.</td></tr>
+    <tr><td>FT-14</td><td>Create manufacturing definition</td><td>Definition saves with project/part link and submits for review.</td><td><span class="tag pass">PASS</span></td><td>MFD-2026-016 · Pending Review.</td></tr>
+    <tr><td>FT-15</td><td>BOM lifecycle</td><td>BOM can be created, submitted, approved with comments and released.</td><td><span class="tag pass">PASS</span></td><td>BOM-2026-009 · Released via REL-REV-2026-003.</td></tr>
+    <tr><td>FT-16</td><td>CAD upload and preview</td><td>SVG upload registers file and preview opens.</td><td><span class="tag pass">PASS</span></td><td>CAD-2026-013 · Preview Available.</td></tr>
+    <tr><td>FT-17</td><td>Drawing submit, approve and release</td><td>Draft drawing can be submitted, approved and released.</td><td><span class="tag pass">PASS</span></td><td>E2E-DWG-001 Rev A · Released.</td></tr>
+    <tr><td>FT-18</td><td>Engineering and manufacturing review</td><td>Approval decisions advance the review; final status Approved.</td><td><span class="tag pass">PASS*</span></td><td>REV-2026-013 approved; discovered checklist bypass before gate fix.</td></tr>
+    <tr><td>FT-19</td><td>Checklist enforcement at approval</td><td>Approve is disabled while required checklist items are pending; technical checklist is editable.</td><td><span class="tag pass">PASS</span></td><td>Verified on REV-2026-001: 6 pending, button disabled; changing one item to Pass reduced pending to 5 and updated the count.</td></tr>
+    <tr><td>FT-20</td><td>Controlled release</td><td>Eligible review can release exact BOM and drawing revisions.</td><td><span class="tag pass">PASS</span></td><td>REL-REV-2026-003 created for REV-2026-013.</td></tr>
+    <tr><td>FT-21</td><td>Release propagation to BOM and drawing</td><td>Linked BOM and drawing become Released with the release reference.</td><td><span class="tag pass">PASS</span></td><td>Both records show release status Released and ref REL-REV-2026-003.</td></tr>
+    <tr><td>FT-22</td><td>Transfer validation and purchase handover</td><td>Seeded released BOM validates; purchase handover recorded; status Awaiting Acknowledgement.</td><td><span class="tag pass">PASS</span></td><td>TRF-2026-010 · PUR-HO-2026-006.</td></tr>
+    <tr><td>FT-23</td><td>Live released BOM in transfer selector</td><td>Newly released E2E BOM is selectable, validates and creates transfer.</td><td><span class="tag pass">PASS</span></td><td>TRF-2026-011 · 12 valid · 1 warning · 0 invalid.</td></tr>
+    <tr><td>FT-24</td><td>Live released drawing in transfer selector</td><td>Newly released E2E drawing is selectable and transferable to Purchase.</td><td><span class="tag pass">PASS</span></td><td>TRF-2026-012 · 12 valid · 1 warning · 0 invalid.</td></tr>
+    <tr><td>FT-25</td><td>Production transfer eligibility</td><td>Production is blocked without a released manufacturing package.</td><td><span class="tag warn">BLOCKED</span></td><td>Correct gate: no E2E manufacturing package exists.</td></tr>
+    <tr><td>FT-26</td><td>Support case with new project</td><td>New project appears in support typeahead/select and case saves.</td><td><span class="tag pass">PASS</span></td><td>MSC-Q-2026-004 linked to PRJ-2026-042.</td></tr>
+    <tr><td>FT-27</td><td>Readiness record creation</td><td>Record saves with package reference, owner and readiness checklist.</td><td><span class="tag pass">PASS*</span></td><td>MR-2026-005 created; 0/6 required documents recorded, so readiness remains incomplete.</td></tr>
+    <tr><td>FT-28</td><td>Persistence after reload</td><td>Created records and relationships survive a full browser refresh.</td><td><span class="tag pass">PASS</span></td><td>E2E enquiry, quotation link and project reference retained.</td></tr>
+    <tr><td>FT-29</td><td>Row action menus</td><td>Menus open, close on outside click/Escape and remain inside the viewport when the trigger is visible.</td><td><span class="tag pass">PASS</span></td><td>15 registers audited; wide tables require horizontal scroll to reach the action column.</td></tr>
+    <tr><td>FT-30</td><td>Mobile layout</td><td>390 px layout has no page-level horizontal overflow; sidebar opens and closes.</td><td><span class="tag pass">PASS</span></td><td>Dashboard checked; sidebar 260 px drawer opened and closed.</td></tr>
+    <tr><td>FT-31</td><td>Dark mode</td><td>Toggle applies dark palette, persists, and restores light palette.</td><td><span class="tag pass">PASS</span></td><td>DOM class and computed body background changed and reverted.</td></tr>
+    <tr><td>FT-32</td><td>Three-dot menu labels across registers</td><td>Expected view/edit/duplicate/archive/review actions appear by record state.</td><td><span class="tag pass">PASS</span></td><td>See Document 04 for the full menu inventory.</td></tr>
+    <tr><td>FT-33</td><td>Chart and report filters</td><td>Filter controls render and charts respond to page context.</td><td><span class="tag pass">PASS*</span></td><td>Route/render level; not every report combination was exhaustively filtered.</td></tr>
+    <tr><td>FT-34</td><td>CSV export</td><td>Export downloads a local CSV of the current data set.</td><td><span class="tag info">NOT EXERCISED</span></td><td>Export button present; download path not exercised in this cycle.</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Defects found and fixed</h2>
+<table>
+  <thead><tr><th style="width:8%">ID</th><th style="width:29%">Defect</th><th>Root cause</th><th style="width:13%">Severity</th><th style="width:12%">Result</th></tr></thead>
+  <tbody>
+    <tr><td>BUG-01</td><td>New projects missing from Support project selectors</td><td>Support pages imported a static project fixture instead of the live ProjectsContext.</td><td>High</td><td><span class="tag pass">FIXED</span></td></tr>
+    <tr><td>BUG-02</td><td>No conversion action from ready enquiry to quotation</td><td>Quotation form supported a linked-enquiry query, but the enquiry detail did not expose the action.</td><td>Medium</td><td><span class="tag pass">FIXED</span></td></tr>
+    <tr><td>BUG-03</td><td>Approval possible with all design/technical checklist items pending</td><td>Decision actions were not gated by checklist state; technical checklist had no editor.</td><td>High</td><td><span class="tag pass">FIXED</span></td></tr>
+    <tr><td>BUG-04</td><td>Controlled release did not release linked BOM/drawing</td><td>ApprovalsContext created a release record but did not call the CAD/BOM release actions.</td><td>High</td><td><span class="tag pass">FIXED</span></td></tr>
+    <tr><td>BUG-05</td><td>Released E2E BOM/drawing absent from transfer selector; project reference invalid</td><td>Transfer form used static source fixtures and a static PROJECTS validator.</td><td>High</td><td><span class="tag pass">FIXED</span></td></tr>
+  </tbody>
+</table>
+<p>Each defect was reproduced in the browser, repaired in the affected source, and retested through the flow that exposed it. See the <b>Issues &amp; Fixes Report</b> for file-level changes and verification evidence.</p>
+
+<h2>6. Workflow gate results</h2>
+<div class="two-col">
+  <div class="card">
+    <h3>Correctly blocked</h3>
+    <ul class="clean">
+      <li>Controlled release before BOM/drawing approval.</li>
+      <li>Production transfer without a released manufacturing package.</li>
+      <li>Engineering/manufacturing approval with pending checklist items (after fix).</li>
+      <li>Transfer validation with an invalid project or unmatched BOM revision.</li>
+      <li>Readiness completion with zero required documents.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Correctly allowed</h3>
+    <ul class="clean">
+      <li>Quotation conversion to project after acceptance.</li>
+      <li>Concept selection after comparison.</li>
+      <li>Analysis verification after submit and reviewer assignment.</li>
+      <li>BOM approval and release after review.</li>
+      <li>Drawing approval and release after submit.</li>
+      <li>Transfer creation after all mandatory validation checks pass.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>7. Data integrity and persistence</h2>
+<ul class="clean">
+  <li>E2E records are uniquely named and ID-separated from the seeded data; no seeded record was overwritten.</li>
+  <li>Reloading the browser retained the enquiry, quotation linkage, project conversion, design records, review, release, transfers and support case.</li>
+  <li>Parent-child references were checked: enquiry → quotation → project; project → plan/task/concept/design/part/assembly/analysis/manufacturing/BOM/CAD/drawing/review/change/support; release → BOM/drawing/transfers.</li>
+  <li>A second review and release test required a controlled data reset of the E2E review record to re-enter the eligible state; this was test-record data only and was used to prove propagation. It did not alter seeded records.</li>
+</ul>
+
+<h2>8. Responsive and appearance checks</h2>
+<table class="small-table">
+  <thead><tr><th style="width:27%">Check</th><th>Result</th><th style="width:31%">Observation</th></tr></thead>
+  <tbody>
+    <tr><td>1440 px desktop</td><td><span class="tag pass">PASS</span></td><td>Sidebar, tabs, cards, tables and forms render without page overflow.</td></tr>
+    <tr><td>390 px mobile</td><td><span class="tag pass">PASS</span></td><td>Sidebar collapses behind an Open sidebar control; page width stays within viewport.</td></tr>
+    <tr><td>Wide data tables</td><td><span class="tag pass">PASS*</span></td><td>Tables scroll inside the table container; action column may require horizontal scroll on narrow screens.</td></tr>
+    <tr><td>Dark mode</td><td><span class="tag pass">PASS</span></td><td>Palette switches and restores; body background changes as expected.</td></tr>
+    <tr><td>Long text / IDs</td><td><span class="tag pass">PASS</span></td><td>Tables use clipped cells with titles; no page-level blowout observed.</td></tr>
+  </tbody>
+</table>
+
+<h2>9. Limitations and untested areas</h2>
+<ul class="clean">
+  <li>CSV export download was not exercised.</li>
+  <li>Every chart/filter combination in Reports was not exhaustively exercised.</li>
+  <li>Settings persistence was inspected at the state level, but not every one of the 19 categories was edited in this cycle.</li>
+  <li>Manufacturing and delivery tracking are read-only seeded views and do not ingest the E2E project.</li>
+  <li>Dashboard and report figures are seeded analytics and do not reflect the E2E records.</li>
+  <li>No native CAD geometry viewer; only supported 2D/image previews were exercised.</li>
+  <li>No backend, multi-user, concurrency, authorization or audit-log testing was possible because those services do not exist in this frontend.</li>
+  <li>Production transfer was not completed because no released manufacturing package exists for the E2E drawing.</li>
+</ul>
+
+<h2>10. Exit assessment</h2>
+<p>The frontend is functionally coherent through the tested customer-to-release path. The critical integration issues found in this cycle are fixed and retested. Remaining failures are absent, blocked items are genuine workflow gates, and documented limitations are consistent with the frontend-only architecture.</p>
+<div class="note"><b>Recommended before production use:</b> connect these workflows to server-side persistence and authorization; replace seeded analytics and tracking with live aggregation; add a released manufacturing package path for production transfer; and add automated regression coverage for conversion, release propagation and transfer eligibility.</div>
+
+<div class="signoff">
+  <div>Prepared by · Design Office QA / Engineering Systems · 16 November 2026</div>
+  <div>Reviewed by · ______________________________ · Date ______________</div>
+</div>
+
+<div class="footer-note">Document 03 of 05 · Functional Testing Report · Mechanical Design ERP end-to-end review · 16 November 2026. No test is marked PASS without an executed browser or build check; limitations are stated explicitly.</div>
+</body>
+</html>

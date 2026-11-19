@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>08 — Real Business Data End-to-End Report</title>
+  <link rel="stylesheet" href="report.css" />
+</head>
+<body>
+  <main class="report">
+    <header class="cover">
+      <div>
+        <div class="brandline">
+          <div class="brandmark">VT</div>
+          <div>
+            <div class="brandname">VISHAK TECH</div>
+            <div class="brandsub">Mechanical Design ERP · Verification Report 08</div>
+          </div>
+        </div>
+        <span class="cover-kicker">Real business data · End-to-end</span>
+        <h1>Industrial Hydraulic Power Unit — Enquiry to Delivery</h1>
+        <p class="lede">A complete, persistent Apex Industrial Systems project created through the running React application: enquiry, quotation, project, planning, concepts, mechanical design, analysis, manufacturing definition, BOM, drawing, design review, ECR/release, transfers, readiness, production, quality, finished goods, dispatch, invoice and delivery.</p>
+        <div class="cover-meta">
+          <div><span>Customer scenario</span><strong>Apex Industrial Systems Pvt Ltd — two HPU skid units</strong></div>
+          <div><span>Primary project</span><strong>PRJ-2026-044</strong></div>
+          <div><span>Execution date</span><strong>16–17 Nov 2026 · browser application</strong></div>
+          <div><span>Build result</span><strong>npm run build · exit 0</strong></div>
+        </div>
+      </div>
+      <div class="cover-foot">All records described here were created through the application UI and persist in the application localStorage. Customer contact details are deliberately fictional test data. This is a frontend workflow simulation: no server, payment gateway, carrier API or production ERP transaction was executed.</div>
+    </header>
+
+    <section>
+      <h2>1. Executive result</h2>
+      <div class="summary-band">
+        <div class="metric"><span>Workflow</span><strong>PASS</strong><small>enquiry → delivery</small></div>
+        <div class="metric"><span>Final project</span><strong>Completed</strong><small>100% progress</small></div>
+        <div class="metric"><span>Approval gates</span><strong>PASS</strong><small>review, MFD, quality, handover</small></div>
+        <div class="metric"><span>Build</span><strong>PASS</strong><small>2315 modules · exit 0</small></div>
+      </div>
+      <p>The complete commercial and engineering chain is connected and inspectable in the application. One project, <strong>PRJ-2026-044 “Industrial Hydraulic Power Unit – Development”</strong>, now exists from the customer enquiry through delivered equipment and a paid invoice. The project register shows <strong>Completed · 100%</strong> after a full page refresh.</p>
+      <div class="note"><strong>Final operational state:</strong> two HPU skid units designed, reviewed, released, transferred, manufactured, inspected, accepted, dispatched, invoiced and delivered to the Apex test receiving address. Finished-goods available stock is 0 because both accepted units were dispatched.</div>
+      <p><span class="tag pass">PASS</span> is used only for behaviour executed in the running UI and verified in persisted state. Items that were not exercised are marked <span class="tag warn">NOT TESTED</span> or <span class="tag info">LIMITATION</span>.</p>
+    </section>
+
+    <section>
+      <h2>2. Business scenario and test identity</h2>
+      <div class="two-col">
+        <div class="card">
+          <h3>Customer and requirement</h3>
+          <dl class="kv">
+            <dt>Customer</dt><dd>Apex Industrial Systems Pvt Ltd</dd>
+            <dt>Contact</dt><dd>Apex Project Engineering — Test Contact</dd>
+            <dt>Email</dt><dd class="mono">projects.test@apex-industrial.example</dd>
+            <dt>Phone</dt><dd>+91 00000 00000</dd>
+            <dt>Reference</dt><dd>APEX-RFQ-HPU-2026-01</dd>
+            <dt>Requirement</dt><dd>Two skid-mounted hydraulic power units for a press and clamp circuit</dd>
+          </dl>
+        </div>
+        <div class="card">
+          <h3>Technical basis</h3>
+          <dl class="kv">
+            <dt>Pressure</dt><dd>250 bar continuous / 315 bar peak</dd>
+            <dt>Flow</dt><dd>120 L/min at 1450 rpm</dd>
+            <dt>Motor</dt><dd>45 kW IE3 TEFC, 415 V / 3 ph / 50 Hz</dd>
+            <dt>Reservoir</dt><dd>400 L usable, ISO VG 46 mineral oil</dd>
+            <dt>Materials</dt><dd>IS 2062 E250 reservoir/skid, SS316 piping, 6082-T6 manifold</dd>
+            <dt>Inspection</dt><dd>1.5× hydrostatic, leak, pressure-flow and witnessed FAT</dd>
+          </dl>
+        </div>
+      </div>
+      <p>Quotation reference <strong>QTN-2026-024 Rev A</strong> was accepted against mock customer PO <strong>APEX-PO-TEST-2026-001</strong>. Project CPR <strong>APX-CPR-2026-001</strong> is Approved. No real customer, supplier, payment or logistics system was contacted.</p>
+    </section>
+
+    <section class="pagebreak">
+      <h2>3. End-to-end record chain</h2>
+      <table>
+        <thead><tr><th>Stage</th><th>Record</th><th>Persisted state / evidence</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Enquiry</td><td><strong>ENQ-2026-045</strong></td><td>Submitted → Under Technical Review → Ready for Quotation → Quotation Prepared. Customer spec PDF metadata attached; 5 audit events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Quotation</td><td><strong>QTN-2026-024</strong></td><td>Draft → Technical Review → Technically Accepted → Ready for Sales → Customer Submitted → <strong>Accepted</strong>. PO reference recorded; converted to PRJ-2026-044; 8 audit events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Project</td><td><strong>PRJ-2026-044</strong></td><td><strong>Completed · 100%</strong>; manager R. Kulkarni; CPR Approved; owner N. Joshi; source enquiry and quotation linked. Two project audit events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Planning</td><td><strong>DPL-2026-011 · TSK-2139</strong></td><td>Design plan Active; design task In Progress. Project conversion link present.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Concepts</td><td><strong>CON-2026-013 / 014 / 015 · CMP-2026-005 · FSB-2026-006</strong></td><td>Three concepts created and compared on six weighted criteria. <strong>CON-2026-013</strong> selected; feasibility <strong>Conditionally Feasible</strong> with the customer valve-logic condition recorded. Earlier FSB-2026-005 remains linked to CON-2026-015.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Mechanical design</td><td><strong>DES-2026-018</strong></td><td><strong>Released</strong>; linked to CON-2026-013, ASM-2026-009 and five parts; technical duty, materials and operating conditions captured. Four activity events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Parts / assembly</td><td><strong>PRT-2026-020 … 024 · ASM-2026-009</strong></td><td>HPU-RES-001 reservoir, HPU-MTG-002 bracket, HPU-MAN-003 manifold, HPU-PIPE-004 piping, HPU-CTRL-005 control box; assembly HPU-APX-ASSY-001 linked to the design.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Calculation</td><td><strong>CAL-2026-009</strong></td><td>Torque and Ø85 mm EN19 shaft check: 296.3 N·m rated, 444.5 N·m design, 3.7 MPa shear vs 120 MPa allowable. Verification status <strong>Verified</strong> by V. Sharma.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Analysis</td><td><strong>ANL-2026-025 · RVW-2026-017</strong></td><td>Lifting/frame strength verification linked to ASM-2026-009. Review <strong>RVW-2026-017</strong> is <strong>Verified</strong>; analysis verification status <strong>Verified</strong>.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Manufacturing definition</td><td><strong>MFD-2026-018</strong></td><td>In Progress → Pending Review → <strong>Approved</strong>. Reviewer N. Joshi; approval comment references drawing, references and shop capability; 3 status events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Inspection plan</td><td><strong>INS-2026-010</strong></td><td>NDT, weld, dimensional and documentation requirements. In Progress → Pending Review → <strong>Approved</strong>; 3 status events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Process plan</td><td><strong>PPR-2026-010</strong></td><td>Cutting, fabrication, equipment and sequence planning. In Progress → Pending Review → <strong>Approved</strong>; 3 status events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>BOM</td><td><strong>BOM-2026-011</strong></td><td>11 items; submitted, reviewed and <strong>Released</strong>. Unit cost total INR 16,92,500. Cost estimate <strong>CST-2026-008</strong> total INR 19,96,000.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>CAD / drawing</td><td><strong>CAD-2026-014 · DRW-2026-013</strong></td><td>Real SVG CAD attachment uploaded. Drawing CAD-APX-HPU-001 created against BOM-2026-011, MFD-044-011 and ASM-2026-009; submitted, approved and <strong>Released</strong>.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Design review</td><td><strong>REV-2026-015 · REL-REV-2026-004</strong></td><td>Engineering and manufacturing checklists all Pass; both stages approved; controlled release created; review status <strong>Released</strong>.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>ECR / release</td><td><strong>ECR-2026-010 · ERL-2026-002</strong></td><td>FKM seal upgrade for 65 °C oil. Impact assessment, ECO approval, revision A→B and engineering release completed; ECR status <strong>Released</strong>; 6 change events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Transfers</td><td><strong>TRF-2026-016 · TRF-2026-017</strong></td><td>BOM-2026-011 Rev A to Purchase; drawing CAD-APX-HPU-001 Rev A to Purchase and Production. Validation passed; both <strong>Ready for Transfer</strong>.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Readiness</td><td><strong>MR-2026-006</strong></td><td>Package MFG-HPU-2026-A Rev A; 6/6 controlled documents and 6/6 checklist complete; ready for handover.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Production handover</td><td><strong>PDH-2026-004</strong></td><td>Created from MR-2026-006 and TRF-2026-017; <strong>Approved</strong> by “Production — Skid assembly bay”; acknowledgement now <strong>Acknowledged with Remarks</strong>; 4 history events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Production</td><td><strong>PO-2026-002</strong></td><td>Created only from approved PDH-2026-004; quantity 2; all five operations complete; completed 2, pending 0, rejected 0; status <strong>Completed</strong>; 3 history events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Quality</td><td><strong>QC-2026-002</strong></td><td>Created from completed PO-2026-002; 4/4 checklist Pass; accepted 2, rejected 0; status <strong>Approved</strong>.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Finished goods</td><td><strong>FG-2026-002</strong></td><td>Created from approved QC-2026-002; accepted 2; status <strong>Dispatched</strong>; available stock 0.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Dispatch</td><td><strong>DSP-2026-002</strong></td><td>Quantity 2 to Apex Industrial Systems; transport, address and packing remarks recorded; stock reduced from 2 to 0; status <strong>Delivered</strong>.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Invoice</td><td><strong>INV-2026-002</strong></td><td>Linked to DSP-2026-002. Final net INR 32,85,000; GST 18% INR 5,91,300; total <strong>INR 38,76,300</strong>; payment status <strong>Paid</strong>. Four invoice audit events.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Delivery</td><td><strong>DLV-2026-002</strong></td><td>Created from DSP-2026-002; status <strong>Delivered</strong>; received by “Test Stores Supervisor — Apex Industrial Systems”; delivery remarks and 2 history events recorded.</td><td><span class="tag pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. Approvals, gates and eligibility</h2>
+      <table class="small-table">
+        <thead><tr><th>Gate</th><th>Rule exercised</th><th>Outcome</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Quotation acceptance</td><td>Quotation must pass technical review and be submitted before customer acceptance.</td><td>QTN-2026-024 reached Accepted only after the review chain; accepted PO reference stored.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Concept selection</td><td>Weighted comparison must be saved before a concept can feed mechanical design.</td><td>CMP-2026-005 selection recorded; CON-2026-013 used by DES-2026-018.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Calculation verification</td><td>Calculation requires a named verifier and Verified status.</td><td>CAL-2026-009 Verified by V. Sharma.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Analysis verification</td><td>Review must be completed before the analysis is treated as verified.</td><td>ANL-2026-025 and RVW-2026-017 both Verified.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Manufacturing approval</td><td>Record must move to Pending Review and receive a reviewer decision.</td><td>MFD-2026-018, INS-2026-010 and PPR-2026-010 each In Progress → Pending Review → Approved with review comments.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>BOM release</td><td>Approved BOM required before drawing release and production handover.</td><td>BOM-2026-011 Approved then Released; 11 items retained.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Design review</td><td>Both engineering and manufacturing stages must pass before controlled release.</td><td>REV-2026-015 both stages approved; REL-REV-2026-004 created.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Production handover</td><td>Approved design review, released drawing and BOM, manufacturing instructions and complete checklist are mandatory.</td><td>PDH-2026-004 submitted, checklist confirmed and approved; acknowledgement recorded.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Production order</td><td>Only an approved handover can create one production order; duplicates blocked.</td><td>PO-2026-002 created from PDH-2026-004; all operations completed.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Quality approval</td><td>Completed production order and all mandatory checks Pass/N/A.</td><td>QC-2026-002 4/4 Pass; accepted 2, rejected 0; Approved.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Dispatch and delivery</td><td>Only approved stock can dispatch; delivered status requires a delivery record and received-by.</td><td>Dispatch limited to available 2; delivery created, then Delivered with receiver details; dispatch synchronised.</td><td><span class="tag pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="pagebreak">
+      <h2>5. Audit and history evidence</h2>
+      <p>Workflow-controlled records persist an event trail containing the actor, timestamp and change detail. The project Activity History now renders the recorded project audit rather than seed activity. The following records were inspected directly in persisted state and in the UI.</p>
+      <table class="small-table">
+        <thead><tr><th>Record</th><th>Audit evidence observed</th><th>Actor</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>ENQ-2026-045</td><td>5 events: created/submitted, attachment added, technical review, ready for quotation, quotation prepared.</td><td>N. Joshi / R. Kulkarni</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>QTN-2026-024</td><td>8 events from Draft through technical review, sales release, customer submission and acceptance.</td><td>R. Kulkarni / N. Joshi</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>PRJ-2026-044</td><td>2 actual project edit events, including the closure note appended to CPR notes. Visible in Activity History with “2026-11-16 18:04:54 · Design Admin” and the later closure event.</td><td>Design Admin</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>DES-2026-018</td><td>4 design activity events: registered, updated, technical fields updated, released.</td><td>Design Admin / N. Joshi</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>CAL-2026-009</td><td>Revision A record plus verified-by V. Sharma and Verified status.</td><td>N. Joshi / V. Sharma</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>ANL-2026-025 · RVW-2026-017</td><td>4 analysis activity events; review history shows Submitted for review → Verify, with comments and status transition to Verified.</td><td>N. Joshi / V. Sharma</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>MFD-2026-018</td><td>3 status events with reviewer decision and comments; Approved.</td><td>D. Rao / N. Joshi</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>INS-2026-010</td><td>3 status events with reviewer decision; Approved.</td><td>S. Menon / N. Joshi</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>PPR-2026-010</td><td>3 status events with reviewer decision; Approved.</td><td>D. Rao / N. Joshi</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>BOM-2026-011</td><td>Status history: saved, submitted, approved with verification comment, released to Purchase and Production.</td><td>D. Rao / N. Joshi / Design Authority</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>DRW-2026-013</td><td>Revision and release record; drawing status Released.</td><td>N. Joshi / V. Sharma</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>REV-2026-015</td><td>4 review events across engineering and manufacturing stage decisions.</td><td>N. Joshi / K. Pillai</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>ECR-2026-010 · ERL-2026-002</td><td>6 change events: request, impact assessment, ECO approval, revision update and engineering release; release record present.</td><td>N. Joshi / Design Authority</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>TRF-2026-016 · TRF-2026-017</td><td>Transfer history event present; both records validated and Ready for Transfer.</td><td>N. Joshi</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>PDH-2026-004</td><td>4 events: Handover created, Submitted for approval, Handover approved, Acknowledgement: Acknowledged with Remarks. Actor and timestamp present on each.</td><td>Manufacturing engineering / Production</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>PO-2026-002</td><td>3 production history events: order creation and progress updates; final 2/2 completed, pending 0.</td><td>Production Supervisor</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>QC-2026-002</td><td>2 events: quality record created (2 accepted / 0 rejected) and quality approved with comments; 4/4 Pass checklist retained.</td><td>Quality Engineer</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>FG-2026-002 · DSP-2026-002</td><td>2 events each: finished goods received, then reserved for dispatch; dispatch created and delivery status synchronised.</td><td>Stores / Dispatch</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>INV-2026-002</td><td>4 events: invoice raised, value corrected against accepted quotation, payment status Paid → Partially Paid → Paid. Each has actor and detail.</td><td>Accounts / Finance — Accounts</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>DLV-2026-002</td><td>2 events: delivery record created and status Delivered with receiver remarks.</td><td>Dispatch / Apex Stores</td><td><span class="tag pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Audit implementation completed in this round</h3>
+      <ul>
+        <li><strong>Project edits now produce an audit event</strong> containing the actor (<code>Design Admin</code>), timestamp and before → after values for changed fields. The existing Project Details “Activity History” panel renders these recorded events.</li>
+        <li><strong>Quality checklist changes now produce an audit event</strong> naming the inspection item and the changed result/comments.</li>
+        <li><strong>Invoice payment status changes now produce an audit event</strong> showing previous status → new status and the responsible finance actor.</li>
+        <li><strong>Production handover acknowledgement changes now produce an audit event</strong> with the acknowledgement status, actor and changed fields.</li>
+      </ul>
+      <div class="warning"><strong>Audit limitation:</strong> planning plans/tasks, concepts, concept comparisons, part/assembly master records, cost estimates and readiness records keep created/updated metadata and workflow status but do not all expose a separate event-level audit array. Those records were verified by persisted fields and linked workflow state, not by a complete per-field change log.</div>
+    </section>
+
+    <section>
+      <h2>6. Persistence and calculation verification</h2>
+      <table class="small-table">
+        <thead><tr><th>Check</th><th>Observed result</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Full page refresh — project register</td><td>PRJ-2026-044 still shows <strong>100%</strong> and <strong>Completed</strong> after reload.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Final statuses after reload</td><td>DES-2026-018 Released; CAL-2026-009 Verified; ANL/RVW Verified; MFD/INS/PPR Approved; BOM Released; Drawing Released; REV Released; ECR Released; PDH Approved + Acknowledged; PO Completed; QC Approved; FG Dispatched; DSP Delivered; INV Paid; DLV Delivered.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Relationship preservation</td><td>Project retains ENQ-2026-045 and QTN-2026-024; design retains CON-2026-013, ASM-2026-009 and PRT-2026-020…024; analysis retains ASM-2026-009; BOM/drawing/review/transfer/handover/production/quality/dispatch/invoice/delivery chain intact.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Finished-goods stock</td><td>QC accepted 2 → FG available 2 → dispatch quantity 2 → FG available 0, status Dispatched.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Invoice arithmetic</td><td>Net INR 32,85,000 + 18% GST INR 5,91,300 = <strong>INR 38,76,300</strong>; displayed and persisted after reload.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Production arithmetic</td><td>Planned 2; completed 2; pending 0; rejected 0; order Completed.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Calculation result</td><td>45 kW at 1450 rpm → 296.3 N·m rated; 1.5 service factor → 444.5 N·m; Ø85 mm shaft shear 3.7 MPa vs 120 MPa allowable.</td><td><span class="tag pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+      <div class="note"><strong>Invoice correction:</strong> the invoice was first raised at INR 49,00,000 net. It was corrected before payment to the accepted quotation value of INR 32,85,000 net, with GST recalculated from INR 8,82,000 to INR 5,91,300. The correction is retained as an audited invoice event so the commercial record now agrees with QTN-2026-024.</div>
+    </section>
+
+    <section>
+      <h2>7. Files modified</h2>
+      <table class="small-table">
+        <thead><tr><th>File</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">src/pages/manufacturing-readiness/ReadinessTab.jsx</td><td>Create form and project dropdown now use live projects from <code>useProjects</code>, so newly created projects (including PRJ-2026-044) can be selected.</td></tr>
+          <tr><td class="mono">src/pages/manufacturing-readiness/readinessUi.jsx</td><td><code>ProjectLabel</code> resolves live project names with the existing static data as fallback.</td></tr>
+          <tr><td class="mono">src/context/ProjectsContext.jsx</td><td>Added project audit history on updates: actor, timestamp and compact before → after field changes; preserves existing project data.</td></tr>
+          <tr><td class="mono">src/data/projectData.js</td><td><code>buildProjectActivity</code> now prefers recorded project history over generated seed activity, so Project Details shows the actual audit trail.</td></tr>
+          <tr><td class="mono">src/context/FulfilmentContext.jsx</td><td>Added audit entries for quality checklist changes and invoice payment-status changes.</td></tr>
+          <tr><td class="mono">src/context/ManufacturingReadinessContext.jsx</td><td>Added audit entries for production-handover tracking and acknowledgement changes.</td></tr>
+          <tr><td class="mono">docs/e2e-review/08-Real-Business-Data-E2E-Report.html</td><td>This report.</td></tr>
+        </tbody>
+      </table>
+      <p>Existing records, seed data and earlier reports 01–07 were not deleted or reset. The new project was created through conversion flows and UI forms; no records were inserted directly into localStorage except the audited invoice-value correction described above.</p>
+    </section>
+
+    <section>
+      <h2>8. Build and regression checks</h2>
+      <table class="small-table">
+        <thead><tr><th>Check</th><th>Command / method</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Production build</td><td><code>npm run build</code></td><td><span class="tag pass">PASS</span> — exit 0; 2315 modules transformed; built in 954 ms. Existing chunk-size warning only (3,243.18 kB bundle).</td></tr>
+          <tr><td>Browser runtime errors</td><td>Preview console after HMR and route changes</td><td><span class="tag pass">PASS</span> — no runtime error, failed request or React exception observed in the inspected console.</td></tr>
+          <tr><td>Persistence after refresh</td><td>Reloaded project register and re-queried persisted records</td><td><span class="tag pass">PASS</span> — Completed/100%, approval statuses and financial values retained.</td></tr>
+          <tr><td>UI approval path</td><td>Submitted and approved MFD, INS and PPR on their detail pages</td><td><span class="tag pass">PASS</span> — each transition recorded, reviewer set and final Approved status visible.</td></tr>
+          <tr><td>Full route sweep</td><td>All 67 application routes</td><td><span class="tag warn">NOT TESTED</span> — only routes used by this scenario were opened in this round.</td></tr>
+          <tr><td>Responsive / dark mode</td><td>Tablet, mobile and theme variants</td><td><span class="tag warn">NOT TESTED</span> — not re-exercised in this round.</td></tr>
+          <tr><td>PDF export</td><td>Report 08 PDF</td><td><span class="tag warn">NOT TESTED</span> — only the HTML report was generated.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>9. Limitations and follow-ups</h2>
+      <ul>
+        <li><strong>Frontend-only simulation.</strong> All state is browser localStorage. There is no backend, authentication, real payment, carrier booking, e-way bill, warranty registration or ERP transaction.</li>
+        <li><strong>Revision propagation.</strong> ECR-2026-010 is released with a proposed Rev B seal upgrade and the production handover explicitly instructs Rev B incorporation. The BOM and drawing master registers still show Rev A; automatic master-revision propagation is a follow-up.</li>
+        <li><strong>Master status propagation.</strong> DES-2026-018 and the drawing/review are Released, but the linked part and assembly master records retain “In Design”; there is no automatic design-to-master status update in this frontend.</li>
+        <li><strong>Cost estimate status.</strong> CST-2026-008 remains In Progress even though its INR 19,96,000 total is available; there is no separate approval gate applied to it in this run.</li>
+        <li><strong>Text issue retained.</strong> Concept C’s name contains “hydrid” instead of “hybrid”; it was left unchanged to preserve the tested record.</li>
+        <li><strong>Audit coverage.</strong> Event-level audit is present for workflow records; several master registers expose only created/updated metadata, as noted in section 5.</li>
+        <li><strong>Invoice correction method.</strong> The invoice UI has no edit action for net value; the audited commercial correction was applied to persisted invoice state and then verified through the normal invoice UI. This is the one record correction not made through an ordinary form submission.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>10. Final verdict</h2>
+      <table>
+        <thead><tr><th>Area</th><th>Verdict</th><th>Basis</th></tr></thead>
+        <tbody>
+          <tr><td>Complete business workflow</td><td><span class="tag pass">PASS</span></td><td>One connected Apex project exists from ENQ-2026-045 to DLV-2026-002 and is inspectable in the application.</td></tr>
+          <tr><td>Final approvals</td><td><span class="tag pass">PASS</span></td><td>MFD-2026-018, INS-2026-010 and PPR-2026-010 approved through the UI; handover, quality, invoice and delivery states complete.</td></tr>
+          <tr><td>Audit / history</td><td><span class="tag pass">PASS</span> with documented coverage limits</td><td>Project, quality, invoice and handover audit gaps fixed and verified; workflow records retain actor/time/change events. Master-register coverage remains partial.</td></tr>
+          <tr><td>Report</td><td><span class="tag pass">PASS</span></td><td>This HTML report records IDs, statuses, approvals, audit evidence, persistence, calculations, modified files, build result and limitations.</td></tr>
+          <tr><td>Build</td><td><span class="tag pass">PASS</span></td><td><code>npm run build</code> exit 0 with the existing bundle-size warning only.</td></tr>
+          <tr><td>Deferred checks</td><td><span class="tag warn">NOT TESTED</span></td><td>Full route sweep, responsive/dark-mode review and PDF export were not re-run.</td></tr>
+        </tbody>
+      </table>
+      <div class="note">The project remains available in the running application at <code>http://localhost:5173/projects/PRJ-2026-044</code>. Use the Project Details tabs and the module registers to inspect each linked record; no test data was cleared.</div>
+      <div class="signoff">
+        <div>Prepared by: Design Admin · Codebuff verification run</div>
+        <div>Report date: 17 Nov 2026 · Application data date: 16 Nov 2026</div>
+      </div>
+      <p class="footer-note">Report 08 · Mechanical Design ERP · Real business data E2E verification. Earlier report 07 and all source records remain intact.</p>
+    </section>
+  </main>
+</body>
+</html>

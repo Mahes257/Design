@@ -1,0 +1,748 @@
+/* ===== MODULE 06 — SIMULATION & DESIGN VALIDATION ======================
+   Workspace selection strip, upload/viewer panels, metadata, observations
+   and validation report layouts built on the shared design system.
+   ====================================================================== */
+
+.sim-selection {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border: 1px solid #e6ecea;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.sim-selection .form-field {
+  margin-bottom: 0;
+}
+
+.sim-grid {
+  display: grid;
+  grid-template-columns: 340px minmax(0, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+  align-items: start;
+}
+
+.sim-panel {
+  margin-bottom: 14px;
+  border: 1px solid #e6ecea;
+  border-radius: 12px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.sim-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef2f0;
+  background: #fbfdfc;
+  font-size: 12px;
+  color: #334155;
+}
+
+.sim-panel-head strong {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sim-panel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sim-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+}
+
+.sim-panel-body .form-grid {
+  margin-bottom: 0;
+}
+
+.sim-note {
+  margin: 0;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.sim-model-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.sim-model-line strong {
+  font-size: 12px;
+  color: #0f172a;
+  word-break: break-all;
+}
+
+.sim-viewer-blocked {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed #f0c98a;
+  border-radius: 10px;
+  background: #fffaf0;
+  color: #7c4a03;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.sim-viewer-blocked svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sim-viewer-blocked strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11.5px;
+}
+
+.sim-viewer-blocked p {
+  margin: 0 0 4px;
+}
+
+.sim-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid #eef2f0;
+  font-size: 11px;
+}
+
+.sim-meta dt {
+  color: #94a3b8;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sim-meta dd {
+  margin: 2px 0 0;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+.sim-meta-full {
+  grid-column: 1 / -1;
+}
+
+.sim-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+}
+
+.sim-file-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid #eef2f0;
+  border-radius: 8px;
+  background: #fbfdfc;
+  color: #334155;
+}
+
+.sim-file-list li svg {
+  width: 13px;
+  height: 13px;
+  color: #0f8f78;
+  flex-shrink: 0;
+}
+
+.sim-file-list li span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sim-issue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.sim-issue-card {
+  border: 1px solid #e6ecea;
+  border-radius: 10px;
+  background: #fbfdfc;
+  padding: 12px 14px;
+}
+
+.sim-issue-card > header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 11.5px;
+  color: #0f172a;
+}
+
+.sim-issue-card > header .icon-btn {
+  margin-left: auto;
+}
+
+.sim-report-layout {
+  display: block;
+}
+
+.sim-report-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sim-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sim-evidence-grid h3 {
+  margin: 0 0 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sim-ref-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 11px;
+}
+
+.sim-ref-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border: 1px solid #eef2f0;
+  border-radius: 8px;
+}
+
+.sim-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eef2f0;
+}
+
+.sim-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0f8f78;
+  text-decoration: none;
+}
+
+.sim-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1100px) {
+  .sim-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sim-selection {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sim-evidence-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.dark .sim-selection,
+.dark .sim-panel {
+  border-color: #1f3733;
+  background: #0f1f1d;
+}
+
+.dark .sim-panel-head {
+  border-color: #1c3330;
+  background: #102622;
+  color: #cbd5e1;
+}
+
+.dark .sim-panel-head strong,
+.dark .sim-meta dd,
+.dark .sim-model-line strong,
+.dark .sim-evidence-grid h3,
+.dark .sim-issue-card > header {
+  color: #e2e8f0;
+}
+
+.dark .sim-file-list li,
+.dark .sim-issue-card,
+.dark .sim-ref-list li {
+  border-color: #1f3733;
+  background: #102622;
+  color: #cbd5e1;
+}
+
+.dark .sim-viewer-blocked {
+  border-color: #5a4621;
+  background: #241d10;
+  color: #f0c98a;
+}
+
+.dark .sim-meta {
+  border-color: #1f3733;
+}
+
+.dark .sim-detail-actions {
+  border-color: #1f3733;
+}
+
+/* --- format capability registry --------------------------------------- */
+.sim-registry-group h3 {
+  margin: 0 0 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.sim-registry-group + .sim-registry-group {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #eef2f0;
+}
+
+.sim-registry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 18px;
+}
+
+.sim-registry-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border: 1px solid #eef2f0;
+  border-radius: 8px;
+  font-size: 10.5px;
+  background: #fbfdfc;
+}
+
+.sim-registry-row strong {
+  min-width: 64px;
+  font-size: 11px;
+  color: #0f172a;
+}
+
+.sim-registry-row .cell-muted {
+  flex: 1 1 100%;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.cad-bg-select {
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid #d6e0dd;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 10.5px;
+  color: #334155;
+}
+
+.dark .sim-registry-group h3,
+.dark .sim-registry-row strong {
+  color: #e2e8f0;
+}
+
+.dark .sim-registry-row {
+  border-color: #1f3733;
+  background: #102622;
+}
+
+.dark .sim-registry-group + .sim-registry-group {
+  border-color: #1f3733;
+}
+
+.dark .cad-bg-select {
+  border-color: #1f3733;
+  background: #102622;
+  color: #cbd5e1;
+}
+
+/* --- capability status chips ------------------------------------------ */
+.chip-amber {
+  background: #fff7e8;
+  color: #8a5a06;
+  border-color: #f0d9ad;
+}
+
+.chip-blue {
+  background: #eef4fd;
+  color: #24527f;
+  border-color: #c9dbf2;
+}
+
+.chip-red {
+  background: #fdeeee;
+  color: #8f2b2b;
+  border-color: #f0c7c7;
+}
+
+.dark .chip-amber {
+  background: #2a2010;
+  color: #e8c78a;
+  border-color: #4a3a1c;
+}
+
+.dark .chip-blue {
+  background: #101f2e;
+  color: #9cc2e8;
+  border-color: #1d3548;
+}
+
+.dark .chip-red {
+  background: #2a1113;
+  color: #e8a3a3;
+  border-color: #46201f;
+}
+
+/* --- Through URL source section --------------------------------------- */
+.sim-url-section {
+  border: 1px solid #e6ecea;
+  border-radius: 10px;
+  background: #fbfdfc;
+  overflow: hidden;
+}
+
+.sim-url-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 0;
+  background: transparent;
+  color: #0f172a;
+  text-align: left;
+  cursor: pointer;
+  font-size: 11.5px;
+}
+
+.sim-url-head svg:first-child {
+  width: 14px;
+  height: 14px;
+  color: #0f8f78;
+}
+
+.sim-url-head strong {
+  font-weight: 600;
+}
+
+.sim-url-head span {
+  flex: 1;
+  min-width: 0;
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.sim-url-head svg:last-child {
+  width: 13px;
+  height: 13px;
+  color: #94a3b8;
+  transition: transform 0.15s ease;
+}
+
+.sim-url-section.is-open .sim-url-head svg:last-child {
+  transform: rotate(180deg);
+}
+
+.sim-url-body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 0 11px 11px;
+  border-top: 1px solid #eef2f0;
+  padding-top: 10px;
+}
+
+.sim-url-body .form-field {
+  margin-bottom: 0;
+}
+
+.sim-url-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sim-url-viewer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border: 1px solid #e6ecea;
+  border-radius: 8px;
+  background: #fbfdfc;
+  font-size: 10.5px;
+}
+
+.sim-url-viewer-bar .cell-clamp {
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.sim-url-viewer-bar .sim-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sim-url-viewer-bar .sim-link svg {
+  width: 12px;
+  height: 12px;
+}
+
+.sim-embed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim-embed iframe.sim-embed-frame {
+  width: 100%;
+  height: 440px;
+  border: 1px solid #dbe5e2;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.sim-embed-note {
+  padding: 9px 11px;
+  border: 1px dashed #f0d9ad;
+  border-radius: 9px;
+  background: #fffaf0;
+  font-size: 10.5px;
+  line-height: 1.55;
+  color: #7c4a03;
+}
+
+.sim-embed-note strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 11px;
+}
+
+.sim-embed-note p {
+  margin: 0 0 6px;
+}
+
+.sim-spin {
+  display: inline-block;
+  vertical-align: -2px;
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  animation: sim-spin 0.9s linear infinite;
+}
+
+@keyframes sim-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dark .sim-url-section,
+.dark .sim-url-viewer-bar {
+  border-color: #1f3733;
+  background: #102622;
+}
+
+.dark .sim-url-head {
+  color: #e2e8f0;
+}
+
+.dark .sim-url-body {
+  border-color: #1f3733;
+}
+
+.dark .sim-embed iframe.sim-embed-frame {
+  border-color: #1f3733;
+}
+
+.dark .sim-embed-note {
+  border-color: #4a3a1c;
+  background: #241d10;
+  color: #f0c98a;
+}
+
+/* --- Through URL expand / collapse ------------------------------------ */
+.sim-url-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.26s ease;
+}
+
+.sim-url-collapse.is-open {
+  grid-template-rows: 1fr;
+}
+
+.sim-url-collapse-inner {
+  min-height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: visibility 0.26s ease;
+}
+
+.sim-url-collapse.is-open .sim-url-collapse-inner {
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sim-url-collapse,
+  .sim-url-collapse-inner {
+    transition: none;
+  }
+}
+
+/* --- Simulation & Validation Reports list card ------------------------ */
+.sim-reports-card .table-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 15px 18px 13px;
+  border-bottom: 1px solid #eef2f0;
+}
+
+.sim-reports-card .table-card-title {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.sim-reports-card .table-card-title h2 {
+  margin: 0 0 4px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #102a2a;
+}
+
+.sim-reports-card .table-card-title p {
+  margin: 0;
+  max-width: 66ch;
+  font-size: 11px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.sim-reports-card .table-card-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sim-reports-card .table-card-tools .search-input {
+  width: 240px;
+}
+
+.sim-reports-card .table-card-tools .search-field {
+  flex: 0 1 240px;
+  min-width: 180px;
+}
+
+.sim-reports-card .table-card-tools .form-field {
+  margin: 0;
+}
+
+.sim-reports-card .table-card-tools .form-select {
+  width: auto;
+  min-width: 148px;
+  max-width: 220px;
+}
+
+.sim-reports-card .table-card-head + .data-table,
+.sim-reports-card .table-card-head + .table-wrap {
+  border-top: 0;
+}
+
+@media (max-width: 1100px) {
+  .sim-reports-card .table-card-tools {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .sim-reports-card .table-card-tools .search-field {
+    flex: 1 1 220px;
+  }
+
+  .sim-reports-card .table-card-tools .form-select {
+    flex: 1 1 150px;
+    min-width: 140px;
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .sim-reports-card .table-card-head {
+    padding: 13px 14px 11px;
+  }
+
+  .sim-reports-card .table-card-tools {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sim-reports-card .table-card-tools .search-field,
+  .sim-reports-card .table-card-tools .form-select {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.dark .sim-reports-card .table-card-head {
+  border-bottom-color: #1f3733;
+}
+
+.dark .sim-reports-card .table-card-title h2 {
+  color: #e2e8f0;
+}
+
+.dark .sim-reports-card .table-card-title p {
+  color: #94a3b8;
+}

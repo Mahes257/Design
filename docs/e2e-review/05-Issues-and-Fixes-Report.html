@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Issues &amp; Fixes Report — Mechanical Design ERP</title>
+<link rel="stylesheet" href="report.css" />
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="brandline">
+      <div class="brandmark">VT</div>
+      <div>
+        <div class="brandname">VISHAK TECH</div>
+        <div class="brandsub">Mechanical Design ERP · Frontend Workspace</div>
+      </div>
+    </div>
+    <span class="cover-kicker">End-to-End Review · Document 05 of 05</span>
+    <h1>Issues &amp; Fixes Report</h1>
+    <p class="lede">The defects discovered during end-to-end testing, their root causes, the source changes made, the retests performed, and the limitations that remain.</p>
+    <div class="cover-meta">
+      <div><span>Document</span><strong>Issues &amp; Fixes Report</strong></div>
+      <div><span>Version</span><strong>1.0 · Final</strong></div>
+      <div><span>Review date</span><strong>16 November 2026</strong></div>
+      <div><span>Defects fixed</span><strong>5 root-cause issues</strong></div>
+      <div><span>Source files touched</span><strong>11</strong></div>
+      <div><span>Final build</span><strong>Pass · exit 0</strong></div>
+    </div>
+  </div>
+  <div class="cover-foot">All changes are limited to the Mechanical Design ERP project. No reference project, backend, external service or unrelated user data was modified.</div>
+</section>
+
+<h2>1. Summary</h2>
+<div class="summary-band">
+  <div class="metric"><span>High severity</span><strong>4</strong><small>workflow/integration</small></div>
+  <div class="metric"><span>Medium severity</span><strong>1</strong><small>conversion usability</small></div>
+  <div class="metric"><span>Fixed and retested</span><strong>5</strong><small>no open failures</small></div>
+  <div class="metric"><span>Build</span><strong>PASS</strong><small>exit code 0</small></div>
+</div>
+<p>Testing exposed five root-cause issues. Four affected cross-module integrity: new projects were missing from support lookups; approvals could bypass checklists; controlled release did not release the linked documents; and transfers could not see newly released baselines. One affected the sales conversion path: a ready enquiry had no direct quotation action. All five were repaired and retested through the workflows that exposed them.</p>
+
+<div class="note"><b>Repair boundary.</b> The objective was to fix integration gaps, not redesign the application. Existing shells, themes, reusable components, routes and seeded records were preserved. New behavior is limited to the workflows described below.</div>
+
+<h2>2. Issue register</h2>
+<table>
+  <thead><tr><th style="width:7%">ID</th><th style="width:27%">Issue</th><th style="width:25%">Impact</th><th style="width:10%">Severity</th><th style="width:13%">Status</th><th>Retest</th></tr></thead>
+  <tbody>
+    <tr><td>ISS-01</td><td>Support project selectors ignored newly created projects</td><td>A production case could not be linked to the new E2E project; detail showed no project name.</td><td>High</td><td><span class="tag pass">FIXED</span></td><td>Case MSC-Q-2026-004 linked to PRJ-2026-042.</td></tr>
+    <tr><td>ISS-02</td><td>No direct quotation conversion from a ready enquiry</td><td>Sales had to leave the enquiry and create an unlinked quotation manually, risking duplicate or wrong linkage.</td><td>Medium</td><td><span class="tag pass">FIXED</span></td><td>Open Quotation navigation confirmed; create action is status-aware.</td></tr>
+    <tr><td>ISS-03</td><td>Approval could be recorded with all checklist items pending; technical checklist was read-only</td><td>Review integrity: an “Approved” review could show 0/7, 0/6 and 0/6 checklist progress.</td><td>High</td><td><span class="tag pass">FIXED</span></td><td>Technical editor saves; approve disabled with pending count; tested on REV-2026-001.</td></tr>
+    <tr><td>ISS-04</td><td>Controlled release did not release linked BOM and drawing</td><td>Approval release existed but downstream saw BOM/drawing as “Approved / Not released,” blocking transfer.</td><td>High</td><td><span class="tag pass">FIXED</span></td><td>Both linked records became Released with REL-REV-2026-003.</td></tr>
+    <tr><td>ISS-05</td><td>Transfer selectors used static sources; project validation used static projects</td><td>Newly released E2E BOM/drawing were absent; a valid new project failed validation and displayed “ID · ID.”</td><td>High</td><td><span class="tag pass">FIXED</span></td><td>TRF-2026-011 and TRF-2026-012 validated and created.</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Root cause and repair detail</h2>
+
+<h3>ISS-01 · Support project lookups</h3>
+<p><b>Root cause.</b> The case form, support register and case detail resolved projects through the static <span class="mono">PROJECTS</span> fixture instead of the live <span class="mono">ProjectsContext</span>. A project created by quotation conversion existed in state but not in that fixture.</p>
+<p><b>Repair.</b> Support pages now use <span class="mono">useProjects()</span> for the project option list, register filter and detail label. Static support case types and field definitions remain unchanged.</p>
+<p><b>Files.</b> <span class="mono">src/pages/support/CaseFormPage.jsx</span>, <span class="mono">src/pages/support/SupportModulePage.jsx</span>, <span class="mono">src/pages/support/CaseDetailPage.jsx</span>.</p>
+
+<h3>ISS-02 · Enquiry-to-quotation conversion</h3>
+<p><b>Root cause.</b> The quotation form already accepted a linked enquiry through <span class="mono">?enquiryId=</span>, but the enquiry detail header exposed only Register, Edit and Update Status. The conversion was possible only by creating a quotation elsewhere and selecting the enquiry.</p>
+<p><b>Repair.</b> Added a status-aware header action:</p>
+<ul class="clean">
+  <li><b>Create Quotation</b> when status is Ready for Quotation and no linked quotation exists; opens the quotation form with the enquiry ID.</li>
+  <li><b>Open Quotation</b> when a quotation is already linked; opens the existing quotation instead of allowing a duplicate.</li>
+</ul>
+<p><b>File.</b> <span class="mono">src/pages/customer-enquiries/CustomerEnquiryDetailPage.jsx</span>.</p>
+
+<h3>ISS-03 · Approval checklist enforcement</h3>
+<p><b>Root cause.</b> The engineering and manufacturing decision actions checked only the review stage, not checklist completeness. The engineering workspace rendered the technical checklist as a read-only summary, so a new review could be approved while every design and technical item remained Pending.</p>
+<p><b>Repair.</b></p>
+<ul class="clean">
+  <li>The technical checklist is now editable with result, reviewer, comments and evidence fields.</li>
+  <li>Engineering approval is disabled while any design or technical item is not Pass or N/A; a banner reports the pending count.</li>
+  <li>Manufacturing approval is disabled while any manufacturing item is not Pass or N/A; a banner reports the pending count.</li>
+  <li>Reject and Request Changes remain available while items are pending, so a review can still be returned.</li>
+</ul>
+<p><b>Files.</b> <span class="mono">src/pages/approvals/EngineeringReviewTab.jsx</span>, <span class="mono">src/pages/approvals/ManufacturingReviewTab.jsx</span>.</p>
+<p><b>Verification.</b> REV-2026-001 opened with 6 pending design/technical items; Approve was disabled and the banner reported 6. Changing technical item TC-4 from Pending to Pass updated the chip to 4/6 and the banner to 5 pending; reverting restored 6. No review data was left changed by the test.</p>
+<div class="warning"><b>Historical test record.</b> REV-2026-013 was approved before this gate was added and remains Approved with its original checklist state for traceability. It is test data, not a production record. The gate is verified on a seeded in-review record.</div>
+
+<h3>ISS-04 · Controlled release propagation</h3>
+<p><b>Root cause.</b> <span class="mono">releaseReview</span> created a release object inside the approval review and wrote release history, but it did not call the CAD or BOM release actions. Release eligibility looked correct inside the approvals module while the linked drawing still showed <i>Approved / Not released</i> and the BOM remained <i>Approved</i>.</p>
+<p><b>Repair.</b></p>
+<ul class="clean">
+  <li><span class="mono">releaseDrawing</span> accepts an optional controlled release reference.</li>
+  <li><span class="mono">releaseBom</span> accepts an optional controlled release reference.</li>
+  <li>Controlled release calls these actions for the exact linked BOM/drawing revisions when they are still Approved, then creates the approval release record.</li>
+  <li>If a linked document is already released, propagation is skipped rather than failing the release.</li>
+</ul>
+<p><b>Files.</b> <span class="mono">src/context/ApprovalsContext.jsx</span>, <span class="mono">src/context/CadContext.jsx</span>, <span class="mono">src/context/BomContext.jsx</span>.</p>
+<p><b>Verification.</b> After release, the drawing showed approval Released, release Released and reference REL-REV-2026-003; the BOM showed status Released and the same reference. Both records then appeared in the transfer source selector.</p>
+
+<h3>ISS-05 · Live transfer sources and project validation</h3>
+<p><b>Root cause.</b> The transfer form imported a fixed <span class="mono">SOURCE_DELIVERABLES</span> array. Controlled release updated the live BOM and CAD state, but that state was never merged into the selector. Project validity used the static <span class="mono">PROJECTS</span> array, so PRJ-2026-042 was reported invalid and the project label fell back to “PRJ-2026-042 · PRJ-2026-042.”</p>
+<p><b>Repair.</b></p>
+<ul class="clean">
+  <li>NewTransferPage now reads released BOMs from <span class="mono">BomContext</span> and released drawings from <span class="mono">CadContext</span>.</li>
+  <li>Live sources include the linked approval review, release reference, release date, BOM items, derived material requirements, attachments and destination eligibility.</li>
+  <li>A released drawing carries its linked released BOM items and materials into purchase validation.</li>
+  <li>Static fixtures remain as fallback, with duplicates by deliverable type, number and revision suppressed.</li>
+  <li><span class="mono">sourceFor</span> has a snapshot fallback so a transfer created from a live source can still resolve its display context after reload.</li>
+  <li>Project existence and display names resolve against seeded and persisted projects; transfer validation uses the same resolver.</li>
+</ul>
+<p><b>Files.</b> <span class="mono">src/pages/transfers/NewTransferPage.jsx</span>, <span class="mono">src/data/transfersData.js</span>, plus the release propagation described in ISS-04.</p>
+<p><b>Verification.</b> E2E BOM Rev A validated with 12 valid, 1 warning and 0 invalid, and created TRF-2026-011. E2E drawing Rev A validated with 12 valid, 1 warning and 0 invalid, and created TRF-2026-012. The project label rendered correctly as PRJ-2026-042 · E2E Testing – Mechanical Product.</p>
+
+<h2>4. Change inventory</h2>
+<table class="small-table">
+  <thead><tr><th style="width:38%">File</th><th>Change</th><th style="width:14%">Issue</th></tr></thead>
+  <tbody>
+    <tr><td class="mono">src/pages/support/CaseFormPage.jsx</td><td>Project options and summary from live projects.</td><td>ISS-01</td></tr>
+    <tr><td class="mono">src/pages/support/SupportModulePage.jsx</td><td>Project filter and table name lookup from live projects.</td><td>ISS-01</td></tr>
+    <tr><td class="mono">src/pages/support/CaseDetailPage.jsx</td><td>Project detail lookup from live projects.</td><td>ISS-01</td></tr>
+    <tr><td class="mono">src/pages/customer-enquiries/CustomerEnquiryDetailPage.jsx</td><td>Added FileSearch icon, live quotation context, Create/Open Quotation action.</td><td>ISS-02</td></tr>
+    <tr><td class="mono">src/pages/approvals/EngineeringReviewTab.jsx</td><td>Technical checklist editor, pending count, approval gate.</td><td>ISS-03</td></tr>
+    <tr><td class="mono">src/pages/approvals/ManufacturingReviewTab.jsx</td><td>Pending count and approval gate.</td><td>ISS-03</td></tr>
+    <tr><td class="mono">src/context/ApprovalsContext.jsx</td><td>Release propagation to linked BOM and drawing; optional release reference.</td><td>ISS-04</td></tr>
+    <tr><td class="mono">src/context/CadContext.jsx</td><td>releaseDrawing accepts a controlled release reference.</td><td>ISS-04</td></tr>
+    <tr><td class="mono">src/context/BomContext.jsx</td><td>releaseBom accepts a controlled release reference.</td><td>ISS-04</td></tr>
+    <tr><td class="mono">src/pages/transfers/NewTransferPage.jsx</td><td>Live released sources, BOM/material mapping, deduplication, live source lookup.</td><td>ISS-05</td></tr>
+    <tr><td class="mono">src/data/transfersData.js</td><td>Live project existence/name lookup, snapshot source fallback.</td><td>ISS-05</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Verification performed</h2>
+<table class="small-table">
+  <thead><tr><th style="width:26%">Verification</th><th>Method</th><th style="width:14%">Result</th></tr></thead>
+  <tbody>
+    <tr><td>Production build</td><td><span class="mono">npm run build</span>; exit status captured.</td><td><span class="tag pass">PASS</span> exit 0</td></tr>
+    <tr><td>Route regression</td><td>Browser sweep of 65 module/tab routes after initial baseline.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Support linkage</td><td>Create case against PRJ-2026-042 and inspect saved reference.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Quotation action</td><td>Open linked enquiry; confirm Open Quotation navigates to QTN-2026-022.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Checklist gate</td><td>Confirm disabled Approve at 6 pending; change TC-4 to Pass; confirm count and banner change; revert.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Release propagation</td><td>Create controlled release; inspect drawing and BOM release status/reference.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Transfer selector</td><td>Confirm E2E released BOM/drawing options; validate; create TRF-2026-011/012.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Persistence</td><td>Reload browser; confirm E2E enquiry, quotation link, project and release records remain.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Responsive</td><td>390 × 844 dashboard; open and close sidebar; check page width.</td><td><span class="tag pass">PASS</span></td></tr>
+    <tr><td>Dark mode</td><td>Toggle theme; inspect DOM class and computed background; restore light.</td><td><span class="tag pass">PASS</span></td></tr>
+  </tbody>
+</table>
+
+<h2>6. Remaining limitations and recommendations</h2>
+<table>
+  <thead><tr><th style="width:29%">Item</th><th>Status / recommendation</th></tr></thead>
+  <tbody>
+    <tr><td>Production transfer for E2E</td><td><b>Blocked by design.</b> No released manufacturing package exists for E2E-DWG-001. Add a package release path and then validate Production.</td></tr>
+    <tr><td>Approved E2E review with original checklist</td><td><b>Historical test data.</b> The record predates the new gate. Reset E2E data or recreate a review for a clean demo.</td></tr>
+    <tr><td>Dashboard/report aggregation</td><td><b>Known limitation.</b> Seeded analytics do not recompute from local E2E records. Replace with live aggregation if management reporting is required.</td></tr>
+    <tr><td>Manufacturing/delivery tracking</td><td><b>Known limitation.</b> Read-only seeded dataset. Integrate execution systems or add a local tracking write path.</td></tr>
+    <tr><td>Action column visibility</td><td><b>Usability improvement.</b> Add sticky identity/action columns to the widest registers.</td></tr>
+    <tr><td>CSV export</td><td><b>Not exercised.</b> Verify browser download behaviour in the target environment.</td></tr>
+    <tr><td>Checklist defaults</td><td><b>Process decision.</b> New reviews start with all checklist items Pending. Decide whether technical checklist items should be pre-populated from a standard template.</td></tr>
+    <tr><td>Backend controls</td><td><b>Out of scope.</b> There is no server-side authorization, concurrency control or audited event store. Add before production use.</td></tr>
+  </tbody>
+</table>
+
+<h2>7. E2E test data and cleanup</h2>
+<p>The following records were created for this review and are identifiable by the <b>E2E</b> naming convention. Seeded records were not overwritten.</p>
+<table class="small-table">
+  <thead><tr><th style="width:22%">Area</th><th>Test records</th></tr></thead>
+  <tbody>
+    <tr><td>Customer &amp; Sales</td><td>ENQ-2026-044 · QTN-2026-022</td></tr>
+    <tr><td>Project / planning</td><td>PRJ-2026-042 · DPL-2026-009 · TSK-2105</td></tr>
+    <tr><td>Concepts</td><td>CON-2026-011 (selected) · CON-2026-012</td></tr>
+    <tr><td>Mechanical</td><td>DES-2026-016 · PRT-2026-019 / E2E-FRAME-001 · ASM-2026-008</td></tr>
+    <tr><td>Analysis</td><td>ANL-2026-023 · RVW-2026-016</td></tr>
+    <tr><td>Manufacturing</td><td>MFD-2026-016</td></tr>
+    <tr><td>BOM / CAD / drawing</td><td>BOM-2026-009 · CAD-2026-013 · DRW-2026-011 / E2E-DWG-001</td></tr>
+    <tr><td>Review / release</td><td>REV-2026-013 · REL-REV-2026-003</td></tr>
+    <tr><td>Change</td><td>ECR-2026-008</td></tr>
+    <tr><td>Transfers</td><td>TRF-2026-011 · TRF-2026-012</td></tr>
+    <tr><td>Support</td><td>MSC-Q-2026-004</td></tr>
+    <tr><td>Readiness test</td><td>MR-2026-005 · E2E-PKG-041-001 (seeded project)</td></tr>
+  </tbody>
+</table>
+<h3>Cleanup options</h3>
+<ol>
+  <li><b>Full local reset (recommended for demo handover):</b> use the application’s <b>Reset Seed Data</b> action. This restores the seeded workspace and removes all E2E records and local edits, including settings and theme changes. Export any data you need first.</li>
+  <li><b>Selective cleanup:</b> delete or archive E2E records from their registers and cancel the two E2E transfers that are still Ready for Transfer. Some linked records (review, release, support case) do not offer delete and require a full reset for complete removal.</li>
+  <li><b>Browser storage cleanup:</b> clearing site data for the localhost origin removes all <span class="mono">md-*-state-v1</span> keys. This is destructive to all local records.</li>
+</ol>
+<div class="warning"><b>Do not use Reset Seed Data</b> if the workspace contains real user-entered data that has not been exported. There is no server backup.</div>
+
+<h2>8. Closure</h2>
+<p>All five root-cause issues are fixed and retested. The final production build passes. The main E2E flow reaches a controlled release and creates validated purchase transfers from the newly released baseline. Remaining blocked items are intentional gates, and the remaining limitations are architectural or content-related rather than functional regressions.</p>
+<div class="note"><b>Next recommended step:</b> run a second regression cycle focused on production handover after implementing a released manufacturing package, then replace the seeded analytics and tracking data with live aggregation before operational use.</div>
+
+<div class="signoff">
+  <div>Prepared by · Design Office QA / Engineering Systems · 16 November 2026</div>
+  <div>Accepted by · ______________________________ · Date ______________</div>
+</div>
+
+<div class="footer-note">Document 05 of 05 · Issues &amp; Fixes Report · Mechanical Design ERP end-to-end review · 16 November 2026. Source files listed are the only application files intentionally changed for these fixes.</div>
+</body>
+</html>

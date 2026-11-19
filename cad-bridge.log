@@ -1,0 +1,5 @@
+[cad-bridge] listening on http://127.0.0.1:47823
+[cad-bridge] origins: localhost, 127.0.0.1, private LAN addresses and *.local/*.lan/*.internal
+[cad-bridge] this bridge serves THIS computer only (per-device install).
+[cad-bridge] detection scan started; GET /cad-bridge/capabilities when ready
+[cad-bridge] launched edrawings · primary-check.step · ref=localhost

@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="990" viewBox="0 0 1400 990" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1400" height="990" fill="#ffffff"/>
+  <rect x="20" y="20" width="1360" height="950" fill="none" stroke="#111" stroke-width="3"/>
+  <rect x="45" y="45" width="1310" height="860" fill="none" stroke="#111" stroke-width="1.5"/>
+
+  <text x="70" y="110" font-size="30" font-weight="bold">INDUSTRIAL HYDRAULIC POWER UNIT</text>
+  <text x="70" y="145" font-size="22">GENERAL ARRANGEMENT — HPU-APX-ASSY-001</text>
+  <text x="70" y="175" font-size="16" fill="#444">All dimensions in millimetres. Do not scale drawing.</text>
+
+  <!-- skid base -->
+  <rect x="200" y="640" width="900" height="40" fill="#d9dde3" stroke="#111" stroke-width="3"/>
+  <rect x="220" y="600" width="20" height="80" fill="#b8bec8" stroke="#111" stroke-width="2"/>
+  <rect x="1060" y="600" width="20" height="80" fill="#b8bec8" stroke="#111" stroke-width="2"/>
+
+  <!-- reservoir -->
+  <rect x="230" y="420" width="840" height="210" fill="#eef2f7" stroke="#111" stroke-width="3"/>
+  <text x="590" y="535" font-size="24" font-weight="bold">400 L RESERVOIR</text>
+  <text x="565" y="565" font-size="16">IS 2062 E250 BR · 6 mm</text>
+  <line x1="230" y1="455" x2="1070" y2="455" stroke="#8a94a3" stroke-width="1"/>
+  <text x="250" y="447" font-size="13" fill="#555">MAX OIL LEVEL</text>
+  <line x1="230" y1="590" x2="1070" y2="590" stroke="#8a94a3" stroke-width="1"/>
+  <text x="250" y="608" font-size="13" fill="#555">MIN OIL LEVEL</text>
+
+  <!-- motor -->
+  <rect x="300" y="270" width="170" height="150" fill="#cbd5e1" stroke="#111" stroke-width="3"/>
+  <circle cx="385" cy="345" r="42" fill="#f8fafc" stroke="#111" stroke-width="2"/>
+  <text x="335" y="250" font-size="16" font-weight="bold">45 kW IE3 MOTOR</text>
+  <text x="336" y="440" font-size="12">TEFC · 415 V · 1450 rpm</text>
+
+  <!-- pump -->
+  <rect x="470" y="300" width="170" height="120" fill="#c7d2fe" stroke="#111" stroke-width="3"/>
+  <text x="492" y="352" font-size="16" font-weight="bold">VARIABLE PUMP</text>
+  <text x="510" y="378" font-size="12">71 cc/rev</text>
+  <text x="480" y="398" font-size="12">250 bar continuous</text>
+  <line x1="470" y1="360" x2="385" y2="360" stroke="#111" stroke-width="4"/>
+
+  <!-- manifold -->
+  <rect x="680" y="300" width="210" height="100" fill="#fde68a" stroke="#111" stroke-width="3"/>
+  <text x="705" y="340" font-size="16" font-weight="bold">INTEGRATED MANIFOLD</text>
+  <text x="720" y="365" font-size="12">6061-T6 · 315 bar peak</text>
+  <line x1="640" y1="350" x2="680" y2="350" stroke="#111" stroke-width="5"/>
+  <text x="646" y="340" font-size="12">P</text>
+
+  <!-- filter -->
+  <rect x="930" y="300" width="80" height="90" fill="#bbf7d0" stroke="#111" stroke-width="3"/>
+  <text x="918" y="285" font-size="13" font-weight="bold">10 µm FILTER</text>
+  <text x="945" y="345" font-size="12" text-anchor="middle">RF</text>
+  <line x1="890" y1="335" x2="930" y2="335" stroke="#111" stroke-width="4"/>
+
+  <!-- cooler -->
+  <rect x="1030" y="300" width="120" height="100" fill="#bae6fd" stroke="#111" stroke-width="3"/>
+  <text x="1043" y="285" font-size="13" font-weight="bold">AIR COOLER</text>
+  <text x="1062" y="350" font-size="12">25 kW</text>
+  <line x1="1010" y1="335" x2="1030" y2="335" stroke="#111" stroke-width="4"/>
+
+  <!-- controller -->
+  <rect x="700" y="500" width="200" height="70" fill="#e5e7eb" stroke="#111" stroke-width="3"/>
+  <text x="726" y="532" font-size="14" font-weight="bold">CONTROL JUNCTION BOX</text>
+  <text x="755" y="554" font-size="12">IP55 · PLC-ready I/O</text>
+
+  <!-- dimension line overall -->
+  <line x1="200" y1="770" x2="1100" y2="770" stroke="#111" stroke-width="1"/>
+  <line x1="200" y1="760" x2="200" y2="780" stroke="#111" stroke-width="2"/>
+  <line x1="1100" y1="760" x2="1100" y2="780" stroke="#111" stroke-width="2"/>
+  <text x="625" y="800" font-size="18" text-anchor="middle">2200 OVERALL</text>
+
+  <!-- notes -->
+  <text x="80" y="850" font-size="14" font-weight="bold">NOTES:</text>
+  <text x="80" y="872" font-size="13">1. Design, manufacture and test to ISO 4413 and IEC 60204-1.</text>
+  <text x="80" y="892" font-size="13">2. Hydraulic cleanliness ISO 4406 18/16/13 after flushing.</text>
+  <text x="80" y="912" font-size="13">3. Reservoir hydrostatic test at 1.5 × design pressure before coating.</text>
+
+  <!-- title block -->
+  <rect x="960" y="820" width="395" height="120" fill="#fff" stroke="#111" stroke-width="2"/>
+  <line x1="960" y1="860" x2="1355" y2="860" stroke="#111" stroke-width="1"/>
+  <line x1="960" y1="900" x2="1355" y2="900" stroke="#111" stroke-width="1"/>
+  <line x1="1160" y1="820" x2="1160" y2="940" stroke="#111" stroke-width="1"/>
+  <text x="975" y="845" font-size="15" font-weight="bold">APEX INDUSTRIAL SYSTEMS PVT LTD</text>
+  <text x="975" y="884" font-size="13">TITLE: HPU GENERAL ARRANGEMENT</text>
+  <text x="975" y="924" font-size="13">DRAWING NO: CAD-APX-HPU-001</text>
+  <text x="1172" y="845" font-size="13">REV: A</text>
+  <text x="1172" y="884" font-size="13">SCALE: NTS</text>
+  <text x="1172" y="924" font-size="13">SHEET 1 OF 1</text>
+  <text x="975" y="955" font-size="11">PROJECT PRJ-2026-044 · DRAWN N. JOSHI · CHECKED V. SHARMA · 16-11-2026</text>
+</svg>

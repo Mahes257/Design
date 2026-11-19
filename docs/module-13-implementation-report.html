@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 13 — Design Release &amp; Production Handover</title>
+<style>
+  :root { --ink:#16211f; --muted:#5d716b; --green:#145c4d; --line:#d9e5df; --bg:#f4f8f6; --warn:#a85a00; --red:#a52929; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.62 system-ui,Segoe UI,Arial,sans-serif; }
+  header { background:#0f3f36; color:#fff; padding:38px 24px; }
+  header div, main { max-width:1080px; margin:0 auto; }
+  h1 { margin:0 0 6px; font-size:30px; line-height:1.2; }
+  header p { margin:0; color:#c9e2d8; }
+  main { padding:26px 24px 60px; }
+  section { background:#fff; border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:18px 0; }
+  h2 { margin:0 0 12px; font-size:20px; color:var(--green); }
+  h3 { margin:18px 0 8px; font-size:16px; }
+  p { margin:8px 0; }
+  ul,ol { margin:8px 0; padding-left:24px; }
+  code { background:#edf4f0; padding:2px 5px; border-radius:4px; font-size:13px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:13px; }
+  th,td { border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top; }
+  th { background:#edf5f1; }
+  .meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:8px; margin-top:18px; }
+  .meta span { background:#fff; color:var(--ink); border-radius:7px; padding:9px 12px; }
+  .note { border-left:4px solid var(--warn); background:#fff8ec; padding:12px 14px; border-radius:0 6px 6px 0; }
+  .pass { color:#0d6b38; font-weight:700; }
+  .gap { color:var(--red); font-weight:700; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  figure { margin:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; background:#fff; }
+  figure img { display:block; width:100%; height:auto; }
+  figcaption { padding:7px 10px; font-size:12px; color:var(--muted); }
+  footer { max-width:1080px; margin:0 auto; padding:0 24px 40px; color:var(--muted); font-size:13px; }
+</style>
+</head>
+<body>
+<header><div>
+  <h1>Module 13 — Design Release &amp; Production Handover</h1>
+  <p>Implementation and verification report · 17 November 2026</p>
+  <div class="meta">
+    <span><strong>Build:</strong> <span class="pass">PASS</span> (exit 0)</span>
+    <span><strong>Route:</strong> <code>/design-handover</code></span>
+    <span><strong>ERP transfer:</strong> <span class="gap">UNAVAILABLE</span></span>
+    <span><strong>Tabs:</strong> 5</span>
+  </div>
+</div></header>
+<main>
+<section>
+  <h2>Summary</h2>
+  <p>Module 13 was added as a frontend-only module with one sidebar entry and exactly five tabs: Handover Register, Final Design Package, Release Validation, Send to Production and Transfer History.</p>
+  <p>It links the handover, package, validation, release and manual transfer audit to <strong>existing</strong> project, mechanical design, CAD, drawing, BOM, manufacturing, simulation, analysis, review and engineering-change records. No source document, approval, ERP reference or acknowledgement was invented.</p>
+  <p>Release is blocked whenever a mandatory validation check fails. The inspected ERP Production area has work orders, drawings and models but <strong>no design-package import or handover endpoint</strong>. Direct transfer is therefore reported as <code>Integration Pending</code>; manual export is recorded as <code>Ready for Export</code> or <code>Integration Pending</code>.</p>
+</section>
+
+<section>
+  <h2>Routes</h2>
+  <table>
+    <thead><tr><th>Tab</th><th>Route</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Handover Register</td><td><code>/design-handover</code></td><td>Search, filter and open records</td></tr>
+      <tr><td>Final Design Package</td><td><code>/design-handover/package</code></td><td>Link actual sources and mark Prepared</td></tr>
+      <tr><td>Release Validation</td><td><code>/design-handover/validation</code></td><td>16 checks and release gate</td></tr>
+      <tr><td>Send to Production</td><td><code>/design-handover/send</code></td><td>Manifest export and manual attempts</td></tr>
+      <tr><td>Transfer History</td><td><code>/design-handover/history</code></td><td>Permanent audit and retry</td></tr>
+    </tbody>
+  </table>
+  <p>Supporting routes: <code>/design-handover/new</code>, <code>/design-handover/:handoverId</code>, <code>/design-handover/:handoverId/edit</code>.</p>
+</section>
+
+<section>
+  <h2>Implementation files</h2>
+  <ul>
+    <li><code>src/data/designHandoverData.js</code> — 15 categories, completeness, 16 validation rules, manifest builder.</li>
+    <li><code>src/context/DesignHandoverContext.jsx</code> — persistence, CRUD, source linking, validation, release gate, export and retry.</li>
+    <li><code>src/pages/design-handover/</code> — module shell, register, create/edit, details, package, validation, send and history tabs.</li>
+    <li><code>src/styles/design-handover.css</code> — scoped responsive styles.</li>
+    <li><code>src/config/navigation.js</code> — one Module 13 sidebar entry and five tabs.</li>
+    <li><code>src/App.jsx</code> — provider, imports and routes.</li>
+  </ul>
+  <p>Storage key: <code>md-design-handover-state-v1</code>. Existing storage and the legacy hidden transfer module were left intact.</p>
+</section>
+
+<section>
+  <h2>Package categories</h2>
+  <p>Eleven mandatory categories: Approved Mechanical Design, Released Design Revision, Final CAD Models, Engineering Drawings, BOM and BOM Revision, Manufacturing Definitions, Inspection and Quality Requirements, Process Plans and Work Instructions, Engineering Review Records, Manufacturing Review Records, Approval Evidence.</p>
+  <p>Optional: Material Specifications, Simulation and Validation Reports, Engineering Analysis Reports, Approved Engineering Change Records. All lists come from the selected project's existing records; CAD excludes superseded files.</p>
+</section>
+
+<section>
+  <h2>Release validation</h2>
+  <p>Sixteen checks cover project, design, exact revision, CAD, drawings, BOM/revision, manufacturing definition, inspection, process plan, engineering and manufacturing review approval, final approval, open engineering changes, revision state and package Prepared state.</p>
+  <p>Release requires explicit confirmation, a <code>Prepared</code> package, no mandatory failures (recalculated at release), and no prior release. Inspection and process checks are <code>Not Applicable</code> only when no record exists for the project.</p>
+</section>
+
+<section>
+  <h2>ERP Production finding</h2>
+  <p>The Production screens, frontend service calls and backend controllers/routes were inspected read-only. They expose production work orders, drawings and models, but no design-package import, handover receipt or acknowledgement endpoint.</p>
+  <p class="note">No direct transfer, destination reference, actual transfer date or success message is generated. Direct transfer remains <strong>Integration Pending</strong> until a real Production acknowledgement exists.</p>
+</section>
+
+<section>
+  <h2>Verified test results</h2>
+  <table>
+    <thead><tr><th>Test</th><th>Result</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>Build</td><td class="pass">PASS</td><td><code>npm run build</code>, exit 0</td></tr>
+      <tr><td>Create handover</td><td class="pass">PASS</td><td>HND-2026-001, HND-2026-002</td></tr>
+      <tr><td>Duplicate rejection</td><td class="pass">PASS</td><td>Existing record named; count unchanged</td></tr>
+      <tr><td>Edit and delete draft</td><td class="pass">PASS</td><td>HND-2026-003 edited, audited and deleted</td></tr>
+      <tr><td>Link actual sources</td><td class="pass">PASS</td><td>47 links, 11/11 mandatory categories</td></tr>
+      <tr><td>Validation pass</td><td class="pass">PASS</td><td>16/16 for HND-2026-001</td></tr>
+      <tr><td>Validation failure blocks release</td><td class="pass">PASS</td><td>10/16 for HND-2026-002; release disabled</td></tr>
+      <tr><td>Controlled release</td><td class="pass">PASS</td><td>DRL-2026-001 for DES-2026-001 Rev C</td></tr>
+      <tr><td>Manifest export</td><td class="pass">PASS</td><td>XFR-2026-001, Ready for Export</td></tr>
+      <tr><td>Manual handover</td><td class="pass">PASS</td><td>XFR-2026-002, Integration Pending</td></tr>
+      <tr><td>Retry preserves history</td><td class="pass">PASS</td><td>XFR-2026-003 added; prior rows unchanged</td></tr>
+      <tr><td>Refresh persistence</td><td class="pass">PASS</td><td>2 handovers, 1 release, 3 attempts after reload</td></tr>
+      <tr><td>Responsive layout</td><td class="pass">PASS (layout)</td><td>430 px capture; tabs/tables scroll horizontally</td></tr>
+      <tr><td>Direct ERP transfer</td><td class="gap">NOT TESTED / UNAVAILABLE</td><td>No import endpoint</td></tr>
+      <tr><td>Real acknowledgement/destination</td><td class="gap">NOT TESTED</td><td>None received; none invented</td></tr>
+      <tr><td>Downloaded JSON re-opened</td><td class="gap">NOT TESTED</td><td>Download triggered, file not re-opened</td></tr>
+    </tbody>
+  </table>
+  <p>No final test failed. Fixes during verification: released counter now counts actual releases; stale feedback clears on handover selector change; passing inspection/process rows no longer show corrective remarks.</p>
+</section>
+
+<section>
+  <h2>Screenshots</h2>
+  <div class="gallery">
+    <figure><img src="module-13-evidence/handover-register.png" alt="Handover register"><figcaption>Module entry, five tabs and register</figcaption></figure>
+    <figure><img src="module-13-evidence/create-handover-form.png" alt="Create handover form"><figcaption>Create form with actual source records</figcaption></figure>
+    <figure><img src="module-13-evidence/final-design-package.png" alt="Final package"><figcaption>Final design package completeness</figcaption></figure>
+    <figure><img src="module-13-evidence/release-validation-pass.png" alt="Validation pass"><figcaption>Validation checks passing</figcaption></figure>
+    <figure><img src="module-13-evidence/release-validation-failed.png" alt="Validation failure"><figcaption>Blocking failures for HND-2026-002</figcaption></figure>
+    <figure><img src="module-13-evidence/controlled-release-record.png" alt="Controlled release"><figcaption>Controlled release DRL-2026-001</figcaption></figure>
+    <figure><img src="module-13-evidence/send-to-production.png" alt="Send to Production"><figcaption>ERP integration finding and manual export</figcaption></figure>
+    <figure><img src="module-13-evidence/transfer-history.png" alt="Transfer history"><figcaption>Permanent transfer attempt history</figcaption></figure>
+    <figure><img src="module-13-evidence/responsive-register-top.png" alt="Responsive register"><figcaption>430 px responsive layout</figcaption></figure>
+  </div>
+</section>
+
+<section>
+  <h2>Limitations</h2>
+  <ul>
+    <li>No ERP import/acknowledgement API exists; export is manual by design.</li>
+    <li>Module 13 records are browser-local, consistent with the existing app.</li>
+    <li>Test records HND-2026-001, HND-2026-002, PKG-2026-001, DRL-2026-001 and XFR-2026-001..003 remain as evidence.</li>
+    <li>The downloaded JSON was not re-opened or schema-validated outside the browser.</li>
+    <li>The release confirmation modal was exercised but not screenshotted.</li>
+    <li>Every tab was not separately screenshotted at 430 px.</li>
+  </ul>
+</section>
+</main>
+<footer>Detailed Markdown: <a href="module-13-implementation-report.md">module-13-implementation-report.md</a>. All screenshots are actual browser captures.</footer>
+</body>
+</html>

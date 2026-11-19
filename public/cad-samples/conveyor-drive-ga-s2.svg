@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1190 842" width="1190" height="842" font-family="Inter, Segoe UI, sans-serif">
+  <rect width="1190" height="842" fill="#ffffff"/>
+  <g id="BORDER" fill="none" stroke="#1f2937" stroke-width="1.2">
+    <rect x="12" y="12" width="1166" height="818"/><rect x="24" y="24" width="1142" height="794"/>
+  </g>
+  <g id="OUTLINE" fill="#ffffff" stroke="#111827" stroke-width="1.5">
+    <rect x="90" y="130" width="660" height="330"/>
+    <circle cx="240" cy="295" r="74"/><circle cx="240" cy="295" r="44"/>
+    <rect x="360" y="240" width="210" height="110"/>
+    <rect x="570" y="170" width="150" height="250"/>
+    <rect x="130" y="170" width="70" height="60"/>
+    <rect x="130" y="360" width="70" height="60"/>
+  </g>
+  <g id="HIDDEN" fill="none" stroke="#6b7280" stroke-width="1" stroke-dasharray="6 4">
+    <rect x="150" y="200" width="500" height="200"/>
+    <line x1="90" y1="295" x2="750" y2="295"/>
+  </g>
+  <g id="CENTERLINES" fill="none" stroke="#b91c1c" stroke-width="0.8" stroke-dasharray="14 4 3 4">
+    <line x1="240" y1="190" x2="240" y2="400"/>
+    <line x1="60" y1="295" x2="780" y2="295"/>
+    <line x1="645" y1="130" x2="645" y2="460"/>
+  </g>
+  <g id="DIMENSIONS" fill="#111827" stroke="#111827" stroke-width="0.9" font-size="14">
+    <line x1="90" y1="510" x2="750" y2="510"/><line x1="90" y1="500" x2="90" y2="520"/><line x1="750" y1="500" x2="750" y2="520"/>
+    <text x="420" y="502" text-anchor="middle" stroke="none">660</text>
+    <line x1="90" y1="540" x2="720" y2="540"/><line x1="90" y1="530" x2="90" y2="550"/><line x1="720" y1="530" x2="720" y2="550"/>
+    <text x="405" y="532" text-anchor="middle" stroke="none">630 (ASSEMBLY)</text>
+  </g>
+  <g id="BOM_TABLE" fill="none" stroke="#111827" stroke-width="1" font-size="12">
+    <rect x="90" y="580" width="660" height="220"/>
+    <line x1="90" y1="615" x2="750" y2="615"/><line x1="90" y1="648" x2="750" y2="648"/><line x1="90" y1="681" x2="750" y2="681"/>
+    <line x1="90" y1="714" x2="750" y2="714"/><line x1="90" y1="747" x2="750" y2="747"/><line x1="90" y1="780" x2="750" y2="780"/>
+    <line x1="150" y1="580" x2="150" y2="800"/><line x1="430" y1="580" x2="430" y2="800"/><line x1="620" y1="580" x2="620" y2="800"/>
+  </g>
+  <g id="BOM_TEXT" fill="#111827" font-size="12">
+    <text x="104" y="602" font-weight="700">ITEM</text><text x="168" y="602" font-weight="700">DESCRIPTION</text><text x="448" y="602" font-weight="700">PART NUMBER</text><text x="638" y="602" font-weight="700">QTY</text>
+    <text x="104" y="636">1</text><text x="168" y="636">GEARBOX HOUSING</text><text x="448" y="636">MEC-041-001</text><text x="638" y="636">1</text>
+    <text x="104" y="669">2</text><text x="168" y="669">INPUT SHAFT</text><text x="448" y="669">MEC-041-002</text><text x="638" y="669">1</text>
+    <text x="104" y="702">3</text><text x="168" y="702">BEARING SET 32217</text><text x="448" y="702">MEC-041-004</text><text x="638" y="702">2</text>
+    <text x="104" y="735">4</text><text x="168" y="735">GEAR MOTOR 45 kW</text><text x="448" y="735">PUR-041-011</text><text x="638" y="735">1</text>
+    <text x="104" y="768">5</text><text x="168" y="768">CONVEYOR BELT 1200 EP</text><text x="448" y="768">MEC-041-007</text><text x="638" y="768">1</text>
+  </g>
+  <g id="SHEET2_NOTE" fill="#4b5563" font-size="12">
+    <text x="90" y="100" font-weight="700" fill="#111827">ASSEMBLY SECTION &amp; BILL OF MATERIALS — SHEET 2 OF 2</text>
+  </g>
+  <g id="TITLE_BLOCK" fill="none" stroke="#111827" stroke-width="1">
+    <rect x="820" y="580" width="346" height="220"/>
+    <line x1="820" y1="640" x2="1166" y2="640"/><line x1="820" y1="690" x2="1166" y2="690"/><line x1="820" y1="740" x2="1166" y2="740"/>
+  </g>
+  <g id="TITLE_TEXT" fill="#111827" font-size="12">
+    <text x="836" y="610" font-size="14" font-weight="700">CONVEYOR DRIVE ASSEMBLY</text>
+    <text x="836" y="628" fill="#6b7280">ASSEMBLY DRAWING — SHEET 2</text>
+    <text x="836" y="664" fill="#6b7280" font-size="10">DRAWING NO.</text><text x="836" y="680" font-weight="700">DRG-MEC-041-001</text>
+    <text x="836" y="712" fill="#6b7280" font-size="10">REVISION</text><text x="836" y="728" font-weight="700">C</text>
+    <text x="836" y="762" fill="#6b7280" font-size="10">SHEET</text><text x="836" y="778">2 OF 2</text>
+    <text x="936" y="762" fill="#6b7280" font-size="10">SCALE</text><text x="936" y="778">1:5</text>
+    <text x="1030" y="762" fill="#6b7280" font-size="10">STATUS</text><text x="1030" y="778">RELEASED</text>
+  </g>
+</svg>

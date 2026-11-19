@@ -1,0 +1,407 @@
+/* View Page Banner — the standard Apple Emerald Glass header used by every
+   record View/Detail page in the ERP.
+   Scoped to `.vpb-banner` (and `.vpb-page` for the empty sticky slot) so it
+   can never leak into register, create or edit screens. */
+
+.vpb-page .erp-page-static-header {
+  display: none;
+}
+
+.vpb-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin: 0 0 14px;
+  padding: 13px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 140% at 88% -20%, rgba(120, 234, 186, 0.26) 0%, rgba(120, 234, 186, 0) 58%),
+    radial-gradient(90% 120% at 4% 120%, rgba(12, 82, 61, 0.3) 0%, rgba(12, 82, 61, 0) 62%),
+    linear-gradient(135deg, #16745a 0%, #218b6b 52%, #2da47c 100%);
+  box-shadow:
+    0 18px 44px rgba(6, 45, 32, 0.3),
+    0 2px 6px rgba(6, 45, 32, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  color: #fff;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.vpb-banner::before {
+  content: '';
+  position: absolute;
+  inset: -30% 55% 40% -10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== Breadcrumbs ====================================================== */
+.vpb-banner .vpb-crumbs {
+  margin: 0 0 7px;
+}
+
+.vpb-banner .breadcrumb {
+  margin: 0;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.vpb-banner .breadcrumb .bc-sep {
+  color: rgba(255, 255, 255, 0.38);
+}
+
+.vpb-banner .breadcrumb .bc-link,
+.vpb-banner .breadcrumb span {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.vpb-banner .breadcrumb .bc-link {
+  border-radius: 999px;
+  transition: color 0.18s ease, background 0.18s ease;
+}
+
+.vpb-banner .breadcrumb .bc-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.vpb-banner .breadcrumb .bc-current {
+  padding: 3px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ===== Title + actions ================================================== */
+.vpb-banner-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px 18px;
+}
+
+.vpb-banner-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.vpb-banner-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 8px 18px rgba(4, 38, 27, 0.22);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #fff;
+}
+
+.vpb-banner-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.9;
+}
+
+.vpb-banner-text {
+  min-width: 0;
+}
+
+.vpb-banner-eyebrow {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.vpb-banner-title {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+.vpb-banner-subtitle {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.vpb-banner-pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 7px;
+}
+
+.vpb-banner .status-pill,
+.vpb-banner .chip,
+.vpb-banner .chip-mint {
+  padding: 3px 9px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.13);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.vpb-banner .status-pill::before {
+  background: #eafff5;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.16);
+}
+
+/* ===== Action buttons =================================================== */
+.vpb-banner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+
+.vpb-banner .btn-secondary,
+.vpb-banner .btn-ghost {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.18s ease,
+    box-shadow 0.2s ease;
+}
+
+.vpb-banner .btn-secondary:hover,
+.vpb-banner .btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 8px 18px rgba(4, 38, 27, 0.26);
+}
+
+.vpb-banner .btn-secondary:focus-visible,
+.vpb-banner .btn-ghost:focus-visible,
+.vpb-banner .erp-btn-primary:focus-visible,
+.vpb-banner .link-button:focus-visible,
+.vpb-banner a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+}
+
+.vpb-banner .btn-secondary svg {
+  color: #fff;
+}
+
+.vpb-banner .erp-btn-primary {
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  background: #fff;
+  color: #0f4c3a;
+  font-size: 11.5px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(4, 38, 27, 0.24);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.18s ease,
+    box-shadow 0.2s ease;
+}
+
+.vpb-banner .erp-btn-primary::before {
+  display: none;
+}
+
+.vpb-banner .erp-btn-primary:hover {
+  background: #ecfdf5;
+  color: #0b3d2e;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px rgba(4, 38, 27, 0.3);
+}
+
+.vpb-banner .erp-btn-primary:disabled {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.72);
+  box-shadow: none;
+  transform: none;
+}
+
+.vpb-banner .erp-btn-primary svg,
+.vpb-banner .erp-btn-icon svg {
+  color: inherit;
+}
+
+/* Text links used as banner actions (e.g. "Back to register"). */
+.vpb-banner .link-button {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.vpb-banner .link-button:hover {
+  border-color: rgba(255, 255, 255, 0.44);
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ===== Frosted metadata panel =========================================== */
+.vpb-banner-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px 16px;
+  margin: 9px 0 0;
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(16px) saturate(125%);
+  -webkit-backdrop-filter: blur(16px) saturate(125%);
+}
+
+.vpb-banner-meta-item {
+  min-width: 0;
+}
+
+.vpb-banner-meta-item dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.vpb-banner-meta-item dd {
+  margin: 3px 0 0;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #fff;
+  overflow-wrap: anywhere;
+}
+
+/* ===== Responsive ====================================================== */
+@media (max-width: 1100px) {
+  .vpb-banner {
+    padding: 13px 18px;
+  }
+
+  .vpb-banner-main {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .vpb-banner-actions {
+    justify-content: flex-start;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .vpb-banner {
+    padding: 14px 15px;
+    border-radius: 14px;
+  }
+
+  .vpb-banner-title {
+    font-size: 19px;
+  }
+
+  .vpb-banner-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .vpb-banner-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .vpb-banner-heading {
+    gap: 11px;
+    flex-basis: auto;
+  }
+
+  .vpb-banner-meta {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+    padding: 9px 12px;
+  }
+
+  .vpb-banner-actions {
+    gap: 6px;
+  }
+
+  .vpb-banner .btn-secondary,
+  .vpb-banner .btn-ghost,
+  .vpb-banner .erp-btn-primary,
+  .vpb-banner .link-button {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 460px) {
+  .vpb-banner-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vpb-banner .btn-secondary,
+  .vpb-banner .btn-ghost,
+  .vpb-banner .erp-btn-primary,
+  .vpb-banner .link-button {
+    flex: 1 1 100%;
+  }
+}

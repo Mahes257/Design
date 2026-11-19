@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>07 — Operational Workflow & Final Verification Report</title>
+  <link rel="stylesheet" href="report.css" />
+</head>
+<body>
+  <main class="report">
+    <header class="report-header">
+      <p class="eyebrow">Mechanical Design ERP · Verification Report 07</p>
+      <h1>Operational Workflow &amp; Final End-to-End Verification</h1>
+      <p class="lede">Production transfer validation, design-review approval, manufacturing handover, production tracking, quality, finished goods, dispatch, invoice and delivery. All evidence below was executed in the running browser application on 16 Nov 2026.</p>
+      <div class="metrics">
+        <div class="metric"><span>Build</span><strong>PASS</strong><small>npm run build · exit 0</small></div>
+        <div class="metric"><span>Route sweep</span><strong>67 / 67</strong><small>superset of the 65-route baseline</small></div>
+        <div class="metric"><span>Menus</span><strong>13 / 13</strong><small>desktop, tablet and mobile</small></div>
+        <div class="metric"><span>Operational chain</span><strong>PASS</strong><small>handover → production → delivery</small></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. Issues found and root causes</h2>
+      <table>
+        <thead><tr><th>Issue</th><th>Root cause</th><th>Fix</th></tr></thead>
+        <tbody>
+          <tr><td>Production Transfer omitted the linked design review</td><td>The BOM-to-transfer conversion read <code>targetId</code> from a review fallback object that only had an <code>id</code>.</td><td>Resolve <code>linkedReview.targetId || linkedReview.id</code> when writing <code>reviewId</code>.</td></tr>
+          <tr><td>Production quantities could not be saved when every operation recorded the same completed quantity</td><td>Overall completion summed completed quantities across sequential operations, multiplying the planned quantity.</td><td>Treat operations as sequential stages: completed and rejected totals come from the final operation; per-operation limits remain enforced.</td></tr>
+          <tr><td>Production handover had acknowledgement but no formal approval gate</td><td>The original handover module was tracking-only.</td><td>Added Draft → Submitted → Approved / Rejected lifecycle, mandatory checklist, review reference, approver, comments and history.</td></tr>
+          <tr><td>Manufacturing tracking and delivery were read-only snapshots</td><td>No writable local contexts existed.</td><td>Added <code>ProductionTrackingContext</code> and <code>FulfilmentContext</code> with localStorage persistence, validation and linked records.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>2. Files modified / added</h2>
+      <ul class="columns">
+        <li><code>src/context/WorkflowConversionContext.jsx</code></li>
+        <li><code>src/context/ManufacturingReadinessContext.jsx</code></li>
+        <li><code>src/context/ProductionTrackingContext.jsx</code> (new)</li>
+        <li><code>src/context/FulfilmentContext.jsx</code> (new)</li>
+        <li><code>src/App.jsx</code></li>
+        <li><code>src/pages/manufacturing-readiness/ProductionHandoverTab.jsx</code></li>
+        <li><code>src/pages/manufacturing-tracking/ManufacturingTrackingModulePage.jsx</code></li>
+        <li><code>src/pages/manufacturing-tracking/ProductionOrdersTab.jsx</code> (new)</li>
+        <li><code>src/pages/delivery-tracking/DeliveryTrackingModulePage.jsx</code></li>
+        <li><code>src/pages/delivery-tracking/QualityFinishedGoodsTab.jsx</code> (new)</li>
+        <li><code>src/pages/delivery-tracking/DispatchDeliveryTab.jsx</code> (new)</li>
+        <li><code>docs/e2e-review/07-Workflow-Operations-Final-Report.html</code> (new)</li>
+      </ul>
+      <p>The original <code>06-Workflow-Conversion-Implementation-Report.pdf</code> and its HTML source were left intact. Reports 01–06 are unchanged.</p>
+    </section>
+
+    <section>
+      <h2>3. Browser test evidence</h2>
+      <table>
+        <thead><tr><th>Test</th><th>Expected result</th><th>Actual result</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Production Transfer</td><td>Validation passes</td><td>Created <strong>TRF-2026-015</strong> from BOM-2026-001 Rev C for PRJ-2026-041. Source review REV-2026-010, release REL-2026-001, 6 BOM items and 6 material requirements copied. All mandatory validation checks Valid; only two non-mandatory attachment/component warnings. Initial status Draft. Duplicate transfer option blocked on source records.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Review Approval</td><td>Approval completed</td><td><strong>REV-2026-014</strong>: submitted; all 7 design and 6 technical checklist items set to Pass; engineering approved; all 6 manufacturing checklist items set to Pass; manufacturing approved. Final status Approved. Persisted after a full reload. Action changed to “Raise Engineering Change (ECR)”. Release remains correctly blocked because drawing DRW-2026-012 is Draft.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Manufacturing Handover</td><td>Handover works</td><td><strong>PDH-2026-003</strong> created from ready package MR-2026-003, linked to PRJ-2026-038, BOM-2026-002 Rev B, drawing DRG-FAB-038-001 Rev B, review REV-2026-008 and production transfer TRF-2026-002. Submitted, all five checklist items confirmed, approved by Production Manager — Assembly. Persisted.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Manufacturing Tracking</td><td>Production entry works</td><td><strong>PO-2026-001</strong> created only from approved PDH-2026-003. Five operations tracked at work centres; completed quantity 1/1; status transitioned to Completed; pending 0. Progress and operation history persisted.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Quality Completion</td><td>Quality record works</td><td><strong>QC-2026-001</strong> created from completed PO-2026-001. Four mandatory inspection items marked Pass; accepted 1, rejected 0; approved. Persisted.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Dispatch</td><td>Dispatch record works</td><td><strong>FG-2026-001</strong> created with 1 accepted / 1 available, then <strong>DSP-2026-001</strong> dispatched quantity 1 to the customer with transport and address. Available stock reduced to 0. Persisted.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Invoice</td><td>Invoice record works</td><td><strong>INV-2026-001</strong> linked to DSP-2026-001: amount 12,500, tax 2,250, total 14,750. Payment status changed to Paid in the UI and persisted.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Delivery</td><td>Delivery status updates</td><td><strong>DLV-2026-001</strong> created from DSP-2026-001; status changed to Delivered with received-by “Site Store — Pune”. Dispatch synchronised to Delivered; delivery and dispatch histories recorded. Persisted after reload.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>65 Routes</td><td>All routes load</td><td>67 routes executed in the live SPA (56 module/tab routes + Manufacturing Support base + dashboard + 9 form/detail routes; a superset of the 65 baseline). 67/67 rendered meaningful content with no error screen and no horizontal page overflow. Direct nested URL refresh, browser back and browser forward verified.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Responsive UI</td><td>Desktop/tablet/mobile pass</td><td>All 13 row-action menus opened, contained the expected actions and stayed inside the viewport at 1440×900, 820×1000 and 390×844. Wide tables require their normal horizontal scroll to reach the action column; once reached, dropdowns are not clipped.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Dark Mode</td><td>Menus and dialogs work</td><td>All 13 menus verified in dark mode at desktop, tablet and mobile; light mode verified for all 13 menus at desktop and for the mobile conversion dialog. Dialog measured 341×464 inside a 390 px viewport with no document overflow.</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Build</td><td>Build succeeds</td><td><code>npm run build</code> completed with exit 0. Only the existing chunk-size warning remains.</td><td><span class="tag pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. Connected operational record chain</h2>
+      <ol class="chain">
+        <li><strong>MR-2026-003</strong> ready package · PRJ-2026-038</li>
+        <li><strong>PDH-2026-003</strong> approved handover · BOM-2026-002 Rev B · REV-2026-008</li>
+        <li><strong>PO-2026-001</strong> completed production order · 5 operations</li>
+        <li><strong>QC-2026-001</strong> approved quality inspection</li>
+        <li><strong>FG-2026-001</strong> finished goods · 1 accepted</li>
+        <li><strong>DSP-2026-001</strong> dispatch · quantity 1</li>
+        <li><strong>INV-2026-001</strong> invoice · total 14,750 · Paid</li>
+        <li><strong>DLV-2026-001</strong> delivery · Delivered</li>
+      </ol>
+      <p>Existing conversion history remains intact with 15 links across enquiry→quotation, quotation→project, project→plan, plan→task, concept→design, design→analysis, analysis→manufacturing, manufacturing→BOM, BOM→drawing, BOM→review, review→change, BOM→transfer and transfer→support.</p>
+    </section>
+
+    <section>
+      <h2>5. Validation rules implemented</h2>
+      <ul>
+        <li>Transfer review, release, project, exact revision, material requirements and destination checks remain mandatory.</li>
+        <li>A production order can only be created from an Approved manufacturing handover, and only once per handover.</li>
+        <li>Handover approval requires Submitted status, an approved design review reference, released drawings, manufacturing instructions and every mandatory checklist item.</li>
+        <li>Operation completed plus rejected quantity cannot exceed planned quantity; overall completed cannot exceed order quantity.</li>
+        <li>An order closes only when every operation is Completed and the planned quantity is reached.</li>
+        <li>Quality inspection requires a Completed production order and accepted plus rejected must equal production quantity.</li>
+        <li>Quality approval requires every checklist item to be Pass or N/A.</li>
+        <li>Finished goods require approved quality; dispatch cannot exceed available accepted stock.</li>
+        <li>Invoice requires a dispatch and cannot be raised twice for the same dispatch.</li>
+        <li>Delivery requires a dispatch; Delivered requires received-by details.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Remaining limitations</h2>
+      <ul>
+        <li><span class="tag untested">NOT TESTED</span> A single brand-new project driven through all 23 lifecycle stages in one uninterrupted run. The test used the existing PRJ-2026-042 conversion chain plus a complete operational branch from PRJ-2026-038. Forcing every stage for a new project would require additional legitimate drawings, reviews and releases rather than bypassing gates.</li>
+        <li><span class="tag untested">NOT TESTED</span> Creating a new ECR from REV-2026-014. Eligibility and the action were verified, but no additional ECR was raised because REV-2026-013 already has ECR-2026-009 and the review release is correctly blocked by the Draft drawing.</li>
+        <li>All data remains frontend/localStorage only. There is no backend, authentication boundary, payment processing, transporter integration or legally binding approval.</li>
+        <li>Excel/PDF export, email and external service integrations are outside this implementation.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. Preserved records</h2>
+      <p>Invalid <strong>TRF-2026-013</strong> was preserved and not overwritten. Earlier successful conversions, source statuses and workflow-link history were retained. No seed reset or user-data clearing was performed during this verification.</p>
+    </section>
+
+    <footer>
+      <p>Report generated 16 Nov 2026 · Mechanical Design ERP · Operational workflow verification 07.</p>
+    </footer>
+  </main>
+</body>
+</html>

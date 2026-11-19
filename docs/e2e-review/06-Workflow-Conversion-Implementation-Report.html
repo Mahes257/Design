@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>06 · Workflow Conversion Implementation Report</title>
+  <link rel="stylesheet" href="report.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <p class="eyebrow">Mechanical Design ERP · Live implementation review</p>
+      <h1>Module-by-Module Entry, Status &amp; Conversion Report</h1>
+      <p class="lede">Shared conversion service, register action menus, detail-page actions, linked-record history and end-to-end browser verification. Test date: 16 November 2026.</p>
+      <div class="metrics">
+        <div class="metric"><span>Conversions executed</span><strong>13</strong><small>actual local records created</small></div>
+        <div class="metric"><span>Build</span><strong>PASS</strong><small><code>npm run build</code> exit 0</small></div>
+        <div class="metric"><span>Module/tab smoke</span><strong>56 / 56</strong><small>no crash, no page overflow</small></div>
+        <div class="metric"><span>Runtime errors</span><strong>0</strong><small>after fixes, browser console</small></div>
+      </div>
+    </header>
+
+    <section>
+      <h2>1. What was implemented</h2>
+      <ul>
+        <li><strong>One shared conversion service</strong> in <code>src/context/WorkflowConversionContext.jsx</code>, mounted inside every module provider. Both row-menu and detail-page conversions call the same <code>runConversion</code> logic.</li>
+        <li><strong>Persistent link registry</strong> in <code>md-workflow-conversions-v1</code>. Each conversion stores source type/ID, destination type/ID, label, actor and timestamp.</li>
+        <li><strong>Confirmation dialog</strong> with eligible/blocked destinations, reasons, duplicate blocking and a link to the destination record.</li>
+        <li><strong>Shared <code>WorkflowLinks</code> panel</strong> on key detail pages, showing incoming source and outgoing destination references with conversion history.</li>
+        <li><strong>Register three-dot actions</strong> added to Enquiry, Quotation, Project, Plan, Task, Concept, Mechanical Design, Analysis, Manufacturing Definition, BOM, Drawing, Review and Transfer registers.</li>
+        <li><strong>Detail-page Convert actions</strong> added to Enquiry, Quotation, Project, Mechanical Design, Analysis, Manufacturing Definition, BOM, Review, Plan and Task views.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>2. Executed conversion chain</h2>
+      <table>
+        <thead><tr><th>Stage</th><th>Source</th><th>Destination</th><th>Destination initial status</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Enquiry → Quotation</td><td>ENQ-2026-043</td><td>QTN-2026-023</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Accepted Quotation → Project</td><td>QTN-2026-018</td><td>PRJ-2026-043</td><td>New Request</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Project → Design Plan</td><td>PRJ-2026-043</td><td>DPL-2026-010</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Design Plan → Design Task</td><td>DPL-2026-010</td><td>TSK-2138</td><td>Not Started</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Selected Concept → Mechanical Design</td><td>CON-2026-011</td><td>DES-2026-017</td><td>In Design</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Mechanical Design → Analysis</td><td>DES-2026-017</td><td>ANL-2026-024</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Verified Analysis → Manufacturing Definition</td><td>ANL-2026-023</td><td>MFD-2026-017</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Manufacturing Definition → BOM</td><td>MFD-2026-017</td><td>BOM-2026-010</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Released BOM → Drawing Record</td><td>BOM-2026-010</td><td>DRW-2026-012</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Released BOM → Design Review</td><td>BOM-2026-010</td><td>REV-2026-014</td><td>Draft</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Released Review → Engineering Change</td><td>REV-2026-013</td><td>ECR-2026-009</td><td>ECR Submitted</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Released BOM → Transfer</td><td>BOM-2026-010</td><td>TRF-2026-013</td><td>Draft</td><td><span class="tag pass">PASS</span> (creation)</td></tr>
+          <tr><td>Transfer → Production Support</td><td>TRF-2026-011</td><td>MSC-Q-2026-005</td><td>Assigned</td><td><span class="tag pass">PASS</span></td></tr>
+        </tbody>
+      </table>
+      <p class="note">Every row above was executed in the running browser on port 5173. Records, links and status shifts were read back from localStorage and remained after a full page reload.</p>
+    </section>
+
+    <section>
+      <h2>3. Status and approval verification</h2>
+      <table>
+        <thead><tr><th>Workflow</th><th>Observed transition</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Customer Enquiry</td><td>Ready for Quotation → Quotation Prepared, quotation reference QTN-2026-023 recorded in history</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Quotation</td><td>Accepted retained; <code>convertedProjectId</code> set to PRJ-2026-043; project source reference retained</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Manufacturing Definition</td><td>Draft → Pending Review → Approved through detail-page submit and approval</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>BOM</td><td>Draft → Under Review → Approved → Released before drawing, review and transfer conversions</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Transfer</td><td>Draft created from released BOM; validation attempted on TRF-2026-013</td><td><span class="tag fail">FAIL then FIXED</span> — missing review and material references were found and corrected in conversion code; corrected path not re-executed</td></tr>
+          <tr><td>Design Review</td><td>REV-2026-014 created Draft from released BOM</td><td><span class="tag pass">PASS</span> (creation). Approval of this new review was not completed because its engineering/manufacturing checklists require reviewer input.</td></tr>
+          <tr><td>Production completion / Delivery</td><td>No write API in Manufacturing Tracking or Delivery &amp; Service Tracking; both modules are explicitly read-only snapshots</td><td><span class="tag blocked">BLOCKED</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. Action-menu and detail-page audit</h2>
+      <table>
+        <thead><tr><th>Audit item</th><th>Coverage</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td>Three-dot menu renders and opens</td><td>Enquiry, Quotation, Project, Plan, Task, Concept, Design, Analysis, Manufacturing, BOM, Drawing, Review, Transfer registers</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Convert action appears only when eligible</td><td>Menu actions are generated from live eligibility checks; menu omits conversion when no destination is available</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Duplicate conversion blocked</td><td>Drawing option disabled after BOM conversion with reason “A drawing is already linked to this BOM”; registry also rejects repeats</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Detail-page linked records</td><td>Workflow Links panel rendered on quotation detail with incoming ENQ-2026-043 reference</td><td><span class="tag pass">PASS</span></td></tr>
+          <tr><td>Menu clipping / stacking</td><td>Shared existing <code>Dropdown</code> portal used by all registers; no clipping observed in tested registers</td><td><span class="tag pass">PASS</span> (tested pages)</td></tr>
+          <tr><td>Dark theme and mobile/tablet menu</td><td>Shared dropdown component and existing responsive shell unchanged</td><td><span class="tag untested">NOT TESTED</span> in this pass for every register</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>5. Defects found and fixed</h2>
+      <ol>
+        <li><strong>Analysis → Manufacturing crash.</strong> The converted analysis record had no <code>name</code>, causing <code>toUpperCase</code> on undefined. Fixed by using the analysis title and its linked part; conversion then created MFD-2026-017 successfully.</li>
+        <li><strong>Incomplete transfer destination.</strong> A BOM conversion created a transfer without the review reference or material requirements, so validation returned Invalid. Fixed by copying the linked review ID and mapping BOM items into material requirements. The corrected creation path was not re-run before this report.</li>
+        <li><strong>Enquiry duplicate risk.</strong> An enquiry that already had a quotation but no conversion registry entry could be converted again. Eligibility now also checks existing quotations and <code>quotationRef</code>.</li>
+        <li><strong>Detail-page parity gap.</strong> Plan and Task detail modals only offered Edit. Shared Convert actions and Workflow Links were added.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>6. Verification results</h2>
+      <table>
+        <thead><tr><th>Check</th><th>Result</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td><code>npm run build</code></td><td><span class="tag pass">PASS</span></td><td>Exit 0; only the existing large-chunk warning.</td></tr>
+          <tr><td>Navigation module/tab sweep</td><td><span class="tag pass">PASS</span></td><td>56 unique module/tab routes rendered; 0 failures; 0 horizontal page overflow.</td></tr>
+          <tr><td>Browser runtime console</td><td><span class="tag pass">PASS</span></td><td>No React runtime errors after the fixes; only Vite HMR and React DevTools messages.</td></tr>
+          <tr><td>Refresh persistence</td><td><span class="tag pass">PASS</span></td><td>13 conversion links and all converted records survived a full reload.</td></tr>
+          <tr><td>Full 65-route list</td><td><span class="tag untested">NOT TESTED</span></td><td>This pass swept the 56 navigation tab routes; form and detail routes were exercised only where conversions occurred.</td></tr>
+          <tr><td>Production completion → Tracking</td><td><span class="tag blocked">BLOCKED</span></td><td>Manufacturing Tracking is a fixed read-only snapshot by design; no write context exists.</td></tr>
+          <tr><td>Quality completion → Delivery &amp; Service</td><td><span class="tag blocked">BLOCKED</span></td><td>Delivery &amp; Service Tracking is explicitly read-only; finished goods, dispatch and invoices are outside this frontend.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>7. Remaining limitations</h2>
+      <ul>
+        <li>Manufacturing Tracking and Delivery &amp; Service Tracking remain read-only by their existing module contract, so the final two business handovers cannot create records without redesigning those modules.</li>
+        <li>The new review REV-2026-014 was created correctly but not approved; its checklist gates still require reviewer decisions. The ECR test therefore used the previously released REV-2026-013.</li>
+        <li>TRF-2026-013 remains an invalid draft produced before the transfer-copy fix. It was not deleted, in line with the rule to preserve test records.</li>
+        <li>Dark, tablet and mobile three-dot menus were inherited from the shared Dropdown rather than exhaustively re-tested on every register.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <span>Mechanical Design ERP · Workflow conversion implementation report</span>
+      <span>16 Nov 2026</span>
+    </footer>
+  </main>
+</body>
+</html>
